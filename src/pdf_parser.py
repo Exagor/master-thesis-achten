@@ -52,7 +52,7 @@ def extract_with_pymupdf(pdf_path:str) -> dict:
     return data
 
 def extract_tables_camelot(pdf_path:str, filename:str, save_folder_path:str):
-    tables = camelot.read_pdf(pdf_path, flavor='stream', pages='all')
+    tables = camelot.read_pdf(pdf_path, flavor='lattice', pages='all')
     base_filename = os.path.splitext(filename)[0]
     tables.export(f'{save_folder_path}/tables_{base_filename}.csv', f='csv')
     logging.info(f"Tables extracted")
@@ -61,7 +61,7 @@ def extract_tables_camelot(pdf_path:str, filename:str, save_folder_path:str):
 if __name__ == "__main__":
     # Find all PDF files in the pdf folder and save them in a list
     pdf_folder_path = "data/PDF"
-    save_folder_path = "data/processed"
+    save_folder_path = "data/processed_parser"
     pdf_files = [f for f in os.listdir(pdf_folder_path) if f.endswith('.pdf')]
 
     all_data = []
