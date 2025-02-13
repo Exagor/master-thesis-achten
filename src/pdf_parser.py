@@ -1,6 +1,7 @@
 """
-Simple implementation using pdf parser
+Simple implementation using pdf parser and a rule based approach to extract keys information and tables from PDF files.
 """
+
 import camelot
 import fitz  # PyMuPDF
 import logging
@@ -29,7 +30,7 @@ def extract_with_pymupdf(pdf_path:str) -> dict:
     # Extract the information next to the followin keywords
     examen_info = re.findall(r'EXAMEN\s*:\s*(\S+)', text)
     prelev_info = re.findall(r'N° du prélèvement\s*:\s*(\S+)', text)
-    zone_info = re.findall(r'Origine du prélèvement\s*:\s*(\S+)', text)
+    zone_info = re.findall(r'Origine du prélèvement\s*:\s*((?:(?!  ).)+)', text)
     percentage_info = re.findall(r'% de cellules tumorales\s*:\s*<?\s*(\d+)', text)
     analyse_info = re.findall(r'% de cellules à analyser\s*:\s*<?\s*(\d+)', text)
     logging.info("Information extracted from the text")
