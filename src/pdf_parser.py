@@ -18,7 +18,7 @@ def extract_with_pymupdf(pdf_path:str) -> dict:
         document = fitz.open(pdf_path)
     except Exception as e:
         logging.error(f"Failed to open PDF file: {e}")
-        return pd.DataFrame()
+        return {}
     text = ""
 
     # Iterate through each page
@@ -27,7 +27,7 @@ def extract_with_pymupdf(pdf_path:str) -> dict:
         text += page.get_text()
     logging.info("Text extracted from the PDF file")
 
-    # Extract the information next to the followin keywords
+    # Extract the information next to the following keywords
     examen_info = re.findall(r'EXAMEN\s*:\s*(\S+)', text)
     prelev_info = re.findall(r'N° du prélèvement\s*:\s*(\S+)', text)
     zone_info = re.findall(r'Origine du prélèvement\s*:\s*((?:(?!  ).)+)', text)
@@ -58,6 +58,9 @@ def extract_tables_camelot(pdf_path:str, filename:str, save_folder_path:str):
     tables.export(f'{save_folder_path}/tables_{base_filename}.csv', f='csv')
     logging.info(f"Tables extracted")
     return tables
+
+def clean_dataframe():
+    pass
 
 if __name__ == "__main__":
     # Find all PDF files in the pdf folder and save them in a list
