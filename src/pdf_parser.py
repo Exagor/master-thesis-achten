@@ -35,32 +35,48 @@ def extract_with_pymupdf(pdf_path:str) -> str:
 def format_metadata(text:str) -> dict:
     examen_info = re.findall(r'EXAMEN\s*:\s*(\S+)', text)
     prelev_info = re.findall(r'N° du prélèvement\s*:\s*(\S+)', text)
+    panel_keywords = {
+        "Oncomine": "OST",
+        "OVAIRE": "GP",
+        "COLON & LUNG": "CLP",
+        "THYROID": "TP"
+    }
+    panel_info = "CHP" #base case
+    for keyword, value in panel_keywords.items():
+        if re.search(keyword, text): # previously re.search(keyword, text, re.IGNORECASE)
+            panel_info = value
+            break
     zone_info = re.findall(r'Origine du prélèvement\s*:\s*((?:(?!  ).)+)', text)
+    type_info = re.findall(r'Type de prélèvement\s*:\s*((?:(?!  ).)+)', text)
     percentage_info = re.findall(r'% de cellules tumorales\s*:\s*<?\s*(\d+)', text)
     analyse_info = re.findall(r'% de cellules à analyser\s*:\s*<?\s*(\d+)', text)
+    quality_info = re.findall(r'Qualité du séquençage\s*:\s*(\S+)', text)
     logging.info("Information extracted from the text")
 
     # Extract the first match from each list
     examen_info = examen_info[0] if examen_info else ""
     prelev_info = prelev_info[0] if prelev_info else ""
     zone_info = zone_info[0] if zone_info else ""
+    type_info = type_info[0] if type_info else ""
     percentage_info = percentage_info[0] if percentage_info else ""
     analyse_info = analyse_info[0] if analyse_info else ""
+    quality_info = quality_info[0] if quality_info else ""
     # Combine the extracted information into a DataFrame
     data = {
-        "EXAMEN": examen_info,
+        "Examen": examen_info,
         "N° du prélèvement": prelev_info,
+        "Panel": panel_info,
         "Origine du prélèvement": zone_info,
+        "Type de prélèvement": type_info,
         "% de cellules tumorales": percentage_info,
-        "% de cellules à analyser": analyse_info
+        "% de cellules à analyser": analyse_info,
+        "Qualité du séquencage": quality_info
     }
 
     return data
 
-def extract_tables_camelot(pdf_path:str, filename:str, save_folder_path:str):
+def extract_tables_camelot(pdf_path:str):
     tables = camelot.read_pdf(pdf_path, flavor='lattice', pages='all')
-    # base_filename = os.path.splitext(filename)[0]
-    # tables.export(f'{save_folder_path}/tables_{base_filename}.csv', f='csv')
     logging.info(f"Tables extracted")
     return tables
 
@@ -85,12 +101,13 @@ def post_process_data(metadata:dict, tables):
             # Split the remaining rows by '\n' and create a new DataFrame
             df = df[0].str.split('\n', expand=True)
             df.columns = column_names
-            df["Examen"] = df_doc.loc[i, "EXAMEN"] #add the exam number
+            df["Examen"] = df_doc.loc[i, "Examen"] #add the exam number
             for _, row in df.iterrows():
                 df_table = df_table._append(row, ignore_index=True)
 
     # Drop column unused
-    df_table.drop(columns=["muté","% d’ADN "], inplace=True)
+    columns_to_drop = ["muté", "% d’ADN "]
+    df_table.drop(columns=[col for col in columns_to_drop if col in df_table.columns], inplace=True)
 
     # Handles the impact clinique
     df_table["Impact clinique"] = None
@@ -116,6 +133,9 @@ def post_process_data(metadata:dict, tables):
     columns = ["Examen"] + [col for col in df_table.columns if col != "Examen"]
     df_table = df_table[columns]
 
+    # Remove the last space in the column names
+    df_table.columns = [col[:-1] if col.endswith(" ") else col for col in df_table.columns]
+
     logging.info("Data post-processed")
     return df_doc, df_table
 
@@ -124,7 +144,7 @@ if __name__ == "__main__":
     pdf_folder_path = "data/PDF"
     save_folder_path = "data/processed_parser"
     pdf_files = [f for f in os.listdir(pdf_folder_path) if f.endswith('.pdf')]
-    # pdf_files = ["24EM03352.pdf"]
+    # pdf_files = ["24EM03355.pdf"]
 
     list_data = []
     table_list = []
@@ -134,7 +154,7 @@ if __name__ == "__main__":
         metadata = format_metadata(text)
         if metadata:
             list_data.append(metadata)
-        table_list.append(extract_tables_camelot(pdf_path, file, save_folder_path))
+        table_list.append(extract_tables_camelot(pdf_path))
     
     df_doc, df_tables = post_process_data(list_data, table_list)
 
