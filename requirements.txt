@@ -1,7 +1,8 @@
+numpy==1.26.4
 matplotlib==3.8.3
 pymupdf==1.25.3
 pandas==2.2.3
-camelot-py==1.0.0 #in conflict with pdfplumber
+camelot-py==1.0.0 #in conflict with pdfplumber (because use different pdf-miner version)
 tensorflow==2.18.0 #maybe not and use pytorch instead
 transformers==4.48.3
 datasets==3.3.0
