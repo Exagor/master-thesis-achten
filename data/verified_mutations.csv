@@ -1,0 +1,25 @@
+Examen, Gène, Exon, Mutation, Coverage, % d'ADN muté, Impact clinique
+24EM03308, None, None, None, 0, 0, None
+24EM03352, KRAS, 2, p.G12V, 1644, 5, Avéré
+24EM03352, TP53, 5, p.Y163*, 1041, 6, Indéterminé
+24EM03355, BRAF, 15, p.N581I, 1561, 17, Potentiel
+24EM03355, STK11, 6, p.P281Rfs*6, 249, 24, Indéterminé
+24EM03451, FOXL2, 1, p.C134W, 879, 25, Indéterminé
+24EM03456, KRAS, 3, p.A59E, 1777, 2, Potentiel
+24EM03456, TP53, 7, p.P250L, 1939, 5, Indéterminé
+24EM03460, KRAS, 2, p.G12D, 1992, 40, Avéré
+24EM03460, TP53, 6, p.H214Lfs*33, 1100, 60, Indéterminé
+24EM03461, KRAS, 2, p.G12A, 1984, 33, Avéré
+24EM03461, SMAD4, 3, p.R135*, 1999, 20, Indéterminé
+24EM03461, SMAD4, 12, p.R496H, 1407, 8, Indéterminé
+24EM03461, FBXW7, 10, p.R479Q, 2000, 20, Indéterminé
+24EM03462, PIK3CA, 1, p.R88Q, 1702, 9, Potentiel
+24EM03462, PIK3CA, 20, p.H1047R, 2000, 41, Potentiel
+24EM03462, ESR1, 8, p.Y537S, 1999, 21, Potentiel
+24EM03462, TP53, 5, p.A161T, 934, 50, Indéterminé
+24EM03839, NRAS, 3, p.Q61K, 1973, 29, Potentiel
+24EM03839, TERT, Promoteur, chr5:1295228C>T(C228T), 211, 33, Potentiel
+24EM04099, None, None, None, 0, 0, None
+24EM04107, None, None, None, 0, 0, None
+24EM04337, ATM, 35, p.E1751D, 1998, 38, Indéterminé
+24EM04347, None, None, None, 0, 0, None

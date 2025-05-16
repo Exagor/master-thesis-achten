@@ -1,0 +1,14 @@
+Examen,N du prélèvement,Panel,Origine du prélèvement,Type de prélèvement,Qualité du séquencage,% de cellules
+24EM03308, 24218507-1.1, dazd, CMP, Adénocarcinome pulmonaire, Optimale, 50
+24EM03352, 24MH9794 RF, dazd, Centre Hospitalier de Mouscron, Adénocarcinome lieberkühnien, Optimale, 20
+24EM03355, 24CU550062-2ebus, dasd, CurePath, Carcinome non à petites cellules NOS, Optimale, 20
+24EM03451, 24BB11466 07, daz, HUB, Tumeur de la granulosa, Optimale, 30
+24EM03456, 24CU052383 pneu, daz, Curepath, Adénocarcinome TTF1+, Optimale, 10
+24EM03460, 24MH9721   BN, daz, Centre Hospitalier de Mouscron, Adénocarcinome lieberkühnien, Optimale, 50
+24EM03461, 24CU002162-4, daz, Curepath, Adénocarcinome colorectal métastatique, Optimale, 20
+24EM03462, 24219576 1.1. Foie, dad, CMP, Métastase hépatique d'un adénocarcinome mammaire, Optimale, 30
+24EM03839, 24EC09559 frottis 1, daz, Erasme, PF2, Optimale, 70
+24EM04099, 24CU062291-frottis2, daz, CurePath, PF1, Optimale, 10
+24EM04107, 24CU062294-1, dazaz, CurePath, PF1 oncocytaire, Optimale, 10
+24EM04337, 2431646-1.1, dazd, CMP Pathology, masse gastrique, Optimale, 70
+24EM04347, 23CU032757-1.02, daza, CurePath, carcinome urothélial invasif, Optimale, 50

@@ -142,7 +142,7 @@ def post_process_data(metadata:dict, tables):
 if __name__ == "__main__":
     # Find all PDF files in the pdf folder and save them in a list
     pdf_folder_path = "data/PDF"
-    save_folder_path = "data/processed_parser"
+    save_folder_path = "out/"
     pdf_files = [f for f in os.listdir(pdf_folder_path) if f.endswith('.pdf')]
     # pdf_files = ["24EM03355.pdf"]
 
