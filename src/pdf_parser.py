@@ -34,7 +34,8 @@ def extract_with_pymupdf(pdf_path:str) -> str:
 
 def format_metadata(text:str) -> dict:
     examen_info = re.findall(r'EXAMEN\s*:\s*(\S+)', text)
-    prelev_info = re.findall(r'N° du prélèvement\s*:\s*(\S+)', text)
+    # prelev_info = re.findall(r'N° du prélèvement\s*:\s*(\S+)', text)
+    prelev_info = re.findall(r'N° du prélèvement\s*:\s*([^\n\r]+)', text)
     panel_keywords = {
         "Oncomine": "OST",
         "OVAIRE": "GP",
