@@ -18,10 +18,9 @@ def normalize_string(s):
 def evaluate_model_metadata(model_excel_path, true_csv_path, key_column=None):
     """
     Compare model results with true results line by line, matching on exam number, and print evaluation metrics.
-    Args:
-        model_excel_path (str): Path to the model results Excel file.
-        true_csv_path (str): Path to the true results CSV file.
-        key_column (str, optional): Column to align/merge on if needed.
+    Returns:
+        accuracy (float): row-level accuracy
+        col_accuracy (dict): column-level accuracy
     """
     # Load data
     model_df = pd.read_excel(model_excel_path)
@@ -81,6 +80,7 @@ def evaluate_model_metadata(model_excel_path, true_csv_path, key_column=None):
         print("All rows match exactly.")
 
     # Per-column score (for matched exam numbers)
+    col_accuracy = {}
     if matched_model_rows and matched_true_rows:
         matched_model_df = pd.DataFrame(matched_model_rows)
         matched_true_df = pd.DataFrame(matched_true_rows)
@@ -88,6 +88,7 @@ def evaluate_model_metadata(model_excel_path, true_csv_path, key_column=None):
         for col in matched_true_df.columns:
             if col not in matched_model_df.columns:
                 print(f"  {col}: column missing in model results")
+                col_accuracy[col] = None
                 continue
             m_vals = matched_model_df[col]
             t_vals = matched_true_df[col]
@@ -99,7 +100,9 @@ def evaluate_model_metadata(model_excel_path, true_csv_path, key_column=None):
             else:
                 acc = (m_vals == t_vals).mean()
             print(f"  {col}: {acc:.3f}")
+            col_accuracy[col] = acc
     print("\nEvaluation complete.")
+    return accuracy, col_accuracy # Return accuracy and column accuracy
 
 def norm_row(row):
     return tuple(normalize_string(str(x)) if isinstance(x, str) else x for x in row)

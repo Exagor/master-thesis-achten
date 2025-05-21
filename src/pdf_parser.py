@@ -10,7 +10,7 @@ import os
 import pandas as pd
 import pdfplumber
 import re
-from pdf_tools import pdf2html
+from pdf2image import convert_from_path
 
 # Create a logger
 logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO)
@@ -32,43 +32,6 @@ def extract_with_pymupdf(pdf_path:str) -> str:
     text = "\n".join(text)
     logging.info("Text extracted from the PDF file")
     return text
-
-def extract_into_html(pdf_path: str) -> str:
-    """
-    Extracts the content of a PDF file and returns it as a structured HTML string.
-    Each page is wrapped in a <div class="pdf-page"> and each line in a <p>.
-    Detected tables are included as <table> elements using camelot.
-    """
-    import fitz  # PyMuPDF
-    import camelot
-    import os
-
-    html = ['<html><body>']
-    with fitz.open(pdf_path) as pdf:
-        for page_num, page in enumerate(pdf, 1):
-            html.append(f'<div class="pdf-page" id="page-{page_num}">')
-            # Extract text
-            text = page.get_text()
-            if text:
-                for line in text.split('\n'):
-                    html.append(f'<p>{line}</p>')
-            # Extract tables for this page
-            tables = camelot.read_pdf(pdf_path, flavor='lattice', pages=str(page_num))
-            for table in tables:
-                html.append(table.df.to_html(index=False, header=True, border=1))
-            html.append('</div>')
-    html.append('</body></html>')
-    html_content = '\n'.join(html)
-    # Save the HTML file
-    base_name = os.path.splitext(os.path.basename(pdf_path))[0]
-    output_dir = "../out"
-    os.makedirs(output_dir, exist_ok=True)
-    output_html = f"{base_name}.html"
-    html_file_path = os.path.join(output_dir, output_html)
-    with open(html_file_path, "w") as f:
-        f.write(html_content)
-    logging.info(f"HTML extracted from the PDF file and saved as {output_html}")
-    return html_content
 
 def format_metadata(text:str) -> dict:
     examen_info = re.findall(r'EXAMEN\s*:\s*(\S+)', text)
@@ -118,6 +81,16 @@ def extract_tables_camelot(pdf_path:str):
     tables = camelot.read_pdf(pdf_path, flavor='lattice', pages='all')
     logging.info(f"Tables extracted")
     return tables
+
+def extract_pdf2image(pdf_path, save=False, save_folder_path=None):
+    images = convert_from_path(pdf_path)
+    if save:
+        for i in range(len(images)):
+            page_image = images[i]
+            # Remove .pdf extension from pdf_file
+            image_filename = os.path.splitext(pdf_path)[0]
+            page_image.save(os.path.join(save_folder_path, f"{image_filename}_page_{i}.png"), "PNG")
+    return images
 
 def post_process_data(metadata:dict, tables):
     # Process the metadata
@@ -177,6 +150,54 @@ def post_process_data(metadata:dict, tables):
 
     logging.info("Data post-processed")
     return df_doc, df_table
+
+def extract_all(pdf_path: str) -> str:
+    """
+    Extract all text from the PDF and insert tables (found with camelot) in the text at the place where they should be, in markdown format.
+    Returns a single string with text and tables in order.
+    """
+
+    doc = fitz.open(pdf_path)
+    num_pages = doc.page_count
+    output = []
+
+    tables = camelot.read_pdf(pdf_path, flavor='lattice', pages='all')
+    tables_by_page = {}
+    for table in tables:
+        page = table.page - 1  # camelot pages are 1-based, fitz is 0-based
+        if page not in tables_by_page:
+            tables_by_page[page] = []
+        tables_by_page[page].append(table)
+
+    for page_num in range(num_pages):
+        page = doc[page_num]
+        blocks = page.get_text("blocks")
+        blocks = sorted(blocks, key=lambda b: b[1])  # sort by y0
+        page_tables = tables_by_page.get(page_num, [])
+        table_idx = 0
+        block_idx = 0
+        while block_idx < len(blocks) or table_idx < len(page_tables):
+            next_block_y = blocks[block_idx][1] if block_idx < len(blocks) else float('inf')
+            if table_idx < len(page_tables):
+                next_table_y = page_tables[table_idx]._bbox[1]
+            else:
+                next_table_y = float('inf')
+            if next_table_y < next_block_y:
+                md = page_tables[table_idx].df.to_markdown(index=False)
+                output.append(md)
+                table_idx += 1
+            elif block_idx < len(blocks):
+                text = blocks[block_idx][4].strip()
+                if text:
+                    output.append(text)
+                block_idx += 1
+            else:
+                break
+        while table_idx < len(page_tables):
+            md = page_tables[table_idx].df.to_markdown(index=False)
+            output.append(md)
+            table_idx += 1
+    return '\n\n'.join(output)
 
 if __name__ == "__main__":
     # Find all PDF files in the pdf folder and save them in a list

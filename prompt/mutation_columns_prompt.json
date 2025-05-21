@@ -1,0 +1,9 @@
+{
+    "Examen":"Quel est le numéro d'examen ?",
+    "Gène":"Quel gène est affecté ?",
+    "Exon":"Sur quel exon la mutation a eu lieu ?",
+    "Mutation":"Quelle mutation a été détectée ?",
+    "Coverage":"Quel est le coverage de la mutation ?",
+    "% d'ADN muté":"Combien de % d'ADN a muté ? ?",
+    "Impact clinique":"Quel est l'impact clinique de la mutation ?"
+}

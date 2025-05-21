@@ -1,0 +1,9 @@
+{
+    "Examen":"Quel est le numéro d'examen ?",
+    "N° du prélèvement":"Quel est le numéro de prélèvement ?",
+    "Panel":"Sur quel panel le prélèvement a été effectué ?",
+    "Origine du prélèvement":"Quelle est l'origine du prélèvement ?",
+    "Type de prélèvement":"Quel est le type de prélèvement ?",
+    "Qualité du séquencage":"Quelle est la qualité du séquencage ?",
+    "% de cellules":"Quel est le pourcentage (%) de cellules à analyser ?"
+}
