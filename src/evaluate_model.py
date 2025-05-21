@@ -15,7 +15,7 @@ def normalize_string(s):
     s = ''.join(s.split())
     return s
 
-def evaluate_model_results(model_excel_path, true_csv_path, key_column=None):
+def evaluate_model_metadata(model_excel_path, true_csv_path, key_column=None):
     """
     Compare model results with true results line by line, matching on exam number, and print evaluation metrics.
     Args:
@@ -50,7 +50,7 @@ def evaluate_model_results(model_excel_path, true_csv_path, key_column=None):
         # Compare each value with normalization for strings
         row_match = True
         for m_val, t_val in zip(model_row, true_row):
-            if isinstance(m_val, str) or isinstance(t_val, str):
+            if isinstance(m_val, str) or isinstance(t_val, str): #check if there are strings
                 if normalize_string(str(m_val)) != normalize_string(str(t_val)):
                     row_match = False
                     break
@@ -67,7 +67,8 @@ def evaluate_model_results(model_excel_path, true_csv_path, key_column=None):
 
     accuracy = exact_matches / total if total > 0 else 0
     print(f"Line-by-line exact match accuracy (exam number matched): {accuracy:.3f} ({exact_matches}/{total})")
-    if mismatches:
+    if mismatches: #if there are mismatches
+        print(f"\nTotal mismatches: {len(mismatches)}")
         print(f"\nMismatched rows (showing up to 5):")
         for exam_number, exam_msg, model_vals, true_vals in mismatches[:5]:
             if exam_msg:
@@ -91,7 +92,7 @@ def evaluate_model_results(model_excel_path, true_csv_path, key_column=None):
             m_vals = matched_model_df[col]
             t_vals = matched_true_df[col]
             # Normalize strings for comparison
-            if m_vals.dtype == object or t_vals.dtype == object:
+            if m_vals.dtype == object or t_vals.dtype == object: #check if there are strings
                 m_vals_norm = m_vals.apply(lambda x: normalize_string(str(x)))
                 t_vals_norm = t_vals.apply(lambda x: normalize_string(str(x)))
                 acc = (m_vals_norm == t_vals_norm).mean()
@@ -99,6 +100,51 @@ def evaluate_model_results(model_excel_path, true_csv_path, key_column=None):
                 acc = (m_vals == t_vals).mean()
             print(f"  {col}: {acc:.3f}")
     print("\nEvaluation complete.")
+
+def norm_row(row):
+    return tuple(normalize_string(str(x)) if isinstance(x, str) else x for x in row)
+
+def evaluate_model_mutations(model_path, true_path):
+    model_df = pd.read_excel(model_path)
+    true_df = pd.read_csv(true_path)
+
+    # Ensure columns are in the same order and names
+    model_df = model_df[true_df.columns.intersection(model_df.columns)]
+    true_df = true_df[model_df.columns]
+
+    # Group by exam number
+    exam_col = true_df.columns[0]
+    model_grouped = model_df.groupby(exam_col)
+    true_grouped = true_df.groupby(exam_col)
+
+    all_exam_numbers = set(model_grouped.groups.keys()) | set(true_grouped.groups.keys()) # Union of all exam numbers
+    total = len(all_exam_numbers)
+    exact_matches = 0
+    mismatches = []
+
+    for exam in sorted(all_exam_numbers):
+        model_rows = model_grouped.get_group(exam) if exam in model_grouped.groups else pd.DataFrame(columns=model_df.columns)
+        true_rows = true_grouped.get_group(exam) if exam in true_grouped.groups else pd.DataFrame(columns=true_df.columns)
+
+        # Convert all values to tuple of normalized strings for fair comparison
+        model_set = set(norm_row(row) for row in model_rows.values)
+        true_set = set(norm_row(row) for row in true_rows.values)
+
+        if model_set == true_set:
+            exact_matches += 1
+        else:
+            # For easier debugging, show the normalized sets as well
+            mismatches.append((exam, list(model_set), list(true_set)))
+
+    accuracy = exact_matches / total if total > 0 else 0
+    print(f"Extracted mutations accuracy : {accuracy:.3f} ({exact_matches}/{total})")
+    if mismatches:
+        print("Mismatches (up to 5):")
+        for exam, model_vals, true_vals in mismatches[:5]:
+            print(f"Exam {exam}:")
+            print(f"  Model: {model_vals}\n  True:  {true_vals}")
+    else:
+        print("All exam mutation sets match exactly.")
 
 if __name__ == "__main__":
     model_excel_path = 'out/extracted_metadata.xlsx'
@@ -109,9 +155,13 @@ if __name__ == "__main__":
         print(f"Model results file not found: {model_excel_path}")
     if not os.path.exists(true_csv_path):
         print(f"True results file not found: {true_csv_path}")
-
     # Evaluate the model results
-    evaluate_model_results(model_excel_path, true_csv_path)
+    evaluate_model_metadata(model_excel_path, true_csv_path)
 
-    string = "AzfSA op.789 ééèà"
-    print(normalize_string(string))
+    model_excel_path = 'out/extracted_results_mutation.xlsx'
+    true_csv_path = 'data/verified_mutations_without_none.csv'
+
+    evaluate_model_mutations(model_excel_path, true_csv_path)
+
+    # string = "AzfSA op.789 éé-èà"
+    # print(normalize_string(string))

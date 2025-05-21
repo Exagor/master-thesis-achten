@@ -10,6 +10,7 @@ import os
 import pandas as pd
 import pdfplumber
 import re
+from pdf_tools import pdf2html
 
 # Create a logger
 logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO)
@@ -31,6 +32,43 @@ def extract_with_pymupdf(pdf_path:str) -> str:
     text = "\n".join(text)
     logging.info("Text extracted from the PDF file")
     return text
+
+def extract_into_html(pdf_path: str) -> str:
+    """
+    Extracts the content of a PDF file and returns it as a structured HTML string.
+    Each page is wrapped in a <div class="pdf-page"> and each line in a <p>.
+    Detected tables are included as <table> elements using camelot.
+    """
+    import fitz  # PyMuPDF
+    import camelot
+    import os
+
+    html = ['<html><body>']
+    with fitz.open(pdf_path) as pdf:
+        for page_num, page in enumerate(pdf, 1):
+            html.append(f'<div class="pdf-page" id="page-{page_num}">')
+            # Extract text
+            text = page.get_text()
+            if text:
+                for line in text.split('\n'):
+                    html.append(f'<p>{line}</p>')
+            # Extract tables for this page
+            tables = camelot.read_pdf(pdf_path, flavor='lattice', pages=str(page_num))
+            for table in tables:
+                html.append(table.df.to_html(index=False, header=True, border=1))
+            html.append('</div>')
+    html.append('</body></html>')
+    html_content = '\n'.join(html)
+    # Save the HTML file
+    base_name = os.path.splitext(os.path.basename(pdf_path))[0]
+    output_dir = "../out"
+    os.makedirs(output_dir, exist_ok=True)
+    output_html = f"{base_name}.html"
+    html_file_path = os.path.join(output_dir, output_html)
+    with open(html_file_path, "w") as f:
+        f.write(html_content)
+    logging.info(f"HTML extracted from the PDF file and saved as {output_html}")
+    return html_content
 
 def format_metadata(text:str) -> dict:
     examen_info = re.findall(r'EXAMEN\s*:\s*(\S+)', text)
@@ -95,7 +133,7 @@ def post_process_data(metadata:dict, tables):
             df = None
         else:
             df = table[2].df
-        if df is not None:
+            
             # Extract the first row and split it by '\n' to get the column names
             column_names = df.iloc[0, 0].split('\n')
             df = df.drop(0).reset_index(drop=True)

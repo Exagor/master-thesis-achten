@@ -12,3 +12,4 @@ pdfplumber==0.11.5 #in conflict with camelot-py
 torch==2.6.0
 pytesseract==0.3.13
 pdf2image==1.17.0
+tqdm==4.67.1
