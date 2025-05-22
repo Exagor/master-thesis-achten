@@ -1,5 +1,5 @@
 Examen,Gène,Exon,Mutation,Coverage,% d'ADN muté,Impact clinique
-24EM03308,None,None,None,0,0,None
+24EM03308,None,None,None,None,None,None
 24EM03352,KRAS,2,p.G12V,1644,5,Avéré
 24EM03352,TP53,5,p.Y163*,1041,6,Indéterminé
 24EM03355,BRAF,15,p.N581I,1561,17,Potentiel
@@ -19,7 +19,7 @@ Examen,Gène,Exon,Mutation,Coverage,% d'ADN muté,Impact clinique
 24EM03462,TP53,5,p.A161T,934,50,Indéterminé
 24EM03839,NRAS,3,p.Q61K,1973,29,Potentiel
 24EM03839,TERT,Promoteur,chr5:1295228C>T(C228T),211,33,Potentiel
-24EM04099,None,None,None,0,0,None
-24EM04107,None,None,None,0,0,None
+24EM04099,None,None,None,None,None,None
+24EM04107,None,None,None,None,None,None
 24EM04337,ATM,35,p.E1751D,1998,38,Indéterminé
-24EM04347,None,None,None,0,0,None
+24EM04347,None,None,None,None,None,None

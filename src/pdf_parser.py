@@ -199,6 +199,36 @@ def extract_all(pdf_path: str) -> str:
             table_idx += 1
     return '\n\n'.join(output)
 
+def clean_text_pdf(text:str) -> str:
+    texte_nettoye = []
+    pieds_de_page_possibles = set()
+    
+    lignes = text.split('\n')
+    lignes_nettoyees = []
+
+    for ligne in lignes:
+        ligne = ligne.strip()
+
+        # Ignorer des lignes classiques de pied de page ou en-tête (ex. numéro de page)
+        if re.match(r"^\s*(Page|[0-9]{1,2} / [0-9]{1,2})", ligne, re.IGNORECASE):
+            pieds_de_page_possibles.add(ligne)
+            continue
+        # Fusionner les mots coupés par un retour à la ligne avec un tiret
+        ligne = re.sub(r'-\s*\n', '', ligne)
+        # Nettoyer les espaces multiples
+        ligne = re.sub(r'\s{2,}', ' ', ligne)
+
+        lignes_nettoyees.append(ligne)
+
+    texte_nettoye.append(" ".join(lignes_nettoyees))
+
+    # Fusion finale et normalisation
+    texte_final = "\n\n".join(texte_nettoye)
+    texte_final = re.sub(r'\n{3,}', '\n\n', texte_final)  # Limiter les sauts de ligne excessifs
+    texte_final = texte_final.strip()
+
+    return texte_final
+
 if __name__ == "__main__":
     # Find all PDF files in the pdf folder and save them in a list
     pdf_folder_path = "data/PDF"
@@ -219,5 +249,5 @@ if __name__ == "__main__":
     df_doc, df_tables = post_process_data(list_data, table_list)
 
     # Save the dataframe to a csv file
-    df_doc.to_excel(f"{save_folder_path}/extracted_metadata.xlsx", index=False)
-    df_tables.to_excel(f"{save_folder_path}/extracted_results_mutation.xlsx", index=False)
+    df_doc.to_excel(f"{save_folder_path}/hand_pdf_parser_metadata.xlsx", index=False)
+    df_tables.to_excel(f"{save_folder_path}/hand_pdf_parser_mutation.xlsx", index=False)
