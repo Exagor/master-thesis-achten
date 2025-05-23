@@ -21,7 +21,7 @@ Pour chaque **mutation détectée**, extrais les éléments suivants :
 | `"Examen"`                | Numéro ou code unique de l'examen figurant dans le rapport                  |
 | `"Gène"`                  | Nom du gène dans lequel une mutation est identifiée                         |
 | `"Exon"`                  | Numéro de l’exon concerné par la mutation                                   |
-| `"Mutation"`              | Description de la mutation détectée (notation protéique de type p.XYZ)     |
+| `"Mutation"`              | Description de la mutation détectée                                         |
 | `"Coverage"`              | Couverture de lecture (coverage) pour cette mutation                        |
 | `"% d'ADN muté"`          | Pourcentage d’ADN mutant détecté pour cette mutation                        |
 | `"Impact clinique"`       | Impact clinique rapporté (valeurs possibles : `"Avéré"`, `"Potentiel"`, `"Indéterminé"`) |
