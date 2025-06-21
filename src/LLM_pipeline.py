@@ -7,10 +7,10 @@ from transformers import pipeline
 import json
 import pandas as pd
 
-pdf_folder_path = "../data/PDF"
+pdf_folder_path = "data/PDF"
 # pdf_files = [f for f in os.listdir(pdf_folder_path) if f.endswith('.pdf')]
 pdf_files = ["24EM03456.pdf"]
-image_save_folder_path = "../data/images"
+image_save_folder_path = "data/images"
 
 pdf_text_image = {}
 for pdf_file in pdf_files:
@@ -34,7 +34,7 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 # device = "cpu"
 print(f"Using device: {device}")
 
-with open("../login.txt", "r") as f:
+with open("login.txt", "r") as f:
     token = f.read()
 login(token) #token from huggingface.co necessary to use gemma3
 print("login done")
@@ -93,6 +93,6 @@ data2 = json.loads(cleaned_mut)
 print(data2)
 
 df = pd.DataFrame([data])
-df.to_excel("../out/metadata_gemma3_4B.xlsx", index=False)
+df.to_excel("out/metadata_gemma3_4B.xlsx", index=False)
 df2 = pd.DataFrame(data2)
-df2.to_excel("../out/mutation_gemma3_4B.xlsx", index=False)
+df2.to_excel("out/mutation_gemma3_4B.xlsx", index=False)
