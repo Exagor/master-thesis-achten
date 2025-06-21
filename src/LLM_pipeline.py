@@ -19,9 +19,6 @@ for pdf_file in pdf_files:
     pdf_images = extract_pdf2image(f"{pdf_folder_path}/{pdf_file}")
     pdf_text_image[os.path.splitext(pdf_file)[0]]["image"] = pdf_images
 
-print(pdf_text_image.keys())
-print(pdf_text_image)
-
 with open("prompt/system_prompt_metadata.md", "r") as f:
     system_prompt_meta = f.read()
 print(system_prompt_meta)
@@ -78,9 +75,7 @@ messages_mut = [
 ]
 
 output_gemma_4B = pipe(messages_meta, max_new_tokens=250) #temperature=0
-print(output_gemma_4B[0]["generated_text"][-1]["content"])
 output_gemma_4B2 = pipe(messages_mut, max_new_tokens=250) #temperature=0
-print(output_gemma_4B2[0]["generated_text"][-1]["content"])
 
 answer_meta = output_gemma_4B[0]["generated_text"][-1]["content"]
 cleaned_meta = answer_meta.replace("```json", "").replace("```", "").strip() #clean the answer
