@@ -1,0 +1,10 @@
+#remove jupyter notebooks
+*.ipynb
+
+#remove python cache
+__pycache__
+
+README.md
+.gitignore
+.git
+guacamole.txt

@@ -3,7 +3,8 @@ matplotlib==3.8.3
 pymupdf==1.25.5
 pandas==2.2.3
 camelot-py==1.0.0 #in conflict with pdfplumber (because use different pdf-miner version)
-tensorflow==2.18.0 #maybe not and use pytorch instead
+# tensorflow==2.18.0 #maybe not and use pytorch instead
+torch==2.7.1
 transformers==4.51.3
 datasets==3.5.0
 evaluate==0.4.3
@@ -13,3 +14,4 @@ torch==2.7.0
 pytesseract==0.3.13
 pdf2image==1.17.0
 tqdm==4.67.1
+sentencepiece==0.2.0

@@ -40,3 +40,18 @@ If you have problems installing tesseract, go check this [link](https://github.c
 ## Data
 
 The data exploited here are medical protocols from various belgians hospitals in the oncology departement. The data are in french and are in the form of a pdf file.
+
+## Docker
+
+### Build the Docker images from the current directory and give them a tag
+
+```bash
+docker build -t llm-pipeline .
+```
+
+### Commands to run the Docker containers
+
+```bash
+docker run --rm -v $(pwd)/out:/app/out llm-pipeline
+docker run --gpus all -v $(pwd)/out:/app/out llm-pipeline
+```
