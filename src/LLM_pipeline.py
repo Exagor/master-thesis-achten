@@ -46,7 +46,8 @@ try:
         "text-generation", #or "image-text-to-text"
         model=model_name,
         torch_dtype=torch.bfloat16,
-        device=device, #uses "cpu" here because the "cuda" requires 3 Go more of VRAM (5GO total)
+        device=device,
+        #device_map="auto", #use "auto" to automatically use all available GPUs (but slows the code ??!!)
     )
     logger.info("pipeline initialized")
 except Exception as e:
