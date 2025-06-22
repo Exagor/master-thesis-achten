@@ -51,6 +51,8 @@ docker build -t llm-pipeline .
 
 ### Commands to run the Docker containers
 
+The first command runs the container without GPU support, while the second command runs it with GPU support if available. Both commands mount the current directory's `out` folder to the container's `/app/out` directory, where the output files will be saved.
+
 ```bash
 docker run --rm -v $(pwd)/out:/app/out llm-pipeline
 docker run --gpus all -v $(pwd)/out:/app/out llm-pipeline

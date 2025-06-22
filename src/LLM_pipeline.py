@@ -7,7 +7,7 @@ import time
 from huggingface_hub import login
 from pdf_parser import *
 from transformers import pipeline
-import tqdm as tqdm
+from tqdm import tqdm
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -87,29 +87,36 @@ for pdf_number,text_pdf in tqdm(pdf_texts.items()):
     start_time = time.time()
     output_gemma_4B = pipe(messages_meta, max_new_tokens=250) #temperature=0
     elapsed_time = time.time() - start_time
-    logger.info(f"Pipeline inference time: {elapsed_time:.2f} seconds")
+    logger.info(f"Pipeline inference time for metadata: {elapsed_time:.2f} seconds")
     start_time = time.time()
-    output_gemma_4B2 = pipe(messages_mut, max_new_tokens=250) #temperature=0
+    output_gemma_4B2 = pipe(messages_mut, max_new_tokens=500) #temperature=0
     elapsed_time = time.time() - start_time
-    logger.info(f"Pipeline inference time: {elapsed_time:.2f} seconds")
+    logger.info(f"Pipeline inference time for mutations: {elapsed_time:.2f} seconds")
 
     answer_meta = output_gemma_4B[0]["generated_text"][-1]["content"]
     cleaned_meta = answer_meta.replace("```json", "").replace("```", "").strip() #clean the answer
-    data_meta = json.loads(cleaned_meta)
-    metadata_data.append(data_meta)
-    logger.debug(f"Metadata output: {data_meta}")
+    try: #to handle when the answer is not a valid json
+        data_meta = json.loads(cleaned_meta)
+        metadata_data.append(data_meta)
+        logger.debug(f"Metadata output: {data_meta}")
+    except json.JSONDecodeError as e:
+        logger.error(f"Failed to decode metadata JSON for {pdf_number}: {e} \nContent: {cleaned_meta}")
 
     answer_mut = output_gemma_4B2[0]["generated_text"][-1]["content"]
     cleaned_mut = answer_mut.replace("```json", "").replace("```", "").strip() #clean the answer
-    data_mut = json.loads(cleaned_mut)
-    mutation_data.append(data_mut)
-    logger.debug(f"Mutation output: {data_mut}")
+    try:
+        data_mut = json.loads(cleaned_mut)
+        mutation_data.append(data_mut)
+        logger.debug(f"Mutation output: {data_mut}")
+    except json.JSONDecodeError as e:
+        logger.error(f"Failed to decode mutation JSON for {pdf_number}: {e} \nContent: {cleaned_mut}")
 
 try:
     df_meta = pd.DataFrame(metadata_data)
     df_meta.to_excel("out/metadata_gemma3_4B.xlsx", index=False)
     logger.info("Saved metadata to out/metadata_gemma3_4B.xlsx")
-    df_mut = pd.DataFrame(mutation_data)
+    flat_mutation_data = [item for sublist in mutation_data for item in sublist]
+    df_mut = pd.DataFrame(flat_mutation_data)
     df_mut.to_excel("out/mutation_gemma3_4B.xlsx", index=False)
     logger.info("Saved mutation data to out/mutation_gemma3_4B.xlsx")
 except Exception as e:
