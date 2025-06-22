@@ -1,4 +1,0 @@
-{
-    "pdf_file": "24EM03352.pdf",
-    "output": "```json\n{\n  \"Examen\": \"24EM03352\",\n  \"N\u00b0 du pr\u00e9l\u00e8vement\": \"24MH9794 RF\",\n  \"Panel\": \"COLP\",\n  \"Origine du pr\u00e9l\u00e8vement\": \"Centre Hospitalier de Mouscron\",\n  \"Type de pr\u00e9l\u00e8vement\": \"Ad\u00e9nocarcinome lieberk\u00fchnien\",\n  \"Qualit\u00e9 du s\u00e9quencage\": \"Optimale\",\n  \"%\" : \"20\",\n  \"Exons Non Contributif (coverage < 250x)*\" : \"AKT1 3, FGFR3 NM_000142 7, 9, 14, 16, 18, ALK NM_004304 22, 23, 25, KRAS NM_033360 2-"
-}
