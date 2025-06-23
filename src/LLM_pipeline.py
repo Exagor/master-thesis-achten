@@ -55,6 +55,8 @@ try:
 except Exception as e:
     logger.error(f"Failed to initialize pipeline: {e}")
 
+time_meta_data = [] # to store processing times
+time_mutation_data = [] # to store processing times
 metadata_data = []
 mutation_data = []
 # loop to process multiple pdfs
@@ -89,10 +91,12 @@ for pdf_number,text_pdf in tqdm(pdf_texts.items()):
     start_time = time.time()
     output_gemma_4B = pipe(messages_meta, max_new_tokens=250) #temperature=0
     elapsed_time = time.time() - start_time
+    time_meta_data.append(elapsed_time)
     logger.info(f"Pipeline inference time for metadata: {elapsed_time:.2f} seconds")
     start_time = time.time()
-    output_gemma_4B2 = pipe(messages_mut, max_new_tokens=500) #temperature=0
+    output_gemma_4B2 = pipe(messages_mut, max_new_tokens=550) #temperature=0
     elapsed_time = time.time() - start_time
+    time_mutation_data.append(elapsed_time)
     logger.info(f"Pipeline inference time for mutations: {elapsed_time:.2f} seconds")
 
     # Process the output
@@ -122,9 +126,22 @@ try:
         df_meta['% cellules'] = df_meta['% cellules'].astype(str).str.replace('%', '', regex=False)
     df_meta.to_excel("out/metadata_gemma3_4B.xlsx", index=False)
     logger.info("Saved metadata to out/metadata_gemma3_4B.xlsx")
+
+    # Flatten the mutation data
     flat_mutation_data = [item for sublist in mutation_data for item in sublist]
     df_mut = pd.DataFrame(flat_mutation_data)
+    # Remove rows with any None values
+    df_mut = df_mut.dropna()
     df_mut.to_excel("out/mutation_gemma3_4B.xlsx", index=False)
     logger.info("Saved mutation data to out/mutation_gemma3_4B.xlsx")
+    
+    # Save processing times
+    df_times = pd.DataFrame({
+        'PDF': pdf_files,
+        'Time_Metadata': time_meta_data,
+        'Time_Mutation': time_mutation_data
+    })
+    df_times.to_excel("out/times_gemma3_4B.xlsx", index=False)
+    logger.info("Saved processing times to out/times_gemma3_4B.xlsx")
 except Exception as e:
     logger.error(f"Failed to save output files: {e}")

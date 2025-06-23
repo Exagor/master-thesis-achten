@@ -264,6 +264,27 @@ def evaluate_mutations_levenshtein(model_path, true_path):
     print("\nLevenshtein mutation evaluation complete.")
     return col_distances
 
+def calculate_time_stats(time_data_path):
+    """
+    Calculate and print statistics from a list of time durations.
+    """
+    df = pd.read_excel(time_data_path)
+    # calculate average, standard deviation, min, max for columns 'time_meta_data' and 'time_mutation_data'
+    if 'Time_metadata' in df.columns:
+        avg_meta = df['Time_metadata'].mean()
+        std_meta = df['Time_metadata'].std()
+        min_meta = df['Time_metadata'].min()
+        max_meta = df['Time_metadata'].max()
+        print(f"Metadata processing times - Avg: {avg_meta:.2f}s, Std: {std_meta:.2f}s, Min: {min_meta:.2f}s, Max: {max_meta:.2f}s")
+    if 'Time_mutation' in df.columns:
+        avg_mut = df['Time_mutation'].mean()
+        std_mut = df['Time_mutation'].std()
+        min_mut = df['Time_mutation'].min()
+        max_mut = df['Time_mutation'].max()
+        print(f"Mutation processing times - Avg: {avg_mut:.2f}s, Std: {std_mut:.2f}s, Min: {min_mut:.2f}s, Max: {max_mut:.2f}s")
+
+
+
 if __name__ == "__main__":
     model_excel_path = 'out/hand_pdf_parser_metadata.xlsx'
     # model_excel_path = 'data/verified_metadata.xlsx'
@@ -279,3 +300,7 @@ if __name__ == "__main__":
 
     evaluate_model_mutations(model_excel_path, true_csv_path)
     evaluate_mutations_levenshtein(model_excel_path, true_csv_path)
+
+    # Calculate time statistics
+    time_data_path = 'out/times_gemma3_4B.xlsx'
+    calculate_time_stats(time_data_path)
