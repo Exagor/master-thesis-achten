@@ -48,7 +48,7 @@ def evaluate_model_metadata(model_excel_path, true_csv_path, key_column=None):
         matched_true_rows.append(true_row)
         # Compare each value with normalization for strings
         row_match = True
-        for m_val, t_val in zip(model_row, true_row):
+        for m_val, t_val in zip(model_row, true_row): # iterate through each value in the row
             if isinstance(m_val, str) or isinstance(t_val, str): #check if there are strings
                 if normalize_string(str(m_val)) != normalize_string(str(t_val)):
                     row_match = False
@@ -101,7 +101,6 @@ def evaluate_model_metadata(model_excel_path, true_csv_path, key_column=None):
                 acc = (m_vals == t_vals).mean()
             print(f"  {col}: {acc:.3f}")
             col_accuracy[col] = acc
-    print("\nEvaluation complete.")
     return accuracy, col_accuracy # Return accuracy and column accuracy
 
 def norm_row(row):
@@ -157,11 +156,12 @@ def levenshtein_distance(s1, s2):
     return Levenshtein.distance(str(s1), str(s2))
 
 
-def evaluate_model_metadata_levenshtein(model_excel_path, true_csv_path):
+def evaluate_metadata_levenshtein(model_excel_path, true_csv_path):
     """
-    Compare model results with true results using Levenshtein distance (row and column-wise).
-    Prints average Levenshtein distance per row and per column.
+    Compare model results with true results using Levenshtein distance (column-wise).
+    Prints average Levenshtein distance per column.
     """
+    # Match the model and true data by exam number
     model_df = pd.read_excel(model_excel_path)
     true_df = pd.read_csv(true_csv_path)
 
@@ -184,16 +184,9 @@ def evaluate_model_metadata_levenshtein(model_excel_path, true_csv_path):
         print("No matching rows found for Levenshtein evaluation.")
         return None, None
 
+    # using matched columns
     matched_model_df = pd.DataFrame(matched_model_rows)
     matched_true_df = pd.DataFrame(matched_true_rows)
-
-    # Row-wise Levenshtein (sum of distances for each row)
-    row_distances = []
-    for m_row, t_row in zip(matched_model_df.values, matched_true_df.values):
-        row_distance = sum(levenshtein_distance(m, t) for m, t in zip(m_row, t_row))
-        row_distances.append(row_distance)
-    avg_row_distance = sum(row_distances) / len(row_distances) if row_distances else None
-    print(f"Average Levenshtein distance per row: {avg_row_distance:.3f}")
 
     # Column-wise Levenshtein (average per column)
     col_distances = {}
@@ -205,17 +198,18 @@ def evaluate_model_metadata_levenshtein(model_excel_path, true_csv_path):
             continue
         m_vals = matched_model_df[col]
         t_vals = matched_true_df[col]
-        distances = [levenshtein_distance(m, t) for m, t in zip(m_vals, t_vals)]
+
+        distances = [levenshtein_distance(normalize_string(m), normalize_string(t)) for m, t in zip(m_vals, t_vals)]
         avg_col_dist = sum(distances) / len(distances) if distances else None
         print(f"  {col}: {avg_col_dist:.3f}")
         col_distances[col] = avg_col_dist
     print("\nLevenshtein evaluation complete.")
-    return avg_row_distance, col_distances
+    return col_distances
 
-def evaluate_model_mutations_levenshtein(model_path, true_path):
+def evaluate_mutations_levenshtein(model_path, true_path):
     """
-    Compare model mutation results with true results using Levenshtein distance.
-    Prints average Levenshtein distance per exam (set of rows).
+    Compare model mutation results with true results using Levenshtein distance (column-wise).
+    Prints average Levenshtein distance per column.
     """
     model_df = pd.read_excel(model_path)
     true_df = pd.read_csv(true_path)
@@ -229,86 +223,59 @@ def evaluate_model_mutations_levenshtein(model_path, true_path):
     model_grouped = model_df.groupby(exam_col)
     true_grouped = true_df.groupby(exam_col)
 
-    all_exam_numbers = set(model_grouped.groups.keys()) | set(true_grouped.groups.keys())
-    total = len(all_exam_numbers)
-    exam_distances = []
-    mismatches = []
+    all_exam_numbers = set(model_grouped.groups.keys()) & set(true_grouped.groups.keys())
+    if not all_exam_numbers:
+        print("No matching exam numbers found for Levenshtein evaluation.")
+        return None
 
+    # Collect all rows for matched exam numbers
+    matched_model_rows = []
+    matched_true_rows = []
     for exam in sorted(all_exam_numbers):
-        model_rows = model_grouped.get_group(exam) if exam in model_grouped.groups else pd.DataFrame(columns=model_df.columns)
-        true_rows = true_grouped.get_group(exam) if exam in true_grouped.groups else pd.DataFrame(columns=true_df.columns)
+        model_rows = model_grouped.get_group(exam)
+        true_rows = true_grouped.get_group(exam)
+        # If there are multiple rows per exam, align by index
+        min_len = min(len(model_rows), len(true_rows))
+        for i in range(min_len):
+            matched_model_rows.append(model_rows.iloc[i])
+            matched_true_rows.append(true_rows.iloc[i])
 
-        # Convert all values to tuple of normalized strings for fair comparison
-        model_set = [norm_row(row) for row in model_rows.values]
-        true_set = [norm_row(row) for row in true_rows.values]
+    if not matched_model_rows or not matched_true_rows:
+        print("No matching rows found for Levenshtein evaluation.")
+        return None
 
-        # Compute pairwise Levenshtein distances between all rows in model_set and true_set
-        if not model_set and not true_set:
-            exam_distances.append(0)
+    matched_model_df = pd.DataFrame(matched_model_rows)
+    matched_true_df = pd.DataFrame(matched_true_rows)
+
+    # Column-wise Levenshtein (average per column)
+    col_distances = {}
+    print("\nAverage Levenshtein distance per column (mutations):")
+    for col in matched_true_df.columns:
+        if col not in matched_model_df.columns:
+            print(f"  {col}: column missing in model results")
+            col_distances[col] = None
             continue
-        if not model_set or not true_set:
-            # All rows missing, penalize by length of the other set
-            max_len = max(len(model_set), len(true_set))
-            exam_distances.append(max_len)
-            mismatches.append((exam, model_set, true_set))
-            continue
-        # For each row in true_set, find the closest row in model_set
-        used = set()
-        total_dist = 0
-        for t_row in true_set:
-            min_dist = None
-            min_idx = None
-            for idx, m_row in enumerate(model_set):
-                if idx in used:
-                    continue
-                dist = sum(levenshtein_distance(m, t) for m, t in zip(m_row, t_row))
-                if min_dist is None or dist < min_dist:
-                    min_dist = dist
-                    min_idx = idx
-            if min_idx is not None:
-                used.add(min_idx)
-                total_dist += min_dist
-            else:
-                total_dist += sum(len(str(x)) for x in t_row)  # Penalize missing row
-        # Penalize extra model rows
-        total_dist += sum(sum(len(str(x)) for x in model_set[idx]) for idx in range(len(model_set)) if idx not in used)
-        avg_exam_dist = total_dist / max(len(true_set), len(model_set))
-        exam_distances.append(avg_exam_dist)
-        if avg_exam_dist > 0:
-            mismatches.append((exam, model_set, true_set))
-
-    avg_exam_distance = sum(exam_distances) / total if total > 0 else None
-    print(f"Average Levenshtein distance per exam (mutations): {avg_exam_distance:.3f}")
-    if mismatches:
-        print("Mismatches (up to 5):")
-        for exam, model_vals, true_vals in mismatches[:5]:
-            print(f"Exam {exam}:")
-            print(f"  Model: {model_vals}\n  True:  {true_vals}")
-    else:
-        print("All exam mutation sets match exactly.")
+        m_vals = matched_model_df[col]
+        t_vals = matched_true_df[col]
+        distances = [levenshtein_distance(normalize_string(m), normalize_string(t)) for m, t in zip(m_vals, t_vals)]
+        avg_col_dist = sum(distances) / len(distances) if distances else None
+        print(f"  {col}: {avg_col_dist:.3f}")
+        col_distances[col] = avg_col_dist
     print("\nLevenshtein mutation evaluation complete.")
-    return avg_exam_distance
+    return col_distances
 
 if __name__ == "__main__":
-    model_excel_path = 'out/extracted_metadata.xlsx'
+    model_excel_path = 'out/hand_pdf_parser_metadata.xlsx'
+    # model_excel_path = 'data/verified_metadata.xlsx'
     true_csv_path = 'data/verified_metadata.csv'
     
-    # Check if files exist
-    if not os.path.exists(model_excel_path):
-        print(f"Model results file not found: {model_excel_path}")
-    if not os.path.exists(true_csv_path):
-        print(f"True results file not found: {true_csv_path}")
     # Evaluate the model results
     evaluate_model_metadata(model_excel_path, true_csv_path)
+    evaluate_metadata_levenshtein(model_excel_path, true_csv_path)
 
-    model_excel_path = 'out/extracted_results_mutation.xlsx'
+    model_excel_path = 'out/hand_pdf_parser_mutation.xlsx'
+    # model_excel_path = 'data/verified_mutations_without_none.xlsx'
     true_csv_path = 'data/verified_mutations_without_none.csv'
 
     evaluate_model_mutations(model_excel_path, true_csv_path)
-    # Evaluate Levenshtein distances
-    print("\nEvaluating Levenshtein distances for metadata...")
-    evaluate_model_metadata_levenshtein(model_excel_path, true_csv_path)
-    print("\nEvaluating Levenshtein distances for mutations...")
-    evaluate_model_mutations_levenshtein(model_excel_path, true_csv_path)
-    print("\nEvaluation complete.")
-    print("All evaluations completed successfully.")
+    evaluate_mutations_levenshtein(model_excel_path, true_csv_path)

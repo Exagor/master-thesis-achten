@@ -1,4 +1,4 @@
-Examen,N° du prélèvement,Panel,Origine du prélèvement,Type de prélèvement,Qualité du séquencage,% de cellules
+Examen,N° du prélèvement,Panel,Origine du prélèvement,Type de prélèvement,Qualité du séquençage,% de cellules
 24EM03308,24218507-1.1,OST,CMP,Adénocarcinome pulmonaire,Optimale,50
 24EM03352,24MH9794 RF,CLP,Centre Hospitalier de Mouscron,Adénocarcinome lieberkühnien,Optimale,20
 24EM03355,24CU550062-2ebus,OST,CurePath,Carcinome non à petites cellules NOS,Optimale,20
@@ -9,6 +9,6 @@ Examen,N° du prélèvement,Panel,Origine du prélèvement,Type de prélèvement
 24EM03462,24219576 1.1. Foie,GP,CMP,Métastase hépatique d'un adénocarcinome mammaire,Optimale,30
 24EM03839,24EC09559 frottis 1,TP,Erasme,PF2,Optimale,70
 24EM04099,24CU062291-frottis2,TP,CurePath,PF1,Optimale,10
-24EM04107,24CU062294-1,TP,CurePath,PF1 oncocytaire, Optimale,10
+24EM04107,24CU062294-1,TP,CurePath,PF1 oncocytaire,Optimale,10
 24EM04337,2431646-1.1,CHP,CMP Pathology,masse gastrique,Optimale,70
 24EM04347,23CU032757-1.02,CHP,CurePath,carcinome urothélial invasif,Optimale,50

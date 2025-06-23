@@ -72,7 +72,7 @@ def format_metadata(text:str) -> dict:
         "Type de prélèvement": type_info,
         "% de cellules tumorales": percentage_info,
         "% de cellules à analyser": analyse_info,
-        "Qualité du séquencage": quality_info
+        "Qualité du séquençage": quality_info
     }
 
     return data

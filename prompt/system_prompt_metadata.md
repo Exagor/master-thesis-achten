@@ -32,7 +32,7 @@ Pour chaque rapport, extrais les données suivantes :
 |                           | - Autres cancers → `"CHP"`                                                 |
 | `"Origine du prélèvement"`| Lieu géographique ou établissement d’où provient le prélèvement             |
 | `"Type de prélèvement"`   | Nature du prélèvement ou type histologique (ex. : adénocarcinome)           |
-| `"Qualité du séquencage"` | Appréciation de la qualité du séquençage (ex. : Optimale, Sous-optimale)   |
+| `"Qualité du séquençage"` | Appréciation de la qualité du séquençage (ex. : Optimale, Sous-optimale)   |
 | `"% cellules"`            | Pourcentage de cellules tumorales analysées ou à analyser (exprimé en % sans le signe)   |
 
 ---
@@ -51,7 +51,7 @@ Pour chaque rapport, extrais les données suivantes :
   "Panel": "CLP",
   "Origine du prélèvement": "Centre Hospitalier de Mouscron",
   "Type de prélèvement": "Adénocarcinome lieberkühnien",
-  "Qualité du séquencage": "Optimale",
+  "Qualité du séquençage": "Optimale",
   "% cellules": 50
 }
 ```

@@ -13,24 +13,24 @@ from tqdm import tqdm
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
+#get pdfs
 pdf_folder_path = "data/PDF"
 pdf_files = [f for f in os.listdir(pdf_folder_path) if f.endswith('.pdf')]
 # pdf_files = ["24EM03456.pdf"] #used for debug
 
+#extract pdf text
 pdf_texts = {}
 for pdf_file in pdf_files:
     #could use langchain here to extract text from pdf and use Document object
     pdf_texts[os.path.splitext(pdf_file)[0]] = extract_with_pdfplumber(os.path.join(pdf_folder_path,pdf_file))
 
+# Load system prompts
 with open("prompt/system_prompt_metadata.md", "r") as f:
     system_prompt_meta = f.read()
-
 with open("prompt/system_prompt_mutation.md", "r") as f:
     system_prompt_mut = f.read()
 
-device = "cuda" if torch.cuda.is_available() else "cpu"
-logger.info(f"Using device: {device}")
-
+# Login to Hugging Face to enable the use of gemma 3
 with open("login_huggingface.txt", "r") as f:
     token = f.read()
 try:
@@ -41,6 +41,8 @@ except Exception as e:
 
 model_name = "google/gemma-3-4b-it"
 
+device = "cuda" if torch.cuda.is_available() else "cpu"
+logger.info(f"Using device: {device}")
 try:
     pipe = pipeline(
         "text-generation", #or "image-text-to-text"
@@ -55,7 +57,7 @@ except Exception as e:
 
 metadata_data = []
 mutation_data = []
-#add a for loop to process multiple pdfs
+# loop to process multiple pdfs
 for pdf_number,text_pdf in tqdm(pdf_texts.items()):
     logger.info(f"Processing PDF: {pdf_number}")
     messages_meta = [
@@ -67,7 +69,6 @@ for pdf_number,text_pdf in tqdm(pdf_texts.items()):
             "role": "user",
             "content": (
                 [{"type": "text", "text": text_pdf}]
-                #+ [{"type": "image", "image": img} for img in pdf_text["24EM03352"]["image"]]
             )
         }
     ]
@@ -94,6 +95,7 @@ for pdf_number,text_pdf in tqdm(pdf_texts.items()):
     elapsed_time = time.time() - start_time
     logger.info(f"Pipeline inference time for mutations: {elapsed_time:.2f} seconds")
 
+    # Process the output
     answer_meta = output_gemma_4B[0]["generated_text"][-1]["content"]
     cleaned_meta = answer_meta.replace("```json", "").replace("```", "").strip() #clean the answer
     try: #to handle when the answer is not a valid json
@@ -101,7 +103,7 @@ for pdf_number,text_pdf in tqdm(pdf_texts.items()):
         metadata_data.append(data_meta)
         logger.debug(f"Metadata output: {data_meta}")
     except json.JSONDecodeError as e:
-        logger.error(f"Failed to decode metadata JSON for {pdf_number}: {e} \nContent: {cleaned_meta}")
+        logger.error(f"Failed to decode JSON for {pdf_number}: {e} \nContent: {cleaned_meta}")
 
     answer_mut = output_gemma_4B2[0]["generated_text"][-1]["content"]
     cleaned_mut = answer_mut.replace("```json", "").replace("```", "").strip() #clean the answer
@@ -110,10 +112,14 @@ for pdf_number,text_pdf in tqdm(pdf_texts.items()):
         mutation_data.append(data_mut)
         logger.debug(f"Mutation output: {data_mut}")
     except json.JSONDecodeError as e:
-        logger.error(f"Failed to decode mutation JSON for {pdf_number}: {e} \nContent: {cleaned_mut}")
+        logger.error(f"Failed to decode JSON for {pdf_number}: {e} \nContent: {cleaned_mut}")
 
+#transform into DataFrame and save to excel
 try:
     df_meta = pd.DataFrame(metadata_data)
+    # Remove % from the '% cellules' column if it exists
+    if '% cellules' in df_meta.columns:
+        df_meta['% cellules'] = df_meta['% cellules'].astype(str).str.replace('%', '', regex=False)
     df_meta.to_excel("out/metadata_gemma3_4B.xlsx", index=False)
     logger.info("Saved metadata to out/metadata_gemma3_4B.xlsx")
     flat_mutation_data = [item for sublist in mutation_data for item in sublist]
