@@ -33,7 +33,7 @@ Pour chaque rapport, extrais les données suivantes :
 | `"Origine du prélèvement"`| Lieu géographique ou établissement d’où provient le prélèvement             |
 | `"Type de prélèvement"`   | Nature du prélèvement ou type histologique (ex. : adénocarcinome)           |
 | `"Qualité du séquençage"` | Appréciation de la qualité du séquençage (ex. : Optimale, Sous-optimale)   |
-| `"% cellules"`            | Pourcentage de cellules tumorales analysées ou à analyser (exprimé en % sans le signe)   |
+| `"% de cellules"`            | Pourcentage de cellules tumorales analysées ou à analyser (exprimé en % sans le signe)   |
 
 ---
 
@@ -52,7 +52,7 @@ Pour chaque rapport, extrais les données suivantes :
   "Origine du prélèvement": "Centre Hospitalier de Mouscron",
   "Type de prélèvement": "Adénocarcinome lieberkühnien",
   "Qualité du séquençage": "Optimale",
-  "% cellules": 50
+  "% de cellules": 50
 }
 ```
 
