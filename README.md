@@ -55,5 +55,8 @@ The first command runs the container without GPU support, while the second comma
 
 ```bash
 docker run --rm -v $(pwd)/out:/app/out llm-pipeline
+```
+or
+```bash
 docker run --gpus all -v $(pwd)/out:/app/out llm-pipeline
 ```

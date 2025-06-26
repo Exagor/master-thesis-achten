@@ -21,6 +21,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the code
 COPY . .
 
+# Run the pre-download script to already download the model weights
+RUN python src/pre_download.py
+
 # Default command to run the pipeline
 CMD ["python", "src/LLM_pipeline.py"]
 #CMD ["python", "src/LM_pipeline.py"]
