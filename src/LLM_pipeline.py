@@ -122,8 +122,8 @@ for pdf_number,text_pdf in tqdm(pdf_texts.items()):
 try:
     df_meta = pd.DataFrame(metadata_data)
     # Remove % from the '% cellules' column if it exists
-    if '% cellules' in df_meta.columns:
-        df_meta['% cellules'] = df_meta['% cellules'].astype(str).str.replace('%', '', regex=False)
+    if '% de cellules' in df_meta.columns:
+        df_meta['% de cellules'] = df_meta['% de cellules'].astype(str).str.replace('%', '', regex=False)
     df_meta.to_excel("out/metadata_gemma3_4B.xlsx", index=False)
     logger.info("Saved metadata to out/metadata_gemma3_4B.xlsx")
 

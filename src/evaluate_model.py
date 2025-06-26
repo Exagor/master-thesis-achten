@@ -203,7 +203,6 @@ def evaluate_metadata_levenshtein(model_excel_path, true_csv_path):
         avg_col_dist = sum(distances) / len(distances) if distances else None
         print(f"  {col}: {avg_col_dist:.3f}")
         col_distances[col] = avg_col_dist
-    print("\nLevenshtein evaluation complete.")
     return col_distances
 
 def evaluate_mutations_levenshtein(model_path, true_path):
@@ -274,32 +273,44 @@ def calculate_time_stats(time_data_path):
         std_meta = df['Time_Metadata'].std()
         min_meta = df['Time_Metadata'].min()
         max_meta = df['Time_Metadata'].max()
-        print(f"Metadata processing times - Avg: {avg_meta:.2f}s, Std: {std_meta:.2f}s, Min: {min_meta:.2f}s, Max: {max_meta:.2f}s")
+        print(f"    Metadata processing times - Avg: {avg_meta:.2f}s, Std: {std_meta:.2f}s, Min: {min_meta:.2f}s, Max: {max_meta:.2f}s")
     if 'Time_Mutation' in df.columns:
         avg_mut = df['Time_Mutation'].mean()
         std_mut = df['Time_Mutation'].std()
         min_mut = df['Time_Mutation'].min()
         max_mut = df['Time_Mutation'].max()
-        print(f"Mutation processing times - Avg: {avg_mut:.2f}s, Std: {std_mut:.2f}s, Min: {min_mut:.2f}s, Max: {max_mut:.2f}s")
+        print(f"    Mutation processing times - Avg: {avg_mut:.2f}s, Std: {std_mut:.2f}s, Min: {min_mut:.2f}s, Max: {max_mut:.2f}s")
 
 if __name__ == "__main__":
-    model_excel_path = 'out/metadata_gemma3_4B.xlsx'
+
     # model_excel_path = 'data/verified_metadata.xlsx'
-    true_csv_path = 'data/verified_metadata.csv'
+    true_csv_path_meta = 'data/verified_metadata.csv'
+    true_csv_path_mut = 'data/verified_mutations_without_none.csv'
+
+    model_excel_path_meta = 'out/hand_pdf_parser_metadata.xlsx'
+    model_excel_path_mut = 'out/hand_pdf_parser_mutation.xlsx'
+    print("---- Evaluating rule based results ----")
+    evaluate_model_metadata(model_excel_path_meta, true_csv_path_meta)
+    evaluate_metadata_levenshtein(model_excel_path_meta, true_csv_path_meta)
+    evaluate_model_mutations(model_excel_path_mut, true_csv_path_mut)
+    evaluate_mutations_levenshtein(model_excel_path_mut, true_csv_path_mut)
+
+    model_excel_path_meta = 'out/metadata_camembert.xlsx'
+    print("---- Evaluating Camembert results ----")
+    evaluate_model_metadata(model_excel_path_meta, true_csv_path_meta)
+    evaluate_metadata_levenshtein(model_excel_path_meta, true_csv_path_meta)
     
-    # Evaluate the model results
-    evaluate_model_metadata(model_excel_path, true_csv_path)
-    evaluate_metadata_levenshtein(model_excel_path, true_csv_path)
-
-    # model_excel_path = 'out/hand_pdf_parser_mutation.xlsx'
-    # model_excel_path = 'data/verified_mutations_without_none.xlsx'
-    model_excel_path = 'out/mutation_gemma3_4B.xlsx'
-    true_csv_path = 'data/verified_mutations_without_none.csv'
-
-    evaluate_model_mutations(model_excel_path, true_csv_path)
-    evaluate_mutations_levenshtein(model_excel_path, true_csv_path)
+    model_excel_path_meta = 'out/metadata_gemma3_4B.xlsx'
+    model_excel_path_mut = 'out/mutation_gemma3_4B.xlsx'
+    print("---- Evaluating gemma 3 4B results ----")
+    evaluate_model_metadata(model_excel_path_meta, true_csv_path_meta)
+    evaluate_metadata_levenshtein(model_excel_path_mut, true_csv_path_meta)
+    evaluate_model_mutations(model_excel_path_mut, true_csv_path_mut)
+    evaluate_mutations_levenshtein(model_excel_path_mut, true_csv_path_mut)
 
     # Calculate time statistics
     time_data_path = 'out/times_gemma3_4B.xlsx'
     print('Time statistics for gemma3_4B model:')
     calculate_time_stats(time_data_path)
+
+
