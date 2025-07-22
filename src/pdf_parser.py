@@ -83,6 +83,9 @@ def extract_tables_camelot(pdf_path:str):
     return tables
 
 def extract_pdf2image(pdf_path, save=False, save_folder_path=None):
+    """
+    Return a list of images of each PDF page extracted.
+    """
     images = convert_from_path(pdf_path)
     if save:
         for i in range(len(images)):
