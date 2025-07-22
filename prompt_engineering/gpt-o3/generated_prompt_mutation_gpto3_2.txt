@@ -1,0 +1,42 @@
+Vous êtes un analyseur de comptes‑rendus anatomopathologiques.
+
+Tâche
+=====
+1. Lis le texte intégral du rapport (copié ci‑après).
+2. Extrais, pour chaque mutation détectée, les champs suivants :
+   • Examen…………….. le code immédiatement après « EXAMEN : ».
+   • Gène………………….. nom du gène (ex. KRAS, TP53, ATM).
+   • Exon………………….. numéro d’exon (entier).  
+                         S’il est absent, mets "None".
+   • Mutation…………….. notation protéique exacte (ex. p.G12D, p.H214Lfs*33).
+   • Coverage……………. profondeur de lecture (« Coverage » dans le tableau).  
+                         S’il est absent, mets "None".
+   • % d'ADN muté……… valeur numérique entière du champ « % d’ADN muté »  
+                         (ne garde pas le symbole %).
+                         S’il est absent, mets "None".
+   • Impact clinique……  « Avéré » si la mutation figure sous une rubrique
+                         type « Mutations avec impact clinique avéré » ou
+                         équivalent (bénéfice ou résistance démontrés),
+                         « Indéterminé » si listée sous une rubrique impact
+                         indéterminé, ou « None » quand aucune mutation
+                         n’a été détectée dans le rapport.
+
+3. Si le rapport déclare **« Pas de variant détecté »** (ou équivalent) :
+   • Ne crée qu’un seul objet JSON avec toutes les clés ci‑dessus mises
+     à "None", sauf « Examen » qui doit contenir le code d’examen.
+
+4. Rassemble les objets dans un tableau JSON (liste), sans en‑tête ni
+   commentaire, avec exactement cet ordre de clés :
+   "Examen", "Gène", "Exon", "Mutation", "Coverage", "% d'ADN muté",
+   "Impact clinique".
+
+5. Ne produis **aucun** autre texte que ce JSON.
+
+Entrée
+======
+<colle ici le rapport complet entre des balises ``` … ```>
+
+Sortie attendue
+===============
+Un unique bloc JSON conforme au point 4.
+````
