@@ -1,0 +1,646 @@
+
+Génère le prompt/instructions le mieux adapté et le plus détaillé pour avoir les sortie ci-dessous avec les entrée données ci-dessous.
+
+# Début de la démonstration
+
+       Entrée : COPIE INTERNE 29/10/2024
+Dr RUA DA SILVA TELES GRILO INES
+CENTRE HOSPITALIER DE MOUSCRON
+AVENUE DE FECAMP 49
+Centre d’Anatomie
+Pathologique H.U.B. 7700 MOUSCRON
+Rue Meylemeersch 90 - 1070 Anderlecht
+Mijlemeerschstraat 90 – 1070 Anderlecht
+PATIENT :
+Directrice de Service
+Pr Myriam Remmelink
+ID :
+Réf. Externe : 24MH9721 EXAMEN : 24EM03460
+Equipe Médicale
+Dr Nicolas de Saint Aubain
+Pr Nicky D’Haene Prélevé le 22/07/2024 à 22/07/2024 Prescripteur : Dr RUA DA SILVA TELES GRILO
+Dr Maria Gomez Galdon Reçu le 08/08/2024 INES
+Dr Chirine Khaled
+Pr Denis Larsimont
+Dr Laetitia Lebrun
+Dr Calliope Maris
+Pr Jean-Christophe Noël
+Pr Isabelle Salmon
+Dr Anne-Laure Trépant
+Pr Laurine Verset
+Consultant (e) s
+Dr Sarah Bouri
+RECHERCHE PAR « NEXT GENERATION SEQUENCING » DE
+Dr Xavier Catteau
+Dr Roland de Wind MUTATIONS DANS 22 GENES IMPLIQUES DANS LES CANCERS
+Dr Valérie Segers
+COLORECTAUX ET PULMONAIRES
+Dr Anne Theunis
+Dr Marie-Paule Van Craynest (COLON & LUNG CANCER PANEL)
+HUB – Centre d’Anatomie Pathologique – est accrédité par BELAC sous le numéro de
+Secrétariat Médical certificat B-727 MED
+T. +32 (0)2 541 73 23
++32 (0)2 555 33 35
+I. Renseignements anatomopathologiques
+SecMed.AnaPath@hubruxelles.be
+N° du prélèvement : 24MH9721 BN
+Secrétariat Direction
+T. +32 (0)2 555 31 15
+Mme Kathia El Yassini
+Date du prélèvement : 22/07/2024
+Kathia.elyassini@hubruxelles.be
+Mme Véronique Millecamps Origine du prélèvement : Centre Hospitalier de Mouscron
+veronique.millecamps@hubruxelles.be
+Type de prélèvement : Adénocarcinome lieberkühnien
+II. Evaluation de l’échantillon
+- % de cellules tumorales : 50%
+- Qualité du séquençage : Optimale (coverage moyen > 1000x)
+- Les exons à considérer comme non contributifs sont détaillés dans le tableau ci-dessous (point III).
+- Commentaires : Nous attirons votre attention sur le fait que le délai de fixation n'est pas indiqué sur la feuille de demande.
+Un délai de fixation supérieur à 1h pourrait éventuellement avoir un impact sur les résultats.
+1 / 3
+Suite de l’examen N° 24EM03460 concernant le patient
+III. Méthodologie (effectué par : CLVA, NADN, NIDH)
+- Extraction ADN à partir de coupes paraffinées après macrodissection des zones
+tumorales ou à partir de frottis.
+- Détection par « Next Generation Sequencing » (sur Ion Gene Studio S5, Ion Torrent
+avec Kit AmpliSeq colon & lung cancer panel) de mutations dans 22 gènes liés aux
+cancers colorectaux et pulmonaires :
+Exons Non Exons Non
+Contributif Contributif
+Gene RefSeq Exons testés Gene RefSeq Exons testés
+(coverage < (coverage <
+250x)* 250x)*
+AKT1 NM_05163 3 FGFR3 NM_000142 7, 9, 14, 16, 18
+ALK NM_004304 22, 23, 25 KRAS NM_033360 2-4
+BRAF NM_004333 11, 15 MAP2K1 NM_002755 2
+CTNNB1 NM_001904 3 MET NM_001127500 2, 14, 16, 19
+DDR2 NM_001014796 6, 9, 13-16, 18 NOTCH1 NM_017617 26, 27
+EGFR NM_005228 12, 18-21 NRAS NM_002524 2, 3, 4
+ERBB2 NM_004448 19-21 PIK3CA NM_006218 9, 13, 20
+3, 4, 6-9, 15,
+ERBB4 NM_005235 23 PTEN NM_000314 1, 3, 6-8
+3, 5, 6, 8, 9, 10,
+FBXW7 NM_033632 5, 8-11 8 SMAD4 NM_005359 12
+FGFR1 NM_023110 4, 7 STK11 NM_000455 1, 4-6, 8
+FGFR2 NM_022970 7, 9, 12 TP53 NM_000546 2, 4-8, 10
+* Un coverage < 250x induit une perte de sensibilité et de spécificité de la méthode.
+- Sensibilité : la technique utilisée détecte une mutation si l’échantillon contient > 4%
+d’ADN mutant. Seules les mutations rapportées dans COSMIC et avec une fréquence
+supérieure à 4% et un variant coverage >30x sont rapportées.
+IV. Résultats
+Liste des mutations détectées :
+Gène Exon Mutation Coverage % d’ADN muté
+Mutations avec impact clinique avéré
+KRAS 2 p.G12D 1992 40%
+Mutations avec impact clinique indéterminé
+TP53 6 p.H214Lfs*33 1100 60%
+V. Discussion :
+Les mutations dans les exons 2, 3 et 4 du gène KRAS sont associées à une résistance aux
+anti-EGFR.
+Amado RG et al., J Clin Oncol 2008, 26 :1626-34
+Douillard JY et al., N Engl J Med 2013, 369 :1023-34
+Les mutations du gène TP53 sont fréquentes dans les cancers colorectaux, leur impact
+clinique est indéterminé.
+2 / 3
+Suite de l’examen N° 24EM03460 concernant le patient
+VI. Conclusion : (CLVA le 20/08/2024)
+Présence de la mutation G12D du gène KRAS.
+A noter la présence de la mutation H214Lfs*33 du gène TP53 dont l’impact clinique est
+indéterminé.
+Pour toute information complémentaire, veuillez nous contacter au 02/555.85.08 ou par mail :
+Biomol.AnaPath@erasme.ulb.ac.be
+N.B. Pour les prélèvements d’histologie et de cytologie ainsi que pour les examens complémentaires
+de biologie moléculaire, merci d’utiliser les nouvelles prescriptions disponibles sur le site internet du
+HUB :
+https://www.hubruxelles.be/sites/default/files/2024-03-04_demande%20analyse%20anapath%20cytologie%20v3.pdf
+https://www.hubruxelles.be/sites/default/files/FO-HUB-BM-11%20Demande%20de%20biologie%20mol%C3%A9culaire-
+IPD%20v1.doc
+Dr N D'HAENE
+Dr ROUSSEAU EMMANUEL
+3 / 3
+
+       Sortie : ```json
+       [
+       {
+              "Examen": "24EM03460",
+              "Gène": "KRAS",
+              "Exon": 2,
+              "Mutation": "p.G12D",
+              "Coverage": 1992,
+              "% d'ADN muté": 40,
+              "Impact clinique": "Avéré"
+       },
+       {
+              "Examen": "24EM03460",
+              "Gène": "TP53",
+              "Exon": 6,
+              "Mutation": "p.H214Lfs*33",
+              "Coverage": 1100,
+              "% d'ADN muté": 60,
+              "Impact clinique": "Indéterminé"
+       }
+       ]
+       ```
+
+       Entrée : COPIE INTERNE 29/10/2024
+Dr CRENER KURT
+CUB HOPITAL ERASME
+ROUTE DE LENNIK 808
+Centre d’Anatomie
+Pathologique H.U.B. 1070 ANDERLECHT
+Rue Meylemeersch 90 - 1070 Anderlecht
+Mijlemeerschstraat 90 – 1070 Anderlecht
+PATIENT :
+Directrice de Service
+Pr Myriam Remmelink
+ID :
+Réf. Externe : 24BB11466 EXAMEN : 24EM03451
+Equipe Médicale
+Dr Nicolas de Saint Aubain
+Pr Nicky D’Haene Prélevé le 01/08/2024 à 01/08/2024 Prescripteur : Dr CRENER KURT
+Dr Maria Gomez Galdon Reçu le 07/08/2024
+Dr Chirine Khaled
+Pr Denis Larsimont
+Dr Laetitia Lebrun
+Dr Calliope Maris
+Pr Jean-Christophe Noël
+Pr Isabelle Salmon
+Dr Anne-Laure Trépant RECHERCHE PAR « NEXT GENERATION SEQUENCING » DE
+Pr Laurine Verset
+MUTATIONS DANS 17 GENES IMPLIQUES DANS LES TUMEURS DE
+Consultant (e) s L’OVAIRE, DE L’ENDOMETRE ET DU SEIN.
+Dr Sarah Bouri
+Dr Xavier Catteau
+Dr Roland de Wind HUB – Centre d’Anatomie Pathologique – est accrédité par BELAC sous le numéro de
+Dr Valérie Segers certificat B-727 MED
+Dr Anne Theunis
+Dr Marie-Paule Van Craynest
+I. Renseignements anatomopathologiques
+Secrétariat Médical
+N° du prélèvement : 24BB11466 07
+T. +32 (0)2 541 73 23
++32 (0)2 555 33 35
+Date du prélèvement : 01/08/24
+SecMed.AnaPath@hubruxelles.be
+Secrétariat Direction Origine du prélèvement : HUB
+T. +32 (0)2 555 31 15
+Mme Kathia El Yassini
+Kathia.elyassini@hubruxelles.be Type de prélèvement : Tumeur de la granulosa
+Mme Véronique Millecamps
+veronique.millecamps@hubruxelles.be
+II. Evaluation de l’échantillon
+- % de cellules tumorales : 30%
+- Qualité du séquençage : Optimale (coverage moyen > 1000x)
+- Les exons à considérer comme non contributifs sont détaillés dans le tableau ci-dessous (point III).
+- Commentaires : Code de prélèvement non-conforme : PNC DEM *
+Nous attirons votre attention sur le fait que le délai de fixation n'est pas indiqué sur la feuille de demande. Un délai de fixation
+supérieur à 1h pourrait éventuellement avoir un impact sur les résultats.
+Nous attirons votre attention sur le fait que la durée de fixation est inférieure à 6h ou supérieure à 72h et que ceci pourrait
+éventuellement avoir un impact sur les résultats.
+1 / 3
+Suite de l’examen N° 24EM03451 concernant le patient
+III. Méthodologie (effectué par : NADN, NIDH)
+- Extraction ADN à partir de coupes paraffinées après macrodissection des zones
+tumorales ou à partir de frottis.
+- Détection par « Next Generation Sequencing » (sur Ion Gene Studio S5, Ion Torrent
+avec Kit AmpliSeq) de mutations dans 17 gènes liés aux tumeurs de l’ovaire, de
+l’endomètre et du sein :
+Exons non Exons non
+contributifs contributifs
+(coverage < (coverage <
+Gene RefSeq Exons testés 250x)* Gene RefSeq Exons testés 250x)*
+AKT1 NM_05163 3, 7 FOXL2 NM_023067 1
+BRAF NM_004333 11, 15 KRAS NM_033360 2, 3, 4
+CTNNB1 NM_001904 3 PIK3CA NM_006218 1, 4, 6, 7, 9, 13, 18, 20
+CDKN2A NM_000077 2 PIK3R1 NM_181523 7-13
+DICER NM_030621 25, 26 POLE NM_006231 9-14
+ERBB2 NM_004448 19-21 PTEN NM_000314 1, 3, 5-8
+ESR1 NM_00125 5-8 RB1 NM_000321 4, 6, 10, 11, 14, 17, 18, 20-22
+FBXW7 NM_033632 5, 8-11 TP53 NM_000546 2-11
+FGFR2 NM_000141 7, 9, 12
+* Un coverage < 250x induit une perte de sensibilité e t de spécificité de la méth ode.
+- Sensibilité : la technique utilisée détecte une mutation si l’échantillon contient > 4%
+d’ADN mutant. Seules les mutations rapportées dans COSMIC et avec une fréquence
+supérieure à 4% et un variant coverage >30x sont rapportées.
+IV. Résultats
+Liste des mutations détectées :
+Gène Exon Mutation Coverage % d’ADN muté
+Mutations avec impact clinique indéterminé
+FOXL2 1 p.C134W 879 25%
+V. Discussion
+Les mutations du gène FOXL2 sont décrites dans plus de 90% des tumeurs de la granulosa.
+Leur impact clinique est indéterminé.
+2 / 3
+Suite de l’examen N° 24EM03451 concernant le patient
+VI. Conclusion : (NADN le 21/08/2024)
+Présence de la mutation C134W du gène FOXL2.
+Pour toute information complémentaire, veuillez nous contacter au 02/555.85.08 ou par mail :
+Biomol.AnaPath@erasme.ulb.ac.be
+N.B. Pour les prélèvements d’histologie et de cytologie ainsi que pour les examens complémentaires
+de biologie moléculaire, merci d’utiliser les nouvelles prescriptions disponibles sur le site internet du
+HUB :
+https://www.hubruxelles.be/sites/default/files/2024-03-04_demande%20analyse%20anapath%20cytologie%20v3.pdf
+https://www.hubruxelles.be/sites/default/files/FO-HUB-BM-11%20Demande%20de%20biologie%20mol%C3%A9culaire-
+IPD%20v1.doc
+Dr N D'HAENE
+Dr REMMELINK MYRIAM
+3 / 3
+
+       Sortie : ```json
+       [
+       {
+              "Examen": "24EM03451",
+              "Gène": "FOXL2",
+              "Exon": 1,
+              "Mutation": "p.C134W",
+              "Coverage": 879,
+              "% d'ADN muté": 25,
+              "Impact clinique": "Indéterminé"
+       }
+       ]
+       ```
+
+       Entrée : COPIE INTERNE 29/10/2024
+Dr HUTSEBAUT NATHALIE
+CHIREC - DELTA
+PNEUMOLOGIE
+Centre d’Anatomie BD DU TRIOMPHE 201
+Pathologique H.U.B. 1160 AUDERGHEM
+Rue Meylemeersch 90 - 1070 Anderlecht
+Mijlemeerschstraat 90 – 1070 Anderlecht
+PATIENT :
+Directrice de Service
+Pr Myriam Remmelink
+ID :
+Réf. Externe : 24CU062291 EXAMEN : 24EM04099
+Equipe Médicale
+Dr Nicolas de Saint Aubain
+Pr Nicky D’Haene Prélevé le 16/09/2024 à 16/09/2024 16:10 Prescripteur : Dr HUTSEBAUT NATHALIE
+Dr Maria Gomez Galdon Reçu le 26/09/2024
+Dr Chirine Khaled
+Pr Denis Larsimont
+Dr Laetitia Lebrun
+Dr Calliope Maris
+Pr Jean-Christophe Noël
+Pr Isabelle Salmon
+Dr Anne-Laure Trépant
+Pr Laurine Verset
+RECHERCHE PAR « NEXT GENERATION SEQUENCING » DE MUTATIONS
+Consultant (e) s
+DANS 26 GENES IMPLIQUES DANS LES CANCERS THYROIDIENS
+Dr Sarah Bouri
+Dr Xavier Catteau (THYROID CANCER PANEL)
+Dr Roland de Wind
+Dr Valérie Segers
+Dr Anne Theunis HUB – Centre d’Anatomie Pathologique – est accrédité par BELAC sous le numéro de
+Dr Marie-Paule Van Craynest certificat B-727 MED
+Secrétariat Médical I. Renseignements anatomopathologiques
+T. +32 (0)2 541 73 23
++32 (0)2 555 33 35
+N° du prélèvement : 24CU062291-frottis2
+SecMed.AnaPath@hubruxelles.be
+Date du prélèvement : 16/09/2024
+Secrétariat Direction
+T. +32 (0)2 555 31 15
+Mme Kathia El Yassini
+Origine du prélèvement : CurePath
+Kathia.elyassini@hubruxelles.be
+Mme Véronique Millecamps Type de prélèvement : PF1
+veronique.millecamps@hubruxelles.be
+II. Evaluation de l’échantillon
+- % de cellules à analyser : 10%
+- Qualité du séquençage : Optimale (coverage moyen > 1000x)
+- Les exons à considérer comme non contributifs sont détaillés dans le tableau ci-dessous (Point III.)
+- Commentaires : /
+1 / 3
+Suite de l’examen N° 24EM04099 concernant le patient
+III. Méthodologie (effectué par : THMA, NIDH)
+- Extraction ADN à partir de coupes paraffinées après macrodissection des zones
+tumorales ou à partir de frottis.
+- Détection par « Next Generation Sequencing » (sur Ion Gene Studio S5, Ion
+Torrent avec Kit AmpliSeq) de mutations dans 26 gènes liés aux cancers
+thyroïdiens :
+Exons Non Exons Non
+Contributif Contributif
+Gene RefSeq Exons testés Gene RefSeq Exons testés
+(coverage < (coverage <
+250x)* 250x)*
+AKT1 NM_05163 3 KRAS NM_033360 2-4
+APC NM_000038 9, 13, 15, 16 NRAS NM_002524 2-4
+AXIN1 NM_003502 2, 3, 6-10 PIK3CA NM_006218 4, 9, 13, 20
+BRAF NM_004333 11, 15 PPM1D NM_003620 5, 6
+CDH1 NM_004360 8, 9, 12 PRKAR1A NM_002734 5
+CDKN2A NM_000077 2 PTEN NM_000314 5-8 8
+3, 4, 11, 13,
+CHEK2 NM_005211 15 RASAL1 NM_004658 11-17
+CTNNB1 NM_001904 3 RET NM_020975 10-13, 15, 16
+EGFR NM_005228 18-21 SMAD4 NM_005359 3, 6- 9, 12
+EIF1AX NM_001412 1, 2 TERT NM_198253 Promoteur Promoteur
+FLT3 NM_004119 16 TP53 NM_000546 2, 4-10
+GNAS NM_000516 8, 9 TSHR NM_00369 9, 10
+HRAS NM_005343 2-4
+IDH1 NM_005896 4, 6
+* Un coverage < 250x induit une perte de sensibilité et de spécificité de la méthode.
+- Sensibilité : la technique utilisée détecte une mutation si l’échantillon contient >
+4% d’ADN mutant. Seules les mutations rapportées dans COSMIC et avec une
+fréquence supérieure à 4% et un variant coverage >30x (sauf promoteur du gène
+TERT : variant coverage > 20x) sont rapportées
+2 / 3
+Suite de l’examen N° 24EM04099 concernant le patient
+IV. Résultats
+Pas de variant détecté.
+VI. Conclusion : (THMA le 10/10/2024)
+Absence de mutation détectée dans le gène BRAF ainsi que dans les autres gènes
+testés.
+Ce résultat est à considérer avec précaution en raison du faible pourcentage de
+cellules dans l'échantillon analysé.
+En raison de l'absence de mutation, la recherche d'un réarrangement des gènes RET,
+PPARG, NTRK1, NTRK3, BRAF, ALK et THADA est demandée et fera l'objet d'un
+protocole additionnel.
+Pour toute information complémentaire, veuillez nous contacter au 02/555.85.08 ou par mail :
+Biomol.AnaPath@erasme.ulb.ac.be N.B. Pour les prélèvements d’histologie et de cytologie
+ainsi que pour les examens complémentaires de biologie moléculaire, merci d’utiliser les nouvelles
+prescriptions disponibles sur le site internet du HUB :
+https://www.hubruxelles.be/sites/default/files/2024-03-04_demande%20analyse%20anapath%20cytologie%20v3.pdf
+https://www.hubruxelles.be/sites/default/files/FO-HUB-BM-11%20Demande%20de%20biologie%20mol%C3%A9culaire-
+IPD%20v1.doc
+Dr N D'HAENE
+Dr LEBRUN Laetitia
+3 / 3
+
+       Sortie : ```json
+       [
+       {
+              "Examen": "24EM04099",
+              "Gène": "None",
+              "Exon": "None",
+              "Mutation": "None",
+              "Coverage": "None",
+              "% d'ADN muté": "None",
+              "Impact clinique": "None"
+       }
+       ]
+       ```
+
+       Entrée : COPIE INTERNE 29/10/2024
+Dr HOLBRECHTS STéPHANE
+C.H.U. AMBROISE PARE
+BOULEVARD PR. KENNEDY, 2
+Centre d’Anatomie
+Pathologique H.U.B. 7000 MONS
+Rue Meylemeersch 90 - 1070 Anderlecht
+Mijlemeerschstraat 90 – 1070 Anderlecht
+PATIENT :
+Directrice de Service
+Pr Myriam Remmelink
+ID :
+Réf. Externe : 24218507-1.1 EXAMEN : 24EM03308
+Equipe Médicale
+Dr Nicolas de Saint Aubain
+Pr Nicky D’Haene Prélevé le à Prescripteur : Dr HOLBRECHTS STéPHANE
+Dr Maria Gomez Galdon Reçu le 29/07/2024
+Dr Chirine Khaled
+Pr Denis Larsimont
+Dr Laetitia Lebrun
+Dr Calliope Maris
+Pr Jean-Christophe Noël
+Pr Isabelle Salmon
+Dr Anne-Laure Trépant
+Pr Laurine Verset
+RECHERCHE PAR « NEXT GENERATION SEQUENCING » DE
+Consultant (e) s
+Dr Sarah Bouri MUTATIONS DANS 25 GENES IMPLIQUES DANS LES CANCERS
+Dr Xavier Catteau PULMONAIRES, LES GIST ET MELANOMES
+Dr Roland de Wind
+Dr Valérie Segers (Colon and Lung Panel + Oncomine Solid Tumor-plus PANEL)
+Dr Anne Theunis
+Dr Marie-Paule Van Craynest
+HUB – Centre d’Anatomie Pathologique – est accrédité par BELAC sous le numéro de
+certificat B-727 MED
+Secrétariat Médical
+T. +32 (0)2 541 73 23
++32 (0)2 555 33 35
+I. Renseignements anatomopathologiques
+SecMed.AnaPath@hubruxelles.be
+Secrétariat Direction N° du prélèvement : 24218507-1.1
+T. +32 (0)2 555 31 15
+Mme Kathia El Yassini
+Kathia.elyassini@hubruxelles.be Date du prélèvement : 18/07/24
+Mme Véronique Millecamps
+veronique.millecamps@hubruxelles.be Origine du prélèvement : CMP
+Type de prélèvement : Adénocarcinome pulmonaire
+II. Evaluation de l’échantillon
+- % de cellules tumorales : 50%
+- Qualité du séquençage : Optimale (coverage moyen > 1000x)
+- Les exons à considérer comme non contributifs sont détaillés dans le tableau ci-dessous (point III).
+- Commentaires : /
+1 / 3
+Suite de l’examen N° 24EM03308 concernant le patient
+III. Méthodologie (effectué par : MAGU)
+- Extraction ADN à partir de coupes paraffinées après macrodissection des zones
+tumorales ou à partir de frottis.
+- Détection par « Next Generation Sequencing » (sur Ion Gene Studio S5, Ion Torrent
+avec Kit AmpliSeq colon & lung cancer panel et OST-plus) de mutations dans 25 gènes
+liés aux cancers pulmonaires, GIST et mélanomes:
+Exons Non Exons Non
+Contributif Contributif
+Gene RefSeq Exons testés Gene RefSeq Exons testés
+(coverage < (coverage <
+250x)* 250x)*
+8, 9, 11, 13, 14,
+AKT1 NM_05163 3 KIT NM_000222 17, 18
+ALK NM_004304 22, 23, 24, 25 KRAS NM_033360 2-4
+BRAF NM_004333 11, 15 MAP2K1 NM_002755 2
+CTNNB1 NM_001904 3 MET NM_001127500 2, 14-20
+DDR2 NM_001014796 6, 9, 13-16, 18 NOTCH1 NM_017617 26, 27
+EGFR NM_005228 12, 18-21 NRAS NM_002524 2, 3, 4
+ERBB2 NM_004448 19-21 PDGFRA NM_006206 12, 14, 18
+3, 4, 6-10, 12,
+ERBB4 NM_005235 15, 23 PIK3CA NM_006218 9, 13, 20
+FBXW7 NM_033632 5, 8-11 PTEN NM_000314 1, 3, 6-8
+FGFR1 NM_023110 4, 7 SMAD4 NM_005359 3, 5, 6, 8-10, 12
+FGFR2 NM_022970 7, 9, 12, 14 STK11 NM_000455 1, 4-6, 8
+FGFR3 NM_000142 7, 9, 14, 16, 18 TP53 NM_000546 2, 4-8, 10
+HRAS NM_005343 2, 3, 4
+* Un coverage < 250x induit une perte de sensibilité et de spécificité de la méthode.
+- Sensibilité : la technique utilisée détecte une mutation si l’échantillon contient > 4%
+d’ADN mutant. Seules les mutations rapportées dans COSMIC et avec une fréquence
+supérieure à 4% et un variant coverage >30x sont rapportées.
+IV. Résultats
+Pas de variant détecté.
+2 / 3
+Suite de l’examen N° 24EM03308 concernant le patient
+V. Conclusion : (MAGU le 07/08/2024)
+Absence de mutation détectée dans le gène EGFR.
+Absence de mutation détectée dans le codon V600 du gène BRAF.
+Absence de mutation détectée dans l'ensemble des gènes testés.
+En raison de l'absence de mutation driver, la recherche d'un réarrangement des gènes
+ALK, ROS1, RET, NTRK1, NTRK2 et NTRK3 est demandée et fera l'objet d'un
+protocole additionnel.
+Pour toute information complémentaire, veuillez nous contacter au 02/555.85.08 ou par mail :
+Biomol.AnaPath@erasme.ulb.ac.be
+N.B. Pour les prélèvements d’histologie et de cytologie ainsi que pour les examens complémentaires
+de biologie moléculaire, merci d’utiliser les nouvelles prescriptions disponibles sur le site internet du
+HUB :
+https://www.hubruxelles.be/sites/default/files/2024-03-04_demande%20analyse%20anapath%20cytologie%20v3.pdf
+https://www.hubruxelles.be/sites/default/files/FO-HUB-BM-11%20Demande%20de%20biologie%20mol%C3%A9culaire-
+IPD%20v1.doc
+Dr M REMMELINK
+Dr VANDE WALLE HILDE
+3 / 3
+
+       Sortie : ```json
+       [
+       {
+              "Examen": "24EM03308",
+              "Gène": "None",
+              "Exon": "None",
+              "Mutation": "None",
+              "Coverage": "None",
+              "% d'ADN muté": "None",
+              "Impact clinique": "None"
+       }
+       ]
+       ```
+
+       Entrée : COPIE INTERNE 29/10/2024
+Dr DIAZ M.
+HOPITAL AMBROISE PARE
+BOULEVARD KENNEDY, 2
+Centre d’Anatomie
+Pathologique H.U.B. 7000 MONS
+Rue Meylemeersch 90 - 1070 Anderlecht
+Mijlemeerschstraat 90 – 1070 Anderlecht
+PATIENT :
+Directrice de Service
+Pr Myriam Remmelink
+ID :
+Réf. Externe : 2431646 EXAMEN : 24EM04337
+Equipe Médicale
+Dr Nicolas de Saint Aubain
+Pr Nicky D’Haene Prélevé le 27/09/2024 à 27/09/2024 Prescripteur : Dr DIAZ M.
+Dr Maria Gomez Galdon Reçu le 11/10/2024
+Dr Chirine Khaled
+Pr Denis Larsimont
+Dr Laetitia Lebrun
+Dr Calliope Maris
+Pr Jean-Christophe Noël
+Pr Isabelle Salmon
+Dr Anne-Laure Trépant
+Pr Laurine Verset
+RECHERCHE PAR « NEXT GENERATION SEQUENCING » DE
+Consultant (e) s
+Dr Sarah Bouri MUTATIONS DANS 50 GENES IMPLIQUES DANS LE CANCER
+Dr Xavier Catteau (CANCER PANEL)
+Dr Roland de Wind
+Dr Valérie Segers
+Dr Anne Theunis HUB – Centre d’Anatomie Pathologique – est accrédité par BELAC sous le numéro de
+Dr Marie-Paule Van Craynest
+certificat B-727 MED
+Secrétariat Médical
+I. Renseignements anatomopathologiques
+T. +32 (0)2 541 73 23
++32 (0)2 555 33 35
+N° du prélèvement : 2431646-1.1
+SecMed.AnaPath@hubruxelles.be
+Secrétariat Direction Date du prélèvement : 27/09/24
+T. +32 (0)2 555 31 15
+Mme Kathia El Yassini
+Kathia.elyassini@hubruxelles.be Origine du prélèvement : CMP Pathology
+Mme Véronique Millecamps
+veronique.millecamps@hubruxelles.be Type de prélèvement : masse gastrique
+II. Evaluation de l’échantillon
+- % de cellules tumorales : 70%
+- Qualité du séquençage : Optimale (coverage moyen > 1000x)
+- Les exons à considérer comme non contributifs sont détaillés dans le tableau ci-dessous (Point III.)
+- Commentaires : /
+1 / 3
+Suite de l’examen N° 24EM04337 concernant le patient
+III. Méthodologie (effectué par : MAGU, NIDH)
+- Extraction ADN à partir de coupes paraffinées après macrodissection des zones
+tumorales ou à partir de frottis.
+- Détection par « Next Generation Sequencing » (sur Ion Gene Studio S5, Ion Torrent
+avec Kit AmpliSeq) de mutations dans 50 gènes liés au cancer :
+Exons Non Exons Non
+Contributif Contributif
+Gene RefSeq Exons testés Gene RefSeq Exons testés
+(coverage < (coverage <
+250x)* 250x)*
+ABL1 NM_005157 4-6, 7 IDH2 NM_002168 4
+AKT1 NM_05163 3, 7 JAK2 NM_004972 14
+ALK NM_004304 23, 25 JAK3 NM_000215 4, 13, 16
+APC NM_000038 16 KDR NM_002253 6, 7, 11, 19, 21, 11
+26, 27, 30
+ATM NM_000051 8, 9, 12, 17, 26, KIT NM_000222 2, 9-11, 13-15, 17,
+34, 35, 36, 39, 18
+50, 54-56, 59,
+61, 63
+BRAF NM_004333 11, 15 KRAS NM_033360 2-4
+CDH1 NM_004360 3, 8, 9 MET NM_001127500 2, 11, 14, 16, 19
+CDKN2A NM_000077 2 MLH1 NM_000249 12
+CSF1R NM_005211 7, 22 MPL NM_005373 10
+CTNNB1 NM_001904 3 NMP1 NM_002520 11
+EGFR NM_005228 3, 7, 15, 18-21 NOTCH1 NM_017617 26, 27, 34
+ERBB2 NM_004448 19-21 NRAS NM_002524 2-4
+ERBB4 NM_005235 3, 4, 6-9, 15, 23 PDGFRA NM_006206 12, 14, 15, 18
+EZH2 NM_004456 16 PIK3CA NM_006218 1, 4, 6, 7, 9, 13,
+18, 20
+FBXW7 NM_033632 5, 8-11 PTEN NM_000314 1, 3, 5-8
+FGFR1 NM_023110 4, 7 PTPN11 NM_002834 3, 13
+FGFR2 NM_022970 7, 9, 12 RB1 NM_000321 4, 6, 10, 11, 14,
+17, 18, 20-22
+FGFR3 NM_000142 7, 9, 14, 16, 18 RET NM_020975 10, 11, 13, 15, 16
+FLT3 NM_004119 11, 14, 16, 20 SMAD4 NM_005359 3-6, 8-12
+GNA11 NM_002067 5 SMARCB1 NM_003073 2, 4, 5, 9
+GNAQ NM_002072 5 SMO NM_005631 3, 5, 6, 9, 11
+GNAS NM_000516 8, 9 SRC NM_005417 14
+HNF1A NM_000545 3, 4 STK11 NM_000455 1, 4-6, 8
+HRAS NM_005343 2, 3 TP53 NM_000546 2, 4-8, 10
+IDH1 NM_005896 4 VHL NM_000551 1-3
+* Un coverage < 250x induit une perte de sensibilité et de spécificité de la méthode.
+Sensibilité : la technique utilisée détecte une mutation si l’échantillon contient > 4%
+d’ADN mutant. Seules les mutations rapportées dans COSMIC et avec une fréquence
+supérieure à 4% et un variant coverage >30x sont rapportées
+IV. Résultats
+Liste des mutations détectées :
+Gène Exon Mutation Coverage % d’ADN muté
+Mutations avec impact clinique indéterminé
+ATM 35 p.E1751D 1998 38%
+V. Discussion
+Les mutations somatiques ou germinales du gène ATM ont été rapportées dans différents
+types de cancers dont des lymphomes, des cancers du sein ou d'autres cancers solides. Le
+variant E1751 du gène ATM est peu décrit dans les bases de données. Les impacts
+biologiques et cliniques de ce variant sont indéterminés.
+2 / 3
+Suite de l’examen N° 24EM04337 concernant le patient
+VI. Conclusion : (MAGU le 25/10/2024)
+Présence de la mutation E1751D du gène ATM, dont les impacts biologiques et cliniques
+sont indéterminés.
+Pour toute information complémentaire, veuillez nous contacter au 02/555.85.08 ou par mail :
+Biomol.AnaPath@erasme.ulb.ac.be N.B. Pour les prélèvements d’histologie et de cytologie
+ainsi que pour les examens complémentaires de biologie moléculaire, merci d’utiliser les nouvelles
+prescriptions disponibles sur le site internet du HUB :
+https://www.hubruxelles.be/sites/default/files/2024-03-04_demande%20analyse%20anapath%20cytologie%20v3.pdf
+https://www.hubruxelles.be/sites/default/files/FO-HUB-BM-11%20Demande%20de%20biologie%20mol%C3%A9culaire-
+IPD%20v1.doc
+Dr N D'HAENE
+Dr MATHIEU ANNE
+3 / 3
+
+       Sortie : ```json
+       [
+       {
+              "Examen": "24EM04337",
+              "Gène": "ATM",
+              "Exon": 35,
+              "Mutation": "p.E1751D",
+              "Coverage": 1998,
+              "% d'ADN muté": 38,
+              "Impact clinique": "Indéterminé"
+       }
+       ]
+       ```
+
+# Fin de la démonstration
+

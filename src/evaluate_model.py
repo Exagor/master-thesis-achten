@@ -155,7 +155,6 @@ def levenshtein_distance(s1, s2):
         return max(len(str(s1)), len(str(s2)))
     return Levenshtein.distance(str(s1), str(s2))
 
-
 def evaluate_metadata_levenshtein(model_excel_path, true_csv_path):
     """
     Compare model results with true results using Levenshtein distance (column-wise).
@@ -304,7 +303,7 @@ if __name__ == "__main__":
     model_excel_path_mut = 'out/mutation_gemma3_4B.xlsx'
     print("---- Evaluating gemma 3 4B results ----")
     evaluate_model_metadata(model_excel_path_meta, true_csv_path_meta)
-    evaluate_metadata_levenshtein(model_excel_path_mut, true_csv_path_meta)
+    evaluate_metadata_levenshtein(model_excel_path_meta, true_csv_path_meta)
     evaluate_model_mutations(model_excel_path_mut, true_csv_path_mut)
     evaluate_mutations_levenshtein(model_excel_path_mut, true_csv_path_mut)
 

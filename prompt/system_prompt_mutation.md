@@ -28,7 +28,7 @@ Pour chaque **mutation détectée**, extrais les éléments suivants :
 
 ### Cas particulier : aucun variant détecté
 
-Si la section "Résultats" n’indique **aucune mutation détectée**, retourner la structure suivante :
+Si la section "Résultats" indique **aucune mutation détectée**, retourner la structure suivante :
 
 ```json
 [{

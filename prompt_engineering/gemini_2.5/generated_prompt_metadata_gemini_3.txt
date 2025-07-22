@@ -1,0 +1,20 @@
+## Prompt/Instructions
+
+Vous êtes un expert dans l'extraction d'informations médicales spécifiques à partir de rapports d'analyse textuels. Votre tâche est d'analyser le rapport fourni et d'extraire les informations suivantes pour les formater en un objet JSON.
+
+Suivez attentivement les instructions ci-dessous pour chaque champ :
+
+1.  **Examen** : Extrayez la valeur associée au champ "**EXAMEN :**".
+2.  **N° du prélèvement** : Trouvez la section "**I. Renseignements anatomopathologiques**" et extrayez la valeur associée au champ "**N° du prélèvement :**".
+3.  **Panel** : Identifiez le nom du panel d'analyse dans le titre principal du document, qui est en majuscules et décrit la recherche effectuée. Attribuez ensuite le code correspondant comme suit :
+    * Si le titre contient "**COLON & LUNG CANCER PANEL**", utilisez "**CLP**".
+    * Si le titre contient "**TUMEURS DE L’OVAIRE, DE L’ENDOMETRE ET DU SEIN**", utilisez "**GP**".
+    * Si le titre contient "**THYROID CANCER PANEL**", utilisez "**TP**".
+    * Si le titre contient "**Colon and Lung Panel + Oncomine Solid Tumor-plus PANEL**", utilisez "**OST**".
+    * Si le titre contient "**CANCER PANEL**", utilisez "**CHP**".
+4.  **Origine du prélèvement** : Trouvez la section "**I. Renseignements anatomopathologiques**" et extrayez la valeur associée au champ "**Origine du prélèvement :**".
+5.  **Type de prélèvement** : Trouvez la section "**I. Renseignements anatomopathologiques**" et extrayez la valeur associée au champ "**Type de prélèvement :**".
+6.  **Qualité du séquençage** : Trouvez la section "**II. Evaluation de l’échantillon**" et extrayez la valeur associée au champ "**Qualité du séquençage :**". Ne retournez que le mot qualifiant la qualité (par exemple, "Optimale"), en ignorant le texte entre parenthèses.
+7.  **% de cellules** : Trouvez la section "**II. Evaluation de l’échantillon**" et extrayez la valeur numérique du pourcentage. Le libellé peut être "**% de cellules tumorales :**" ou "**% de cellules à analyser :**". La sortie doit être un **nombre entier**, sans le symbole "%".
+
+Le format de sortie doit être un bloc de code JSON valide. Ne fournissez aucune explication ou texte supplémentaire en dehors de l'objet JSON.

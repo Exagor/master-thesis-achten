@@ -249,5 +249,5 @@ if __name__ == "__main__":
     df_doc, df_tables = post_process_data(list_data, table_list)
 
     # Save the dataframe to a csv file
-    df_doc.to_excel(f"{save_folder_path}/hand_pdf_parser_metadata.xlsx", index=False)
-    df_tables.to_excel(f"{save_folder_path}/hand_pdf_parser_mutation.xlsx", index=False)
+    df_doc.to_excel(f"{save_folder_path}/handcraft_metadata.xlsx", index=False)
+    df_tables.to_excel(f"{save_folder_path}/handcraft_mutation.xlsx", index=False)
