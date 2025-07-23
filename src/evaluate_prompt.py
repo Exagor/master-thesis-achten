@@ -4,11 +4,10 @@ Here the LLM is a scoring model that evaluates the prompts
 """
 
 from transformers import AutoProcessor, Gemma3ForConditionalGeneration
-from PIL import Image
-import requests
 import torch
 from pdf_parser import *
 import os
+import torch.nn.functional as F
 
 #get the prompt
 with open("prompt/generated_prompt_metadata_gpt4o_merged.txt", "r") as f: #to test gpt4o, gpto3 and gemini
@@ -23,7 +22,6 @@ pdf_files = [f for f in os.listdir(pdf_folder_path) if f.endswith('.pdf')]
 
 pdf_text_image = {}
 for pdf_file in pdf_files:
-    #could use langchain here to extract text from pdf and use Document object
     pdf_text_image[os.path.splitext(pdf_file)[0]] = {"text":extract_with_pdfplumber(os.path.join(pdf_folder_path,pdf_file))}
     pdf_images = extract_pdf2image(f"{pdf_folder_path}/{pdf_file}")
     pdf_text_image[os.path.splitext(pdf_file)[0]]["image"] = pdf_images
@@ -38,10 +36,24 @@ model = Gemma3ForConditionalGeneration.from_pretrained(
 
 processor = AutoProcessor.from_pretrained(model_id)
 
-messages = [
+messages_meta = [
     {
         "role": "system",
-        "content": [{"type": "text", "text": "You are a helpful assistant."}]
+        "content": [{"type": "text", "text": system_prompt_meta}]
+    },
+    {
+        "role": "user",
+        "content": [
+            {"type": "text", "text": pdf_text_image["24EM03456"]["text"]}
+            + [{"type": "image", "image": img} for img in pdf_text_image["24EM03456"]["image"]]
+        ]
+    }
+]
+
+messages_mut = [
+    {
+        "role": "system",
+        "content": [{"type": "text", "text": system_prompt_mut}]
     },
     {
         "role": "user",
@@ -53,21 +65,50 @@ messages = [
 ]
 
 inputs = processor.apply_chat_template(
-    messages, add_generation_prompt=True, tokenize=True,
+    messages_meta, add_generation_prompt=True, tokenize=True,
     return_dict=True, return_tensors="pt"
 ).to(model.device, dtype=torch.bfloat16)
 
 input_len = inputs["input_ids"].shape[-1]
 
 with torch.inference_mode(): #inference mode is similar to nograds param
-    output = model.generate(**inputs, max_new_tokens=100, do_sample=False)
-    output = output[0][input_len:]
+    generated_ids = model.generate(**inputs, max_new_tokens=100, do_sample=False) #the dosample=False is to get deterministic results
+    # Remove the prompt part to get only generated tokens
+    answer_ids = generated_ids[0, input_len:]
 
-decoded = processor.decode(output, skip_special_tokens=True)
+# 2. Concatenate prompt and generated tokens
+full_ids = torch.cat([inputs["input_ids"][0], answer_ids], dim=0).unsqueeze(0)  # shape: (1, prompt+answer_len)
+
+# 3. Forward pass to get logits for the full sequence
+with torch.inference_mode():
+    outputs = model(input_ids=full_ids)
+    logits = outputs.logits  # shape: (1, seq_len, vocab_size)
+
+# 4. Compute log-softmax over the logits
+logprobs = F.log_softmax(logits, dim=-1)  # shape: (1, seq_len, vocab_size)
+
+# 5. Gather logprobs for the generated tokens (the answer)
+# For each generated token, get the logprob assigned by the model at the previous position
+answer_logprobs = []
+for i in range(input_len, full_ids.shape[1] - 1):
+    token_id = full_ids[0, i + 1]
+    logprob = logprobs[0, i, token_id]
+    answer_logprobs.append(logprob.item())
+
+# 6. Compute the average logprob for the generated answer
+average_logprob = sum(answer_logprobs) / len(answer_logprobs) if answer_logprobs else float('-inf')
+print(f"Average logprob for the generated answer: {average_logprob}")
+# Decode the generated answer
+decoded = processor.decode(generated_ids[0, input_len:], skip_special_tokens=True)
 print(decoded)
 
 
-# Save the results to a file
+# Save the logprob and decoded answer to a file
+output_file = "out/evaluation_results.txt"
+with open(output_file, "w") as f:
+    f.write(f"Average logprob: {average_logprob}\n")
+    f.write(f"Decoded answer: {decoded}\n")
+
 
 
 
