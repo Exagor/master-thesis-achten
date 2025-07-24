@@ -139,7 +139,7 @@ def evaluate_model_mutations(model_path, true_path):
             mismatches.append((exam, list(model_set), list(true_set)))
 
     accuracy = exact_matches / total if total > 0 else 0
-    print(f"Extracted mutations accuracy : {accuracy:.3f} ({exact_matches}/{total})")
+    print(f"\nExtracted mutations accuracy : {accuracy:.3f} ({exact_matches}/{total})")
     if mismatches:
         print("Mismatches (up to 5):")
         for exam, model_vals, true_vals in mismatches[:5]:
@@ -155,10 +155,23 @@ def levenshtein_distance(s1, s2):
         return max(len(str(s1)), len(str(s2)))
     return Levenshtein.distance(str(s1), str(s2))
 
+def normalized_levenshtein_similarity(s1, s2, t=0.5):
+    # If both are floats or ints, compare as integers (removing .0)
+    if isinstance(s1, (float, int)) and isinstance(s2, (float, int)):
+        s1_str = str(int(s1))
+        s2_str = str(int(s2))
+    else:
+        s1_str = str(s1)
+        s2_str = str(s2)
+    NL = levenshtein_distance(s1_str, s2_str) / max(len(s1_str), len(s2_str)) if max(len(s1_str), len(s2_str)) > 0 else 0
+    similarity = 1 - NL if NL < t else 0
+    return similarity
+
+
 def evaluate_metadata_levenshtein(model_excel_path, true_csv_path):
     """
-    Compare model results with true results using Levenshtein distance (column-wise).
-    Prints average Levenshtein distance per column.
+    Compare model results with true results using average normalized Levenshtein similarity (column-wise).
+    Prints average ANLS per column.
     """
     # Match the model and true data by exam number
     model_df = pd.read_excel(model_excel_path)
@@ -188,21 +201,21 @@ def evaluate_metadata_levenshtein(model_excel_path, true_csv_path):
     matched_true_df = pd.DataFrame(matched_true_rows)
 
     # Column-wise Levenshtein (average per column)
-    col_distances = {}
-    print("\nAverage Levenshtein distance per column:")
+    col_similarities = {}
+    print("\nAverage Normalized Levenshtein similarity per column:")
     for col in matched_true_df.columns:
         if col not in matched_model_df.columns:
             print(f"  {col}: column missing in model results")
-            col_distances[col] = None
+            col_similarities[col] = None
             continue
         m_vals = matched_model_df[col]
         t_vals = matched_true_df[col]
 
-        distances = [levenshtein_distance(normalize_string(m), normalize_string(t)) for m, t in zip(m_vals, t_vals)]
-        avg_col_dist = sum(distances) / len(distances) if distances else None
-        print(f"  {col}: {avg_col_dist:.3f}")
-        col_distances[col] = avg_col_dist
-    return col_distances
+        similarities = [normalized_levenshtein_similarity(normalize_string(m), normalize_string(t)) for m, t in zip(m_vals, t_vals)]
+        avg_col_sim = sum(similarities) / len(similarities) if similarities else None
+        print(f"  {col}: {avg_col_sim:.3f}")
+        col_similarities[col] = avg_col_sim
+    return col_similarities
 
 def evaluate_mutations_levenshtein(model_path, true_path):
     """
@@ -246,20 +259,21 @@ def evaluate_mutations_levenshtein(model_path, true_path):
     matched_true_df = pd.DataFrame(matched_true_rows)
 
     # Column-wise Levenshtein (average per column)
-    col_distances = {}
-    print("\nAverage Levenshtein distance per column (mutations):")
+    col_similarities = {}
+    print("\nAverage ANLS per column (mutations):")
     for col in matched_true_df.columns:
         if col not in matched_model_df.columns:
             print(f"  {col}: column missing in model results")
-            col_distances[col] = None
+            col_similarities[col] = None
             continue
         m_vals = matched_model_df[col]
         t_vals = matched_true_df[col]
-        distances = [levenshtein_distance(normalize_string(m), normalize_string(t)) for m, t in zip(m_vals, t_vals)]
-        avg_col_dist = sum(distances) / len(distances) if distances else None
-        print(f"  {col}: {avg_col_dist:.3f}")
-        col_distances[col] = avg_col_dist
-    return col_distances
+
+        similarities = [normalized_levenshtein_similarity(normalize_string(m), normalize_string(t)) for m, t in zip(m_vals, t_vals)]
+        avg_col_sim = sum(similarities) / len(similarities) if similarities else None
+        print(f"  {col}: {avg_col_sim:.3f}")
+        col_similarities[col] = avg_col_sim
+    return col_similarities
 
 def calculate_time_stats(time_data_path):
     """
@@ -309,7 +323,7 @@ if __name__ == "__main__":
 
     # Calculate time statistics
     time_data_path = 'out/times_gemma3_4B.xlsx'
-    print('Time statistics for gemma3_4B model:')
+    print('\nTime statistics for gemma3_4B model:')
     calculate_time_stats(time_data_path)
 
 
