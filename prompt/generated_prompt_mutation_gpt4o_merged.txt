@@ -38,7 +38,6 @@ Tu es un expert en extraction d’informations biomédicales à partir de rappor
    * `"Coverage"` : profondeur de lecture (ex: 1992)
    * `"% d'ADN muté"` : pourcentage d’ADN muté, numérique uniquement (ex: 40)
    * `"Impact clinique"` :
-
      * `"Avéré"` si l’impact est confirmé
      * `"Indéterminé"` si non précisé ou en évaluation
      * `"None"` si aucune mutation détectée
