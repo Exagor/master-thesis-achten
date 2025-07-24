@@ -15,12 +15,12 @@ logger = logging.getLogger(__name__)
 
 #get pdfs
 pdf_folder_path = "data/PDF"
-pdf_files = [f for f in os.listdir(pdf_folder_path) if f.endswith('.pdf')]
+pdf_files_path = [f for f in os.listdir(pdf_folder_path) if f.endswith('.pdf')]
 # pdf_files = ["24EM03456.pdf"] #used for debug
 
 #extract pdf text
 pdf_texts = {}
-for pdf_file in pdf_files:
+for pdf_file in pdf_files_path:
     #could use langchain here to extract text from pdf and use Document object
     pdf_texts[os.path.splitext(pdf_file)[0]] = extract_with_pdfplumber(os.path.join(pdf_folder_path,pdf_file))
 
@@ -40,6 +40,7 @@ except Exception as e:
     logger.error(f"Failed to login to hugging face: {e}")
 
 model_name = "google/gemma-3-4b-it"
+model_name_shrt = "gemma3_4B" #used for output files
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 logger.info(f"Using device: {device}")
@@ -89,18 +90,18 @@ for pdf_number,text_pdf in tqdm(pdf_texts.items()):
     ]
     # Run the inference
     start_time = time.time()
-    output_gemma_4B = pipe(messages_meta, max_new_tokens=250) #temperature=0
+    output_meta = pipe(messages_meta, max_new_tokens=250)
     elapsed_time = time.time() - start_time
     time_meta_data.append(elapsed_time)
     logger.info(f"Pipeline inference time for metadata: {elapsed_time:.2f} seconds")
     start_time = time.time()
-    output_gemma_4B2 = pipe(messages_mut, max_new_tokens=550) #temperature=0
+    output_mut = pipe(messages_mut, max_new_tokens=550)
     elapsed_time = time.time() - start_time
     time_mutation_data.append(elapsed_time)
     logger.info(f"Pipeline inference time for mutations: {elapsed_time:.2f} seconds")
 
     # Process the output
-    answer_meta = output_gemma_4B[0]["generated_text"][-1]["content"]
+    answer_meta = output_meta[0]["generated_text"][-1]["content"]
     cleaned_meta = answer_meta.replace("```json", "").replace("```", "").strip() #clean the answer
     try: #to handle when the answer is not a valid json
         data_meta = json.loads(cleaned_meta)
@@ -109,7 +110,7 @@ for pdf_number,text_pdf in tqdm(pdf_texts.items()):
     except json.JSONDecodeError as e:
         logger.error(f"Failed to decode JSON for {pdf_number}: {e} \nContent: {cleaned_meta}")
 
-    answer_mut = output_gemma_4B2[0]["generated_text"][-1]["content"]
+    answer_mut = output_mut[0]["generated_text"][-1]["content"]
     cleaned_mut = answer_mut.replace("```json", "").replace("```", "").strip() #clean the answer
     try:
         data_mut = json.loads(cleaned_mut)
@@ -124,24 +125,24 @@ try:
     # Remove % from the '% cellules' column if it exists
     if '% de cellules' in df_meta.columns:
         df_meta['% de cellules'] = df_meta['% de cellules'].astype(str).str.replace('%', '', regex=False)
-    df_meta.to_excel("out/metadata_gemma3_4B.xlsx", index=False)
-    logger.info("Saved metadata to out/metadata_gemma3_4B.xlsx")
+    df_meta.to_excel(f"out/metadata_{model_name_shrt}.xlsx", index=False)
+    logger.info(f"Saved metadata to out/metadata_{model_name_shrt}.xlsx")
 
     # Flatten the mutation data
     flat_mutation_data = [item for sublist in mutation_data for item in sublist]
     df_mut = pd.DataFrame(flat_mutation_data)
     # Remove rows with any None values
     df_mut = df_mut.dropna()
-    df_mut.to_excel("out/mutation_gemma3_4B.xlsx", index=False)
-    logger.info("Saved mutation data to out/mutation_gemma3_4B.xlsx")
+    df_mut.to_excel(f"out/mutation_{model_name_shrt}.xlsx", index=False)
+    logger.info(f"Saved mutation data to out/mutation_{model_name_shrt}.xlsx")
     
     # Save processing times
     df_times = pd.DataFrame({
-        'PDF': pdf_files,
+        'PDF': pdf_files_path,
         'Time_Metadata': time_meta_data,
         'Time_Mutation': time_mutation_data
     })
-    df_times.to_excel("out/times_gemma3_4B.xlsx", index=False)
-    logger.info("Saved processing times to out/times_gemma3_4B.xlsx")
+    df_times.to_excel(f"out/times_{model_name_shrt}.xlsx", index=False)
+    logger.info(f"Saved processing times to out/times_{model_name_shrt}.xlsx")
 except Exception as e:
     logger.error(f"Failed to save output files: {e}")

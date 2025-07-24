@@ -236,12 +236,12 @@ if __name__ == "__main__":
     # Find all PDF files in the pdf folder and save them in a list
     pdf_folder_path = "data/PDF"
     save_folder_path = "out/"
-    pdf_files = [f for f in os.listdir(pdf_folder_path) if f.endswith('.pdf')]
+    pdf_files_path = [f for f in os.listdir(pdf_folder_path) if f.endswith('.pdf')]
     # pdf_files = ["24EM03355.pdf"]
 
     list_data = []
     table_list = []
-    for file in pdf_files:
+    for file in pdf_files_path:
         pdf_path = f"{pdf_folder_path}/{file}"
         text = extract_with_pdfplumber(pdf_path)
         metadata = format_metadata(text)

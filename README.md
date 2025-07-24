@@ -60,3 +60,6 @@ or
 ```bash
 docker run --gpus all -v $(pwd)/out:/app/out llm-pipeline
 ```
+## HuggingFace
+
+Don't forget to use a login token from the HuggingFace website to access the models. The token is set in the ``login_huggingface.txt`` file.

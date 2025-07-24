@@ -4,10 +4,10 @@ from transformers import AutoTokenizer, AutoModelForQuestionAnswering, pipeline
 import json
 
 pdf_folder_path = "../data/PDF/"
-pdf_files = [f for f in os.listdir(pdf_folder_path) if f.endswith('.pdf')]
+pdf_files_path = [f for f in os.listdir(pdf_folder_path) if f.endswith('.pdf')]
 
 pdf_text = {}
-for pdf_file in pdf_files:
+for pdf_file in pdf_files_path:
     pdf_text[os.path.splitext(pdf_file)[0]] = extract_with_pdfplumber(os.path.join(pdf_folder_path,pdf_file))
 
 model = AutoModelForQuestionAnswering.from_pretrained("almanach/camembertav2-base-fquad")
