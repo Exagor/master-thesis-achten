@@ -13,112 +13,112 @@ import torch
 
 model_name = "google/gemma-3-4b-it"
 model_name_shrt = "gemma3_4B"
-prompt_name = "gpt4o"
+prompt_names = ["gpt4o","gpto3","gemini"]
 
+for prompt_name in prompt_names:
+    #get the prompt
+    with open(f"prompt/generated_prompt_metadata_{prompt_name}_merged.txt", "r") as f: #to test gpt4o, gpto3 and gemini
+        system_prompt_meta = f.read()
+    with open(f"prompt/generated_prompt_mutation_{prompt_name}_merged.txt", "r") as f:
+        system_prompt_mut = f.read()
 
-#get the prompt
-with open(f"prompt/generated_prompt_metadata_{prompt_name}_merged.txt", "r") as f: #to test gpt4o, gpto3 and gemini
-    system_prompt_meta = f.read()
-with open(f"prompt/generated_prompt_mutation_{prompt_name}_merged.txt", "r") as f:
-    system_prompt_mut = f.read()
+    # Get example input (text+image)
+    pdf_folder_path = "data/PDF"
+    pdf_files = [f for f in os.listdir(pdf_folder_path) if f.endswith('.pdf')]
+    # pdf_files = ["24EM03456.pdf"]
 
-# Get example input (text+image)
-pdf_folder_path = "data/PDF"
-pdf_files = [f for f in os.listdir(pdf_folder_path) if f.endswith('.pdf')]
-# pdf_files = ["24EM03456.pdf"]
+    pdf_text_image = {}
+    for pdf_file in pdf_files:
+        pdf_text_image[os.path.splitext(pdf_file)[0]] = {"text":extract_with_pdfplumber(os.path.join(pdf_folder_path,pdf_file))}
+        pdf_images = extract_pdf2image(f"{pdf_folder_path}/{pdf_file}")
+        pdf_text_image[os.path.splitext(pdf_file)[0]]["image"] = pdf_images
 
-pdf_text_image = {}
-for pdf_file in pdf_files:
-    pdf_text_image[os.path.splitext(pdf_file)[0]] = {"text":extract_with_pdfplumber(os.path.join(pdf_folder_path,pdf_file))}
-    pdf_images = extract_pdf2image(f"{pdf_folder_path}/{pdf_file}")
-    pdf_text_image[os.path.splitext(pdf_file)[0]]["image"] = pdf_images
-
-# Login to Hugging Face to enable the use of gemma 3
-with open("login_huggingface.txt", "r") as f:
-    token = f.read()
-try:
-    login(token) #token from huggingface.co necessary to use gemma3
-except Exception as e:
-    print(f"Failed to login to hugging face: {e}")
-
-# Create the model and processor
-device = "cuda"
-
-pipe = pipeline(
-    "text-generation", # "image-text-to-text" or "text-generation"
-    model=model_name,
-    torch_dtype=torch.bfloat16,
-    device=device,
-    #device_map="auto", #use "auto" to automatically use all available GPUs (but slows the code ??!!)
-)
-
-metadata_data = []
-mutation_data = []
-
-# loop to process multiple pdfs
-for pdf_number,pdf in tqdm(pdf_text_image.items()):
-
-    messages_meta = [
-        {
-            "role": "system",
-            "content": [{"type": "text", "text": system_prompt_meta}]
-        },
-        {
-            "role": "user",
-            "content": [
-                {"type": "text", "text": pdf["text"]}]
-                # {"type":"image", "image": pdf["image"][0]}]
-                + [{"type": "image", "image": img} for img in pdf["image"]]
-        }
-    ]
-
-    messages_mut = [
-        {
-            "role": "system",
-            "content": [{"type": "text", "text": system_prompt_mut}]
-        },
-        {
-            "role": "user",
-            "content": [
-                {"type": "text", "text": pdf["text"]}]
-                # {"type":"image", "image": pdf["image"][0]}]
-                + [{"type": "image", "image": img} for img in pdf["image"]]
-        }
-    ]
-
-    # Run the inference
-    output_meta = pipe(text=messages_meta, max_new_tokens=250) #don't forget the text= parameter and temperature=0 doesn't work
-    output_mut = pipe(text=messages_mut, max_new_tokens=550)
-
-    # Process the output
-    answer_meta = output_meta[0]["generated_text"][-1]["content"]
-    cleaned_meta = answer_meta.replace("```json", "").replace("```", "").strip() #clean the answer
-    try: #to handle when the answer is not a valid json
-        data_meta = json.loads(cleaned_meta)
-        metadata_data.append(data_meta)
-    except json.JSONDecodeError as e:
-        print(f"Failed to decode JSON for {pdf_number}: {e} \nContent: {cleaned_meta}")
-
-    answer_mut = output_mut[0]["generated_text"][-1]["content"]
-    cleaned_mut = answer_mut.replace("```json", "").replace("```", "").strip() #clean the answer
+    # Login to Hugging Face to enable the use of gemma 3
+    with open("login_huggingface.txt", "r") as f:
+        token = f.read()
     try:
-        data_mut = json.loads(cleaned_mut)
-        mutation_data.append(data_mut)
-    except json.JSONDecodeError as e:
-        print(f"Failed to decode JSON for {pdf_number}: {e} \nContent: {cleaned_mut}")
+        login(token) #token from huggingface.co necessary to use gemma3
+    except Exception as e:
+        print(f"Failed to login to hugging face: {e}")
 
-df_meta = pd.DataFrame(metadata_data)
-# Remove % from the '% cellules' column if it exists
-if '% de cellules' in df_meta.columns:
-    df_meta['% de cellules'] = df_meta['% de cellules'].astype(str).str.replace('%', '', regex=False)
-df_meta.to_excel(f"out/metadata_{model_name_shrt}_{prompt_name}.xlsx", index=False)
+    # Create the model and processor
+    device = "cuda"
 
-# Flatten the mutation data
-flat_mutation_data = [item for sublist in mutation_data for item in sublist]
-df_mut = pd.DataFrame(flat_mutation_data)
-# Remove rows with any None values
-df_mut = df_mut.dropna()
-df_mut.to_excel(f"out/mutation_{model_name_shrt}_{prompt_name}.xlsx", index=False)
+    pipe = pipeline(
+        "image-text-to-text", # "image-text-to-text" or "text-generation"
+        model=model_name,
+        torch_dtype=torch.bfloat16,
+        device=device,
+        #device_map="auto", #use "auto" to automatically use all available GPUs (but slows the code ??!!)
+    )
+
+    metadata_data = []
+    mutation_data = []
+
+    # loop to process multiple pdfs
+    for pdf_number,pdf in tqdm(pdf_text_image.items()):
+
+        messages_meta = [
+            {
+                "role": "system",
+                "content": [{"type": "text", "text": system_prompt_meta}]
+            },
+            {
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": pdf["text"]}]
+                    # {"type":"image", "image": pdf["image"][0]}]
+                    + [{"type": "image", "image": img} for img in pdf["image"]]
+            }
+        ]
+
+        messages_mut = [
+            {
+                "role": "system",
+                "content": [{"type": "text", "text": system_prompt_mut}]
+            },
+            {
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": pdf["text"]}]
+                    # {"type":"image", "image": pdf["image"][0]}]
+                    + [{"type": "image", "image": img} for img in pdf["image"]]
+            }
+        ]
+
+        # Run the inference
+        output_meta = pipe(text=messages_meta, max_new_tokens=250) #don't forget the text= parameter and temperature=0 doesn't work
+        output_mut = pipe(text=messages_mut, max_new_tokens=550)
+
+        # Process the output
+        answer_meta = output_meta[0]["generated_text"][-1]["content"]
+        cleaned_meta = answer_meta.replace("```json", "").replace("```", "").strip() #clean the answer
+        try: #to handle when the answer is not a valid json
+            data_meta = json.loads(cleaned_meta)
+            metadata_data.append(data_meta)
+        except json.JSONDecodeError as e:
+            print(f"Failed to decode JSON for {pdf_number}: {e} \nContent: {cleaned_meta}")
+
+        answer_mut = output_mut[0]["generated_text"][-1]["content"]
+        cleaned_mut = answer_mut.replace("```json", "").replace("```", "").strip() #clean the answer
+        try:
+            data_mut = json.loads(cleaned_mut)
+            mutation_data.append(data_mut)
+        except json.JSONDecodeError as e:
+            print(f"Failed to decode JSON for {pdf_number}: {e} \nContent: {cleaned_mut}")
+
+    df_meta = pd.DataFrame(metadata_data)
+    # Remove % from the '% cellules' column if it exists
+    if '% de cellules' in df_meta.columns:
+        df_meta['% de cellules'] = df_meta['% de cellules'].astype(str).str.replace('%', '', regex=False)
+    df_meta.to_excel(f"out/metadata_{model_name_shrt}_{prompt_name}.xlsx", index=False)
+
+    # Flatten the mutation data
+    flat_mutation_data = [item for sublist in mutation_data for item in sublist]
+    df_mut = pd.DataFrame(flat_mutation_data)
+    # Remove rows with any None values
+    df_mut = df_mut.dropna()
+    df_mut.to_excel(f"out/mutation_{model_name_shrt}_{prompt_name}.xlsx", index=False)
     
 
 

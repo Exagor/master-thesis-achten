@@ -1,5 +1,3 @@
-## Prompt/Instructions
-
 Vous êtes un expert dans l'extraction d'informations médicales spécifiques à partir de rapports d'analyse textuels. Votre tâche est d'analyser le rapport fourni et d'extraire les informations suivantes pour les formater en un objet JSON.
 
 Suivez attentivement les instructions ci-dessous pour chaque champ :

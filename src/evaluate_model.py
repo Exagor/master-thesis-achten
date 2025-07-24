@@ -168,7 +168,7 @@ def normalized_levenshtein_similarity(s1, s2, t=0.5):
     return similarity
 
 
-def evaluate_metadata_levenshtein(model_excel_path, true_csv_path):
+def evaluate_metadata_levenshtein(model_excel_path, true_csv_path, print_results=True):
     """
     Compare model results with true results using average normalized Levenshtein similarity (column-wise).
     Prints average ANLS per column.
@@ -202,7 +202,8 @@ def evaluate_metadata_levenshtein(model_excel_path, true_csv_path):
 
     # Column-wise Levenshtein (average per column)
     col_similarities = {}
-    print("\nAverage Normalized Levenshtein similarity per column:")
+    if print_results :
+        print("\nAverage Normalized Levenshtein similarity per column:")
     for col in matched_true_df.columns:
         if col not in matched_model_df.columns:
             print(f"  {col}: column missing in model results")
@@ -213,11 +214,12 @@ def evaluate_metadata_levenshtein(model_excel_path, true_csv_path):
 
         similarities = [normalized_levenshtein_similarity(normalize_string(m), normalize_string(t)) for m, t in zip(m_vals, t_vals)]
         avg_col_sim = sum(similarities) / len(similarities) if similarities else None
-        print(f"  {col}: {avg_col_sim:.3f}")
+        if print_results :
+            print(f"  {col}: {avg_col_sim:.3f}")
         col_similarities[col] = avg_col_sim
     return col_similarities
 
-def evaluate_mutations_levenshtein(model_path, true_path):
+def evaluate_mutations_levenshtein(model_path, true_path, print_results=True):
     """
     Compare model mutation results with true results using Levenshtein distance (column-wise).
     Prints average Levenshtein distance per column.
@@ -260,7 +262,8 @@ def evaluate_mutations_levenshtein(model_path, true_path):
 
     # Column-wise Levenshtein (average per column)
     col_similarities = {}
-    print("\nAverage ANLS per column (mutations):")
+    if print_results :
+        print("\nAverage ANLS per column (mutations):")
     for col in matched_true_df.columns:
         if col not in matched_model_df.columns:
             print(f"  {col}: column missing in model results")
@@ -271,7 +274,8 @@ def evaluate_mutations_levenshtein(model_path, true_path):
 
         similarities = [normalized_levenshtein_similarity(normalize_string(m), normalize_string(t)) for m, t in zip(m_vals, t_vals)]
         avg_col_sim = sum(similarities) / len(similarities) if similarities else None
-        print(f"  {col}: {avg_col_sim:.3f}")
+        if print_results:
+            print(f"  {col}: {avg_col_sim:.3f}")
         col_similarities[col] = avg_col_sim
     return col_similarities
 
@@ -299,6 +303,7 @@ if __name__ == "__main__":
     # model_excel_path = 'data/verified_metadata.xlsx'
     true_csv_path_meta = 'data/verified_metadata.csv'
     true_csv_path_mut = 'data/verified_mutations_without_none.csv'
+    print_res = False
 
     model_excel_path_meta = 'out/hand_pdf_parser_metadata.xlsx'
     model_excel_path_mut = 'out/hand_pdf_parser_mutation.xlsx'
@@ -317,13 +322,14 @@ if __name__ == "__main__":
     model_excel_path_mut = 'out/mutation_gemma3_4B.xlsx'
     print("---- Evaluating gemma 3 4B results ----")
     evaluate_model_metadata(model_excel_path_meta, true_csv_path_meta)
-    evaluate_metadata_levenshtein(model_excel_path_meta, true_csv_path_meta)
+    scores_leven_meta = evaluate_metadata_levenshtein(model_excel_path_meta, true_csv_path_meta, print_results=print_res)
     evaluate_model_mutations(model_excel_path_mut, true_csv_path_mut)
-    evaluate_mutations_levenshtein(model_excel_path_mut, true_csv_path_mut)
+    scores_leven_mut = evaluate_mutations_levenshtein(model_excel_path_mut, true_csv_path_mut, print_results=print_res)
+
+    print(f"Average levenshtein similarity for metadata: {sum(scores_leven_meta.values()) / len(scores_leven_meta)}")
+    print(f"Average levenshtein similarity for mutations: {sum(scores_leven_mut.values()) / len(scores_leven_mut)}")
 
     # Calculate time statistics
-    time_data_path = 'out/times_gemma3_4B.xlsx'
-    print('\nTime statistics for gemma3_4B model:')
-    calculate_time_stats(time_data_path)
-
-
+    # time_data_path = 'out/times_gemma3_4B.xlsx'
+    # print('\nTime statistics for gemma3_4B model:')
+    # calculate_time_stats(time_data_path)
