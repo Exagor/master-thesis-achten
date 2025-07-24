@@ -1,9 +1,9 @@
 """
 Try to generate the prompt using local models like gemma3, gemma3n or qwen
 """
+import torch
 from huggingface_hub import login
 from transformers import pipeline
-import torch
 
 model_name = "google/gemma-3-4b-it" #google/gemma-3n-E4B-it or google/gemma-3n-E2B-it or google/gemma-3-4b-it or Qwen/Qwen2.5-VL-3B-Instruct
 model_name_shrt = "gemma3_4B" #used for output files
@@ -22,8 +22,8 @@ try:
 except Exception as e:
     print(f"Failed to login to hugging face: {e}")
 
-# Create the model and processor
-device = "cuda"
+# Create the model
+device = "cuda" if torch.cuda.is_available() else "cpu"
 
 pipe = pipeline(
     "text-generation", # "image-text-to-text" or "text-generation"
@@ -57,7 +57,7 @@ for iteration in range(3): #run 3 times to get a better result
         }
     ]
 
-    output_meta = pipe(messages_meta, max_new_tokens=1200)
+    output_meta = pipe(messages_meta, max_new_tokens=1200) #previously 1200
     output_mut = pipe(messages_mut, max_new_tokens=1200)
 
     answer_meta = output_meta[0]["generated_text"][-1]["content"]
