@@ -1,0 +1,59 @@
+Excellent! Voici un prompt fusionné, intégrant toutes les suggestions et les points forts que vous avez identifiés, avec un accent sur la clarté, la flexibilité et la robustesse :
+
+**Prompt Fusionné :**
+
+"Vous êtes un expert en extraction d'informations médicales structurées. Votre tâche est d'analyser le texte médical fourni et de générer un objet JSON contenant les informations clés suivantes. **Utilisez une extraction structurée pour minimiser les erreurs et assurez-vous d'utiliser des noms de clés cohérents.**
+
+Extrait les informations suivantes du texte et retournez-les au format JSON :
+
+*   **Examen:** Identifiant unique de l'examen (string).
+*   **N° du prélèvement:** Numéro de référence du prélèvement (string).
+*   **ID du patient:** Identifiant unique du patient (string).
+*   **Date de prélèvement:** Date à laquelle le prélèvement a été effectué (format YYYY-MM-DD).
+*   **Médecin(s) responsable(s):** Nom(s) du(des) médecin(s) impliqué(s) (array de strings).
+*   **Équipe médicale:** Liste des membres de l'équipe médicale impliqués (array de strings).
+*   **Type de prélèvement:** Type de prélèvement effectué (string).
+*   **Panel de gènes testés:** Panneau de gènes analysés (string).
+*   **Méthodologie utilisée:** Technique utilisée pour l'analyse (string). Si aucune méthodologie n'est spécifiée, retournez "Non spécifié".
+*   **Résultats:** Résultat principal de l'analyse (string).
+*   **Couverture:** Pourcentage de couverture du séquençage (nombre à virgule flottante, avec deux décimales, ou "N/A" si absent).
+*   **Qualité du séquençage:** Qualité du séquençage (string, ex: "Optimale", "Acceptable", "Défaillante").
+*   **Commentaires:** Commentaires ou observations supplémentaires (string). Si aucun commentaire n'est présent, retourner "N/A".
+
+**Consignes supplémentaires :**
+
+*   Si l'information n'est pas directement disponible dans le texte, retournez "N/A".
+*   Priorisez la précision de l'extraction.
+*   Assurez-vous que le JSON est valide.
+*   Si possible, utilisez des valeurs numériques pour les champs numériques (couverture, etc.)."
+
+**Exemple de sortie JSON (pour illustrer le format attendu) :**
+
+```json
+{
+  "Examen": "24EM03451",
+  "N° du prélèvement": "24BB11466 07",
+  "ID du patient": "123456789",
+  "Date de prélèvement": "2023-10-26",
+  "Médecin(s) responsable(s)": ["Dr. Dupont", "Dr. Martin"],
+  "Équipe médicale": ["Technicien de laboratoire"],
+  "Type de prélèvement": "Tumeur de la granulosa",
+  "Panel de gènes testés": "GP",
+  "Méthodologie utilisée": "Next Generation Sequencing",
+  "Résultats": "Détection de mutation dans le gène X",
+  "Couverture": 98.5,
+  "Qualité du séquençage": "Optimale",
+  "Commentaires": "Résultats confirmés par analyse confirmatrice."
+}
+```
+
+**Justification des modifications :**
+
+*   **Instructions Claires :** Le prompt est explicitement conçu pour être interprété par un modèle de langage, en définissant son rôle et sa tâche.
+*   **Noms de Clés Cohérents :** Utilisation de "Examen" comme nom de clé central.
+*   **Précision du Format :**  Spécification claire du format des dates et des nombres.
+*   **Gestion des Valeurs Absentes :**  Instruction claire pour retourner "N/A" en cas d'absence d'information.
+*   **Flexibilité:** Le prompt peut être adapté à différentes données médicales en ajustant les clés et les champs.
+*   **Robustesse:** La mention de l'importance d'une extraction structurée et de la validité du JSON renforce la robustesse du prompt.
+
+J'espère que ce prompt fusionné sera encore plus efficace pour vos besoins!

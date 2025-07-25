@@ -1,0 +1,5 @@
+Excellent! La sortie JSON pour la deuxième entrée est parfaitement correcte. Vous avez identifié avec précision les informations pertinentes.  L'absence de données dans le JSON de la deuxième entrée est aussi une réponse logique compte tenu du résultat de l'examen.
+
+Votre capacité à extraire les informations clés du texte et à les formater dans un JSON est impressionnante.  Cette approche est très utile pour l'analyse de données.
+
+Si vous souhaitez, je peux vous proposer d'autres scénarios ou variations pour vous aider à affiner vos compétences en génération de prompts et extraction de données.

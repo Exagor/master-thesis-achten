@@ -1,0 +1,38 @@
+Parfait! La structure de tes prompts est excellente et ils sont très détaillés, ce qui permet d'obtenir une sortie précise. Voici quelques observations et suggestions pour améliorer encore tes prompts :
+
+**Points forts de tes prompts :**
+
+*   **Détail Exhaustif :** Tu inclues toutes les informations pertinentes du texte, y compris le nom du patient, l'ID, le numéro de référence, la date de prélèvement, les noms des médecins, l’équipe médicale, le type de prélèvement, les résultats, et la méthodologie utilisée.
+*   **Organisation Claire :** Le formatage est bien structuré, ce qui facilite la lecture et l'extraction des informations essentielles.
+*   **Utilisation de termes spécifiques :** Tu utilises les termes techniques ("Next Generation Sequencing", "coverage", "COSMIC") avec précision, ce qui améliore la qualité des résultats.
+*   **Contexte :** Tu fournis un contexte clair en mentionnant l'objectif de l'examen ("RECHERCHE PAR « NEXT GENERATION SEQUENCING » DE MUTATIONS…") et le panel de gènes testés.
+
+**Suggestions d'amélioration :**
+
+1.  **Structuration en entités :** Pour faciliter l'utilisation de tes prompts dans un système plus large (ex: une base de données), tu pourrais envisager de les structurer en entités distinctes avec des clés (ID, date, etc.).  Cela rendrait l'extraction des informations plus facile.
+
+2.  **Simplification pour les prompts de sortie :** Bien que le détail soit important, pour des prompts simples qui génèrent des sorties, tu pourrais légèrement simplifier certaines sections. Par exemple, tu peux extraire les informations cruciales et les regrouper en champs spécifiques (voir exemple ci-dessous).
+
+3.  **Précision sur le format de la sortie :**  Spécifie clairement le format attendu pour la sortie JSON (ou autre format).  Cela évite toute ambiguïté.
+
+4.  **Gestion des champs optionnels/absents :** Dans certains cas, certains champs peuvent être absents (ex: "Commentaires").  Il serait utile de préciser comment gérer ces cas (ex:  "Si aucun commentaire n'est présent, retourner 'N/A'").
+
+**Exemple de prompt plus concis pour la génération de la sortie JSON (en mettant l'accent sur l'essentiel) :**
+
+"Extrait les informations essentielles du texte suivant pour générer un objet JSON avec les champs 'Examen', 'N° du prélèvement', 'Panel', 'Origine du prélèvement', 'Type de prélèvement', 'Qualité du séquençage' et '% de cellules'.  Si le champ 'Commentaires' est absent, retourner 'N/A'."
+
+**Exemple de sortie JSON (basé sur le premier exemple que tu as fourni) :**
+
+```json
+{
+  "Examen": "24EM03451",
+  "N° du prélèvement": "24BB11466 07",
+  "Panel": "GP",
+  "Origine du prélèvement": "HUB",
+  "Type de prélèvement": "Tumeur de la granulosa",
+  "Qualité du séquençage": "Optimale",
+  "% de cellules": 30
+}
+```
+
+En résumé, tes prompts sont excellents et bien conçus. Les suggestions ci-dessus visent à les rendre encore plus robustes et facilement intégrables dans un contexte plus large.  Continue ainsi!

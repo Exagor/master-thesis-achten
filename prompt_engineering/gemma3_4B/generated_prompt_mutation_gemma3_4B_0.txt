@@ -1,0 +1,62 @@
+Excellent!  Ces prompts sont bien structurés et adaptés aux données fournies. Voici quelques remarques et suggestions pour affiner encore plus leurs performances :
+
+**Remarques générales :**
+
+* **Précision et contexte:** Vous avez capturé les aspects essentiels : les informations de base du patient, des examens, des équipes médicales, de la méthode, des résultats et des conclusions.
+* **Organisation des données:**  La structure JSON est claire et efficace pour l'extraction de l'information pertinente.
+* **Adaptation au type de sortie demandée:** Chaque prompt correspond précisément à la sortie JSON fournie.
+
+**Suggestions d'amélioration et nuances spécifiques (en tenant compte des différences entre les deux exemples) :**
+
+**Exemple 1 (Dr RUA DA SILVA TELES GRILO)**
+
+* **Plus de détails pour l'extraction de mutations:** Le prompt pourrait être amélioré pour inciter à une extraction plus détaillée des mutations, notamment :
+    *  "Extrait les informations relatives aux mutations détectées pour chaque gène testé, incluant le nom du gène, l'exonne(s) affecté(s), la mutation spécifique (par exemple, p.G12D), la couverture (coverage) et le pourcentage d'ADN muté."
+* **Clarification des commentaires:**  Le commentaire sur le délai de fixation pourrait être formulé plus clairement pour que le modèle comprenne qu'il doit le mentionner.
+* **Spécification du type d'information à extraire:** Indiquer explicitement qu'il faut extraire uniquement les mutations pour aider à filtrer le texte.
+
+**Exemple 2 (Dr HUTSEBAUT NATHALIE)**
+
+* **La sortie est vide, il est donc essentiel d'expliquer pourquoi :**  Le prompt pour ce dernier exemple est plus complexe. Il est important de dire au modèle qu'il doit identifier un "None" dans le cas où aucune mutation n'est trouvée.  Sans cela, le modèle peut halluciner des données.
+* **"Aucun variant détecté" est un résultat :** Il faut le formuler comme résultat à extraire.
+
+**Prompt Générique Amélioré (pour une utilisation future)**
+
+Voici un prompt plus général qui pourrait être adapté et amélioré pour la plupart des cas :
+
+```
+"Extrait les informations suivantes du texte fourni :
+
+1.  **Identifiant de l'examen :** (Extrait l'identifiant unique de l'examen, généralement un numéro)
+2.  **Patient :**
+    *   Nom du patient :
+    *   ID du patient :
+3.  **Prélevé le :** (Date et heure du prélèvement)
+4.  **Prescripteur :** (Nom du médecin qui a prescrit l'examen)
+5.  **Type de prélèvement :** (Décrire le type de prélèvement – ex: frottis, coupe paraffinée, etc.)
+6.  **Méthodologie :**
+    *   Technique utilisée (ex: Next Generation Sequencing) :
+    *   Gènes testés : (liste des gènes)
+    *   Exons testés pour chaque gène : (Tableau ou liste)
+    *   Couverture minimale requise :
+    *   Sensibilité de la technique :
+7.  **Résultats :**
+    *   Liste des mutations détectées (pour chaque gène) :
+        *   Gène :
+        *   Exon(s) :
+        *   Mutation spécifique :
+        *   Couverture (coverage) :
+        *   Pourcentage d'ADN muté :
+        *   Impact clinique (si connu) :
+8.  **Conclusion :** (Résumé des principales conclusions du rapport)
+
+Retourne les informations extraites au format JSON."
+```
+
+**Conseils pour l'itération des prompts:**
+
+* **Exemples:** Fournir des exemples de sorties JSON attendues peut grandement améliorer la précision du modèle.
+* **Validation :** Vérifiez attentivement les résultats générés par le modèle pour identifier les erreurs et ajuster le prompt en conséquence.
+* **Itération:**  Testez différentes formulations de prompt et comparez les résultats.
+
+En résumé, vous avez une excellente base. En affinant davantage les prompts et en tenant compte des nuances spécifiques de chaque cas, vous pouvez améliorer considérablement la précision et la fiabilité des extractions d'informations.

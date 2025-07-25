@@ -1,4 +1,3 @@
-
 Génère le prompt/instructions le mieux adapté et le plus détaillé pour avoir les sortie ci-dessous avec les entrée données ci-dessous.
 
 # Début de la démonstration

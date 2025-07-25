@@ -1,0 +1,80 @@
+Voici le prompt/instructions adapté pour générer les sorties demandées :
+
+---
+
+**Début de la démonstration**
+
+### Entrée : COPIE INTERNE 29/10/2024
+Dr RUA DA SILVA TELES GRILO INES
+CENTRE HOSPITALIER DE MOUSCRON
+AVENUE DE FECAMP 49
+Centre d’Anatomie
+Pathologique H.U.B. 7700 MOUSCRON
+Rue Meylemeersch 90 - 1070 Anderlecht
+Mijlemeerschstraat 90 – 1070 Anderlecht
+PATIENT :
+Directrice de Service
+Pr Myriam Remmelink
+ID :
+Réf. Externe : 24MH9721 EXAMEN : 24EM03460
+Equipe Médicale
+Dr Nicolas de Saint Aubain
+Pr Nicky D’Haene Prélevé le 22/07/2024 à 22/07/2024 Prescripteur : Dr RUA DA SILVA TELES GRILO
+Dr Maria Gomez Galdon Reçu le 08/08/2024 INES
+Dr Chirine Khaled
+Pr Denis Larsimont
+Dr Laetitia Lebrun
+Dr Calliope Maris
+Pr Jean-Christophe Noël
+Pr Isabelle Salmon
+Dr Anne-Laure Trépant
+Pr Laurine Verset
+Consultant (e) s
+Dr Sarah Bouri
+RECHERCHE PAR « NEXT GENERATION SEQUENCING » DE
+Dr Xavier Catteau
+Dr Roland de Wind MUTATIONS DANS 22 GENES IMPLIQUÉS DANS LES CANCERS
+COLORECTAUX ET PULMONAIRES
+Dr Valérie Segers
+COLORECTAUX ET PULMONAIRES
+Dr Anne Theunis
+Dr Marie-Paule Van Craynest (COLON & LUNG CANCER PANEL)
+HUB – Centre d’Anatomie Pathologique – est accrédité par BELAC sous le numéro de
+Secrétariat Médical certificat B-727 MED
+T. +32 (0)2 541 73 23
++32 (0)2 555 33 35
+I. Renseignements anatomopathologiques
+SecMed.AnaPath@hubruxelles.be
+N° du prélèvement : 24MH9721 BN
+Secrétariat Direction
+T. +32 (0)2 555 31 15
+Mme Kathia El Yassini
+Date du prélèvement : 22/07/2024
+Kathia.elyassini@hubruxelles.be
+Mme Véronique Millecamps Origine du prélèvement : Centre Hospitalier de Mouscron
+veronique.millecamps@hubruxelles.be
+Type de prélèvement : Adénocarcinome lieberkühnien
+II. Evaluation de l’échantillon
+- % de cellules tumorales : 50%
+- Qualité du séquençage : Optimale (coverage moyen > 1000x)
+- Les exons à considérer comme non contributifs sont détaillés dans le tableau ci-dessous (point III).
+- Commentaires : Nous attirons votre attention sur le fait que le délai de fixation n'est pas indiqué sur la feuille de demande.
+Un délai de fixation supérieur à 1h pourrait éventuellement avoir un impact sur les résultats.
+1 / 3
+Suite de l'examen N° 24EM03460 concernant le patient
+III. Méthodologie (effectué par : CLVA, NADN, NIDH)
+- Extraction ADN à partir de coupes paraffinées après macrodissection des zones
+tumorales ou à partir de frottis.
+- Détection par « Next Generation Sequencing » (sur Ion Gene Studio S5, Ion Torrent
+avec Kit AmpliSeq colon & lung cancer panel) de mutations dans 22 gènes liés aux
+cancers colorectaux et pulmonaires :
+Exons Non Exons Non
+Contributif Contributif
+Gene RefSeq Exons testés Gene RefSeq Exons testés
+(coverage < (coverage <
+250x)* 250x)*
+AKT1 NM_05163 3 FGFR3 NM_000142 7, 9, 14, 16, 18
+ALK NM_004304 22, 23, 25 KRAS NM_033360 2-4
+BRAF NM_004333 11, 15 MAP2K1 NM_002755 2
+CTNNB1 NM_001904 3 MET NM_001127500 2, 14, 16, 19
+DDR2 NM_001014796 6, 9, 13-16, 18 NOTCH1 NM_017617 26, 

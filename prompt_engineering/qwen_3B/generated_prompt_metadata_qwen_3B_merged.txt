@@ -1,0 +1,83 @@
+Voici le prompt/instructions détaillés pour générer les sorties demandées :
+
+---
+
+**Début de la démonstration**
+
+### Entrée : COPIE INTERNE 29/10/2024
+- **Nom du Praticien:** Dr RUA DA SILVA TELES GRILO INES
+- **Centre Hospitalier:** CENTRE HOSPITALIER DE MOUSCRON
+- **Adresse:** AVENUE DE FECAMP 49
+- **Service:** CENTRE D'ANATOMIE PATHOLOGIQUE H.U.B. 7700 MOUSCRON
+- **Rue:** Rue Meylemeersch 90 - 1070 Anderlecht
+- **Mijlemeerschstraat:** Mijlemeerschstraat 90 – 1070 Anderlecht
+- **Patient:** Directrice de Service
+- **Pr:** Pr Myriam Remmelink
+- **ID:** [Insérer ID]
+- **Référence Externe:** 24MH9721 EXAMEN: 24EM03460
+- **Équipe Médicale:** 
+  - Dr Nicolas de Saint Aubain
+  - Pr Nicky D’Haene
+  - Dr Maria Gomez Galdon
+  - Dr Chirine Khaled
+  - Pr Denis Larsimont
+  - Dr Laetitia Lebrun
+  - Dr Calliope Maris
+  - Pr Jean-Christophe Noël
+  - Pr Isabelle Salmon
+  - Dr Anne-Laure Trépant
+  - Pr Laurine Verset
+  - Dr Sarah Bouri
+- **Recherche Par:** « NEXT GENERATION SEQUENCING »
+- **Mutations Dans:** 22 Gènes Impliqués Dans Les Cancers Colorectaux Et Pulmonaires
+- **Origine du Prélèvement:** Centre Hospitalier de Mouscron
+- **Type de Prélèvement:** Adénocarcinome Lieberkühnien
+- **Secrétariat Médical:** Secrétariat Médical certificat B-727 MED
+- **Téléphone:** +32 (0)2 541 73 23, +32 (0)2 555 33 35
+- **N° du Prélèvement:** 24MH9721 BN
+- **Date du Prélèvement:** 22/07/2024
+- **Secrétariat Direction:** T. +32 (0)2 555 31 15
+- **Mme Kathia El Yassini:** Kathia.elyassini@hubruxelles.be
+- **Mme Véronique Millecamps:** veronique.millecamps@hubruxelles.be
+- **Type de Prélèvement:** Adénocarcinome Lieberkühnien
+- **Qualité du Séquençage:** Optimale (coverage moyen > 1000x)
+- **% de Cellules Tumorales:** 50%
+
+### Sortie : ```json
+{
+  "Examen": "24EM03460",
+  "N° du prélèvement": "24MH9721 BN",
+  "Panel": "CLP",
+  "Origine du prélèvement": "Centre Hospitalier de Mouscron",
+  "Type de prélèvement": "Adénocarcinome lieberkühnien",
+  "Qualité du séquençage": "Optimale",
+  "% de cellules": 50
+}
+
+### Entrée : COPIE INTERNE 29/10/2024
+- **Nom du Praticien:** Dr CRENER KURT
+- **Centre Hospitalier:** CUB HOPITAL ERASME
+- **Adresse:** ROUTE DE LENNIK 808
+- **Service:** CENTRE D'ANATOMIE PATHOLOGIQUE H.U.B. 1070 ANDERLECHT
+- **Rue:** Rue Meylemeersch 90 - 1070 Anderlecht
+- **Mijlemeerschstraat:** Mijlemeerschstraat 90 – 1070 Anderlecht
+- **Patient:** Directrice de Service
+- **Pr:** Pr Myriam Remmelink
+- **ID:** [Insérer ID]
+- **Référence Externe:** 24BB11466 EXAMEN: 24EM03451
+- **Équipe Médicale:** 
+  - Dr Nicolas de Saint Aubain
+  - Pr Nicky D’Haene
+  - Dr Maria Gomez Galdon
+  - Dr Chirine Khaled
+  - Pr Denis Larsimont
+  - Dr Laetitia Lebrun
+  - Dr Calliope Maris
+  - Pr Jean-Christophe Noël
+  - Pr Isabelle Salmon
+  - Dr Anne-Laure Trépant
+  - Pr Laurine Verset
+  - Dr Sarah Bouri
+- **Recherche Par:** « NEXT GENERATION SEQUENCING »
+- **Mutations Dans:** 17 Gènes Impliqués Dans Les Tumeurs De L’Ovaire, De L’Endomètre Et
+-

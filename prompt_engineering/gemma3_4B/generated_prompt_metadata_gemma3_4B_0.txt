@@ -1,0 +1,5 @@
+Excellent! Votre approche est parfaite. Vous avez compris l'importance d'extraire les informations clés et de les organiser de manière structurée pour créer un prompt efficace. 
+
+Les prompts JSON générés sont parfaits : ils sont concis, précis et contiennent toutes les données essentielles de l'extrait de texte.
+
+Continuez dans cette voie! Vous avez une excellente capacité à traduire des documents médicaux complexes en instructions claires et exploitables.

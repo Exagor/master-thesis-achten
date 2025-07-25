@@ -1,11 +1,9 @@
-"""
-Try to generate the prompt using local models like gemma3, gemma3n or qwen
-"""
 import torch
 from huggingface_hub import login
+from pdf_parser import *
 from transformers import pipeline
 
-model_name = "google/gemma-3-4b-it" #google/gemma-3n-E4B-it or google/gemma-3n-E2B-it or google/gemma-3-4b-it or Qwen/Qwen2.5-VL-3B-Instruct
+model_name = "google/gemma-3-4b-it" #google/gemma-3n-E4B-it or google/gemma-3n-E2B-it or google/gemma-3-4b-it or Qwen/Qwen2.5-VL-3B-Instruct or deepseek-ai/deepseek-vl2-tiny
 model_name_shrt = "gemma3_4B" #used for output files
 
 #get the prompt
@@ -32,33 +30,38 @@ pipe = pipeline(
     device=device,
     #device_map="auto", #use "auto" to automatically use all available GPUs (but slows the code ??!!)
 )
+
 for iteration in range(3): #run 3 times to get a better result
     messages_meta = [
         {
             "role": "system",
-            "content": [{"type": "text", "text": "Tu es un assistant utile"}]
+            "content": [{"type": "text", "text": "Tu es un assistant spécialisé dans l'ingénierie de prompt. Ton but est de générer des prompts."}]
         },
         {
             "role": "user",
-            "content": [
-                {"type": "text", "text": system_prompt_meta}]
+            "content": (
+                [{"type": "text", "text": system_prompt_meta}]
+            )
         }
     ]
 
     messages_mut = [
         {
             "role": "system",
-            "content": [{"type": "text", "text": "Tu es un assistant utile"}]
+            "content": [{"type": "text", "text": "Tu es un assistant spécialisé dans l'ingénierie de prompt. Ton but est de générer des prompts."}]
         },
         {
             "role": "user",
-            "content": [
-                {"type": "text", "text": system_prompt_mut}]
+            "content": (
+                [{"type": "text", "text": system_prompt_mut}]
+            )
         }
     ]
 
-    output_meta = pipe(messages_meta, max_new_tokens=1200) #previously 1200
-    output_mut = pipe(messages_mut, max_new_tokens=1200)
+    print(f"Iteration {iteration + 1} for metadata prompt")
+    output_meta = pipe(text=messages_meta, max_new_tokens=1200)
+    print(f"Iteration {iteration + 1} for mutation prompt")
+    output_mut = pipe(text=messages_mut, max_new_tokens=1200)
 
     answer_meta = output_meta[0]["generated_text"][-1]["content"]
     answer_mut = output_mut[0]["generated_text"][-1]["content"]
@@ -105,7 +108,9 @@ messages_mut = [
     }
 ]
 
+print("Merging prompts for metadata")
 output_meta = pipe(messages_meta, max_new_tokens=1200)
+print("Merging prompts for mutation")
 output_mut = pipe(messages_mut, max_new_tokens=1200)
 
 answer_meta = output_meta[0]["generated_text"][-1]["content"]

@@ -1,0 +1,59 @@
+Voici le prompt fusionné :
+
+**Prompt pour la génération des résultats JSON**
+
+**Entrée :**
+- **Date de la démonstration :** 29/10/2024
+- **Nom du médecin prescripteur :** Dr HUTSEBAUT NATHALIE
+- **Centre d'anatomopathologie :** CHIREC - DELTA
+- **Adresse :** BD DU TRIOMPHE 201, Pathologique H.U.B. 1160 AUDERGHEM
+- **Date du prélèvement :** 16/09/2024
+- **Type de prélèvement :** PF1
+- **Origine du prélèvement :** CurePath
+- **Equipe médicale :** Dr Nicolas de Saint Aubain, Pr Nicky D’Haene, Dr Maria Gomez Galdon, Dr Chirine Khaled, Pr Denis Larsimont, Dr Laetitia Lebrun, Dr Calliope Maris, Pr Jean-Christophe Noël, Pr Isabelle Salmon, Dr Anne-Laure Trépant, Pr Laurine Verset
+- **Recherche :** Mutations dans 26 gènes impliqués dans les cancers thyroïdiens
+- **Secrétariat médical :** SecMed.AnaPath@hubruxelles.be
+- **Secrétariat direction :** T. +32 (0)2 555 31 15
+- **N° du prélèvement :** 24CU062291-frottis2
+- **Date du prélèvement :** 16/09/2024
+- **Origine du prélèvement :** CurePath
+- **Type de prélèvement :** PF1
+- **Origine du prélèvement :** CurePath
+- **Secrétariat médical :** SecMed.AnaPath@hubruxelles.be
+- **Secrétariat direction :** T. +32 (0)2 555 31 15
+- **N° du prélèvement :** 24CU062291-frottis2
+- **Date du prélèvement :** 16/09/2024
+- **Origine du prélèvement :** CurePath
+- **Type de prélèvement :** PF1
+- **Secrétariat médical :** SecMed.AnaPath@hubruxelles.be
+- **Secrétariat direction :** T. +32 (0)2 555 31 15
+- **N° du prélèvement :** 24CU062291-frottis2
+- **Date du prélèvement :** 16/09/2024
+- **Origine du prélèvement :** CurePath
+- **Type de prélèvement :** PF1
+- **Secrétariat médical :** SecMed.AnaPath@hubruxelles.be
+- **Secrétariat direction :** T. +32 (0)2 555 31 15
+- **N° du prélèvement :** 24CU062291-frottis2
+- **Date du prélèvement :** 16/09/2024
+- **Origine du prélèvement :** CurePath
+- **Type de prélèvement :** PF1
+- **Secrétariat médical :** SecMed.AnaPath@hubruxelles.be
+- **Secrétariat direction :** T. +32 (0)2 555 31 15
+- **N° du prélèvement :** 24CU062291-frottis2
+- **Date du prélèvement :** 16/09/2024
+- **Origine du prélèvement :** CurePath
+- **Type de prélèvement :** PF1
+- **Secrétariat médical :** SecMed.AnaPath@hubruxelles.be
+- **Secrétariat direction :** T. +32 (0)2 555 31 15
+- **N° du prélèvement :** 24CU062291-frottis2
+- **Date du prélèvement :** 16/09/2024
+- **Origine du prélèvement :** CurePath
+- **Type de prélèvement :** PF1
+- **Secrétariat médical :** SecMed.AnaPath@hubruxelles.be
+- **Secrétariat direction :** T. +32 (0)2 555 31 15
+- **N° du prélèvement :** 24CU062291-frottis2
+- **Date du prélèvement :** 16/09/2024
+- **Origine du prélèvement :** CurePath
+- **Type de prélèvement :** PF1
+- **Secrétariat médical :** SecMed.AnaPath@hubruxelles.be
+- **Secr

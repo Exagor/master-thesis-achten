@@ -5,7 +5,7 @@ pandas==2.2.3
 camelot-py==1.0.0 #in conflict with pdfplumber (because use different pdf-miner version)
 # tensorflow==2.18.0 #maybe not and use pytorch instead
 torch==2.7.1
-transformers==4.51.3
+transformers==4.53.3 #was 4.51.3
 datasets==3.5.0
 evaluate==0.4.3
 accelerate==1.6.0
@@ -16,3 +16,4 @@ tqdm==4.67.1
 sentencepiece==0.2.0
 levenshtein==0.27.1
 qwen-vl-utils[decord]==0.0.8 #only used for qwen2.5VL
+timm #used by gemma 3n

@@ -1,0 +1,62 @@
+### Prompt pour la génération des résultats JSON
+
+**Entrée :**
+- **Date de la démonstration :** 29/10/2024
+- **Nom du médecin prescripteur :** Dr RUA DA SILVA TELES GRILO
+- **Centre d'anatomopathologie :** HUB – Centre d’Anatomie Pathologique
+- **Adresse :** Avenue de Fécamp 49, Centre d’Anatomie Pathologique H.U.B. 7700 Mouscron, Rue Meylemeersch 90 - 1070 Anderlecht, Mijlemeerschstraat 90 – 1070 Anderlecht
+- **Patient :** Inès
+- **Directrice de service :** Pr Myriam Remmelink
+- **Référence externe :** 24MH9721
+- **Référence interne :** 24EM03460
+- **Date de prélèvement :** 22/07/2024
+- **Date de reçu :** 08/08/2024
+- **Équipe médicale :** Dr Nicolas de Saint Aubain, Pr Nicky D’Haene, Dr Maria Gomez Galdon, Dr Chirine Khaled, Pr Denis Larsimont, Dr Laetitia Lebrun, Dr Calliope Maris, Pr Jean-Christophe Noël, Pr Isabelle Salmon, Dr Anne-Laure Trépant, Pr Laurine Verset, Dr Sarah Bouri, Dr Xavier Catteau, Dr Roland de Wind, Dr Valérie Segers, Dr Anne Theunis, Dr Marie-Paule Van Craynest
+- **Recherche :** Next Generation Sequencing pour mutations dans 22 gènes impliqués dans les cancers colorectaux et pulmonaires
+- **Type de prélèvement :** Adénocarcinome lieberkühnien
+- **Type de prélèvement :** Colorectal Cancer Panel
+- **Date du prélèvement :** 22/07/2024
+- **Origine du prélèvement :** Centre Hospitalier de Mouscron
+- **Type de prélèvement :** Adénocarcinome lieberkühnien
+- **Type de prélèvement :** Colorectal Cancer Panel
+- **Date du prélèvement :** 16/09/2024
+- **Origine du prélèvement :** CurePath
+- **Type de prélèvement :** PF1
+- **Type de prélèvement :** Thyroid Cancer Panel
+- **Date du prélèvement :** 16/09/2024
+- **Origine du prélèvement :** CurePath
+- **Type de prélèvement :** PF1
+- **Type de prélèvement :** Thyroid Cancer Panel
+- **Date du prélèvement :** 16/09/2024
+- **Origine du prélèvement :** CurePath
+- **Type de prélèvement :** PF1
+- **Type de prélèvement :** Thyroid Cancer Panel
+- **Date du prélèvement :** 16/09/2024
+- **Origine du prélèvement :** CurePath
+- **Type de prélèvement :** PF1
+- **Type de prélèvement :** Thyroid Cancer Panel
+- **Date du prélèvement :** 16/09/2024
+- **Origine du prélèvement :** CurePath
+- **Type de prélèvement :** PF1
+- **Type de prélèvement :** Thyroid Cancer Panel
+- **Date du prélèvement :** 16/09/2024
+- **Origine du prélèvement :** CurePath
+- **Type de prélèvement :** PF1
+- **Type de prélèvement :** Thyroid Cancer Panel
+- **Date du prélèvement :** 16/09/2024
+- **Origine du prélèvement :** CurePath
+- **Type de prélèvement :** PF1
+- **Type de prélèvement :** Thyroid Cancer Panel
+- **Date du prélèvement :** 16/09/2024
+- **Origine du prélèvement :** CurePath
+- **Type de prélèvement :** PF1
+- **Type de prélèvement :** Thyroid Cancer Panel
+- **Date du prélèvement :** 16/09/2024
+- **Origine du prélèvement :** CurePath
+- **Type de prélèvement :** PF1
+- **Type de prélèvement :** Thyroid Cancer Panel
+- **Date du prélèvement :** 16/09/2024
+- **Origine du prélèvement :** CurePath
+- **Type de prélèvement :** PF1
+- **Type de prélèvement :** Thyroid Cancer Panel
+- **Date du prélèvement :** 16/09/2024
