@@ -11,9 +11,39 @@ from transformers import pipeline
 from tqdm import tqdm
 import torch
 
-model_name = "google/gemma-3-4b-it" #google/gemma-3n-E4B-it or google/gemma-3n-E2B-it or google/gemma-3-4b-it or Qwen/Qwen2.5-VL-3B-Instruct
-model_name_shrt = "gemma3_4B"
-prompt_names = ["gpt4o","gpto3","gemini", "gemma3_4B"]
+model_name = "meta-llama/Llama-3.2-1B-Instruct" # google/gemma-3-4b-it or Qwen/Qwen2.5-VL-3B-Instruct or google/gemma-3-1b-it or meta-llama/Llama-3.2-3B-Instruct or meta-llama/Llama-3.2-1B-Instruct
+model_name_shrt = "llama32_1B"
+prompt_names = ["gpt4o","gpto3","gemini", "gemma3_4B"]#"gpt4o","gpto3","gemini", "gemma3_4B"
+
+# Get example input (text+image)
+pdf_folder_path = "data/PDF"
+pdf_files = [f for f in os.listdir(pdf_folder_path) if f.endswith('.pdf')]
+# pdf_files = ["24EM03456.pdf"]
+
+pdf_text_image = {}
+for pdf_file in pdf_files:
+    pdf_text_image[os.path.splitext(pdf_file)[0]] = {"text":extract_with_pdfplumber(os.path.join(pdf_folder_path,pdf_file))}
+    pdf_images = extract_pdf2image(f"{pdf_folder_path}/{pdf_file}")
+    pdf_text_image[os.path.splitext(pdf_file)[0]]["image"] = pdf_images
+
+# Login to Hugging Face to enable the use of gemma 3
+with open("login_huggingface.txt", "r") as f:
+    token = f.read()
+try:
+    login(token) #token from huggingface.co necessary to use gemma3
+except Exception as e:
+    print(f"Failed to login to hugging face: {e}")
+
+# Create the model and processor
+device = "cuda"
+
+pipe = pipeline(
+    "text-generation", # "image-text-to-text" or "text-generation"
+    model=model_name,
+    torch_dtype=torch.bfloat16,
+    device=device,
+    #device_map="auto", #use "auto" to automatically use all available GPUs (but slows the code ??!!)
+)
 
 for prompt_name in prompt_names:
     #get the prompt
@@ -21,36 +51,6 @@ for prompt_name in prompt_names:
         system_prompt_meta = f.read()
     with open(f"prompt/generated_prompt_mutation_{prompt_name}_merged.txt", "r") as f:
         system_prompt_mut = f.read()
-
-    # Get example input (text+image)
-    pdf_folder_path = "data/PDF"
-    pdf_files = [f for f in os.listdir(pdf_folder_path) if f.endswith('.pdf')]
-    # pdf_files = ["24EM03456.pdf"]
-
-    pdf_text_image = {}
-    for pdf_file in pdf_files:
-        pdf_text_image[os.path.splitext(pdf_file)[0]] = {"text":extract_with_pdfplumber(os.path.join(pdf_folder_path,pdf_file))}
-        pdf_images = extract_pdf2image(f"{pdf_folder_path}/{pdf_file}")
-        pdf_text_image[os.path.splitext(pdf_file)[0]]["image"] = pdf_images
-
-    # Login to Hugging Face to enable the use of gemma 3
-    with open("login_huggingface.txt", "r") as f:
-        token = f.read()
-    try:
-        login(token) #token from huggingface.co necessary to use gemma3
-    except Exception as e:
-        print(f"Failed to login to hugging face: {e}")
-
-    # Create the model and processor
-    device = "cuda"
-
-    pipe = pipeline(
-        "image-text-to-text", # "image-text-to-text" or "text-generation"
-        model=model_name,
-        torch_dtype=torch.bfloat16,
-        device=device,
-        #device_map="auto", #use "auto" to automatically use all available GPUs (but slows the code ??!!)
-    )
 
     metadata_data = []
     mutation_data = []
@@ -67,8 +67,8 @@ for prompt_name in prompt_names:
                 "role": "user",
                 "content": [
                     {"type": "text", "text": pdf["text"]}]
-                    # {"type":"image", "image": pdf["image"][0]}]
-                    + [{"type": "image", "image": img} for img in pdf["image"]]
+                    #{"type":"image", "image": pdf["image"][0]}]
+                    #+ [{"type": "image", "image": img} for img in pdf["image"]]
             }
         ]
 
@@ -81,15 +81,15 @@ for prompt_name in prompt_names:
                 "role": "user",
                 "content": [
                     {"type": "text", "text": pdf["text"]}]
-                    # {"type":"image", "image": pdf["image"][0]}]
-                    + [{"type": "image", "image": img} for img in pdf["image"]]
+                    #{"type":"image", "image": pdf["image"][1]}]
+                    #+ [{"type": "image", "image": img} for img in pdf["image"]]
             }
         ]
 
         # Run the inference
         print(f"Processing {pdf_number} with {model_name_shrt} and prompt {prompt_name}")
-        output_meta = pipe(text=messages_meta, max_new_tokens=300) #don't forget the text= parameter and temperature=0 doesn't work
-        output_mut = pipe(text=messages_mut, max_new_tokens=550)
+        output_meta = pipe(messages_meta, max_new_tokens=300) #don't forget the text= parameter and temperature=0 doesn't work
+        output_mut = pipe(messages_mut, max_new_tokens=600)
 
         # Process the output
         answer_meta = output_meta[0]["generated_text"][-1]["content"]

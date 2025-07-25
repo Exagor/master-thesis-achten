@@ -95,7 +95,7 @@ for pdf_number,text_pdf in tqdm(pdf_texts.items()):
     time_meta_data.append(elapsed_time)
     logger.info(f"Pipeline inference time for metadata: {elapsed_time:.2f} seconds")
     start_time = time.time()
-    output_mut = pipe(messages_mut, max_new_tokens=550)
+    output_mut = pipe(messages_mut, max_new_tokens=650)
     elapsed_time = time.time() - start_time
     time_mutation_data.append(elapsed_time)
     logger.info(f"Pipeline inference time for mutations: {elapsed_time:.2f} seconds")
