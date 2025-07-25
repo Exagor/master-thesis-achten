@@ -156,6 +156,9 @@ def levenshtein_distance(s1, s2):
     return Levenshtein.distance(str(s1), str(s2))
 
 def normalized_levenshtein_similarity(s1, s2, t=0.5):
+    # handle the Nan case
+    if pd.isna(s1) or pd.isna(s2):
+        return 0
     # If both are floats or ints, compare as integers (removing .0)
     if isinstance(s1, (float, int)) and isinstance(s2, (float, int)):
         s1_str = str(int(s1))
@@ -303,31 +306,37 @@ if __name__ == "__main__":
     # model_excel_path = 'data/verified_metadata.xlsx'
     true_csv_path_meta = 'data/verified_metadata.csv'
     true_csv_path_mut = 'data/verified_mutations_without_none.csv'
-    print_res = False
+    print_res = True
 
-    model_excel_path_meta = 'out/hand_pdf_parser_metadata.xlsx'
-    model_excel_path_mut = 'out/hand_pdf_parser_mutation.xlsx'
-    print("---- Evaluating rule based results ----")
-    evaluate_model_metadata(model_excel_path_meta, true_csv_path_meta)
-    evaluate_metadata_levenshtein(model_excel_path_meta, true_csv_path_meta)
-    evaluate_model_mutations(model_excel_path_mut, true_csv_path_mut)
-    evaluate_mutations_levenshtein(model_excel_path_mut, true_csv_path_mut)
+    # model_excel_path_meta = 'out/hand_pdf_parser_metadata.xlsx'
+    # model_excel_path_mut = 'out/hand_pdf_parser_mutation.xlsx'
+    # print("---- Evaluating rule based results ----")
+    # evaluate_model_metadata(model_excel_path_meta, true_csv_path_meta)
+    # evaluate_metadata_levenshtein(model_excel_path_meta, true_csv_path_meta)
+    # evaluate_model_mutations(model_excel_path_mut, true_csv_path_mut)
+    # evaluate_mutations_levenshtein(model_excel_path_mut, true_csv_path_mut)
 
-    model_excel_path_meta = 'out/metadata_camembert.xlsx'
-    print("---- Evaluating Camembert results ----")
-    evaluate_model_metadata(model_excel_path_meta, true_csv_path_meta)
-    evaluate_metadata_levenshtein(model_excel_path_meta, true_csv_path_meta)
+    # model_excel_path_meta = 'out/metadata_camembert.xlsx'
+    # print("---- Evaluating Camembert results ----")
+    # evaluate_model_metadata(model_excel_path_meta, true_csv_path_meta)
+    # evaluate_metadata_levenshtein(model_excel_path_meta, true_csv_path_meta)
     
-    model_excel_path_meta = 'out/metadata_gemma3_4B.xlsx'
-    model_excel_path_mut = 'out/mutation_gemma3_4B.xlsx'
+    # ["gemma3_4B", "gemma3_1B", "llama32_1B", "llama32_3B", "qwen_3B" ]
+    # ["gpt4o", "gpto3", "gemini", "gemma3_4B"]
+    model = "qwen_3B"
+    prompt = "gemini"
+    model_excel_path_meta = f'out/metadata_{model}_{prompt}.xlsx'
+    model_excel_path_mut = f'out/mutation_{model}_{prompt}.xlsx'
     print("---- Evaluating gemma 3 4B results ----")
     evaluate_model_metadata(model_excel_path_meta, true_csv_path_meta)
     scores_leven_meta = evaluate_metadata_levenshtein(model_excel_path_meta, true_csv_path_meta, print_results=print_res)
+    print(f"Average levenshtein similarity for metadata: {sum(scores_leven_meta.values()) / len(scores_leven_meta)}")
     evaluate_model_mutations(model_excel_path_mut, true_csv_path_mut)
     scores_leven_mut = evaluate_mutations_levenshtein(model_excel_path_mut, true_csv_path_mut, print_results=print_res)
 
-    print(f"Average levenshtein similarity for metadata: {sum(scores_leven_meta.values()) / len(scores_leven_meta)}")
-    print(f"Average levenshtein similarity for mutations: {sum(scores_leven_mut.values()) / len(scores_leven_mut)}")
+    df = pd.read_excel(model_excel_path_mut)
+    num_mutations = df.shape[0]
+    print(f"Average levenshtein similarity for mutations: {(sum(scores_leven_mut.values()) / len(scores_leven_mut))*num_mutations/24}")
 
     # Calculate time statistics
     # time_data_path = 'out/times_gemma3_4B.xlsx'
