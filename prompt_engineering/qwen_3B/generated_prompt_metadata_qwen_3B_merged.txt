@@ -1,7 +1,3 @@
-Voici le prompt/instructions détaillés pour générer les sorties demandées :
-
----
-
 **Début de la démonstration**
 
 ### Entrée : COPIE INTERNE 29/10/2024

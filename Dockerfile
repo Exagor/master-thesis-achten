@@ -26,6 +26,6 @@ COPY . .
 
 # Default command to run the pipeline
 #CMD ["python", "src/LLM_pipeline.py"]
-#CMD ["python", "src/evaluate_prompt.py"]
-CMD ["python", "src/generate_prompt.py"]
+CMD ["python", "src/evaluate_prompt.py"]
+#CMD ["python", "src/generate_prompt.py"]
 #CMD ["python", "src/LM_pipeline.py"]

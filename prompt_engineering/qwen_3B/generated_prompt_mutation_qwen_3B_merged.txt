@@ -1,7 +1,3 @@
-Voici le prompt fusionné :
-
-**Prompt pour la génération des résultats JSON**
-
 **Entrée :**
 - **Date de la démonstration :** 29/10/2024
 - **Nom du médecin prescripteur :** Dr HUTSEBAUT NATHALIE
