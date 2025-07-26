@@ -2,6 +2,7 @@ from pdf_parser import *
 import os
 from transformers import AutoTokenizer, AutoModelForQuestionAnswering, pipeline
 import json
+import pandas as pd
 
 pdf_folder_path = "../data/PDF/"
 pdf_files_path = [f for f in os.listdir(pdf_folder_path) if f.endswith('.pdf')]
@@ -15,7 +16,7 @@ tokenizer = AutoTokenizer.from_pretrained("almanach/camembertav2-base-fquad")
 
 qa_pipeline = pipeline("question-answering", model=model, tokenizer=tokenizer)
 
-with open("../prompt/metadata_columns_prompt.json", "r") as f:
+with open("prompt/metadata_columns_prompt.json", "r") as f:
     metadata_prompt = json.load(f)
 
 # Prepare all (id, col_name, question, context) tuples
@@ -40,7 +41,5 @@ for (id, col_name), result in zip(id_col_pairs, results):
 print(final_table)
 
 # save the results in an xlsx file
-import pandas as pd
-
 df = pd.DataFrame.from_dict(final_table, orient='index')
-df.to_excel("../out/metadata_camembert.xlsx", index=False)
+df.to_excel("out/metadata_camembert.xlsx", index=False)

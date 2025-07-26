@@ -13,9 +13,11 @@ plt.bar(categories, values, color=['blue', 'orange'])
 # for i, v in enumerate(values):
 #     plt.text(i, v + 0.02, f'{v:.2f}', ha='center', fontsize=20)
 
-plt.ylabel('ANLS')
+plt.xticks(fontsize=14)
+plt.ylabel('ANLS', fontsize=14)
 #plt.title('Comparison of ANLS over the model size')
 plt.ylim([0, 1])
+plt.yticks(np.arange(0, 1.1, 0.1), fontsize=14)
 
 plt.savefig("figs/gemma_size_comparison_meta.pdf")
 plt.show()

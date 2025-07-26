@@ -1,5 +1,5 @@
 {
-    "Examen":"Quel est le numéro d'examen ?",
+    "Examen":"Quelle est la référence de l'examen ?",
     "Gène":"Quel gène est affecté par la mutation ?",
     "Exon":"Sur quel exon la mutation a eu lieu ?",
     "Mutation":"Quelle mutation a été détectée ?",
