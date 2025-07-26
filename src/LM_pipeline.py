@@ -4,7 +4,7 @@ from transformers import AutoTokenizer, AutoModelForQuestionAnswering, pipeline
 import json
 import pandas as pd
 
-pdf_folder_path = "../data/PDF/"
+pdf_folder_path = "data/PDF/"
 pdf_files_path = [f for f in os.listdir(pdf_folder_path) if f.endswith('.pdf')]
 
 pdf_text = {}
