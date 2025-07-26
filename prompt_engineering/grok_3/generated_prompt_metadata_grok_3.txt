@@ -1,0 +1,71 @@
+Vous êtes chargé de transformer un rapport médical d'analyse génétique par séquençage de nouvelle génération (NGS) en un objet JSON structuré. Le rapport contient des informations anatomopathologiques et des détails sur le séquençage génétique. À partir du texte fourni, extrayez les informations spécifiques suivantes et générez un objet JSON avec les clés et valeurs correspondantes, en suivant strictement les règles décrites ci-dessous.
+
+### Instructions pour l'extraction des données :
+1. **Examen** :
+   - Extrait la valeur associée à "EXAMEN" dans le rapport (par exemple, "24EM03460").
+   - Cette valeur est toujours présente dans la section initiale du rapport, après "Réf. Externe" et avant "Prélevé le".
+   - Formatez-la telle qu'elle apparaît dans le texte.
+
+2. **N° du prélèvement** :
+   - Extrait la valeur associée à "N° du prélèvement" dans la section "I. Renseignements anatomopathologiques".
+   - Cette valeur peut inclure des suffixes comme "BN", "07", "-frottis2" ou "-1.1". Conservez la valeur complète telle qu'elle apparaît.
+   - Si aucune modification n'est indiquée, utilisez la valeur brute sans ajout.
+
+3. **Panel** :
+   - Déterminez le type de panel de séquençage utilisé en fonction de la description dans la section initiale ou dans la méthodologie (point III). Utilisez les règles suivantes pour attribuer un code de panel :
+     - Si le texte mentionne "COLON & LUNG CANCER PANEL" ou "cancers colorectaux et pulmonaires", attribuez le code `"CLP"`.
+     - Si le texte mentionne "TUMEURS DE L’OVAIRE, DE L’ENDOMETRE ET DU SEIN", attribuez le code `"GP"`.
+     - Si le texte mentionne "THYROID CANCER PANEL" ou "cancers thyroïdiens", attribuez le code `"TP"`.
+     - Si le texte mentionne "Colon and Lung Panel + Oncomine Solid Tumor-plus PANEL" ou "cancers pulmonaires, GIST et mélanomes", attribuez le code `"OST"`.
+     - Si le texte mentionne "CANCER PANEL" ou "50 GENES IMPLIQUES DANS LE CANCER", attribuez le code `"CHP"`.
+   - Si aucun panel spécifique n'est identifié, ne fournissez pas de valeur pour cette clé ou laissez-la vide.
+
+4. **Origine du prélèvement** :
+   - Extrait la valeur associée à "Origine du prélèvement" dans la section "I. Renseignements anatomopathologiques".
+   - Conservez la valeur telle qu'elle apparaît, par exemple "Centre Hospitalier de Mouscron", "HUB", "CurePath" ou "CMP Pathology".
+   - Si aucune origine n'est spécifiée, laissez la valeur vide.
+
+5. **Type de prélèvement** :
+   - Extrait la valeur associée à "Type de prélèvement" dans la section "I. Renseignements anatomopathologiques".
+   - Conservez la valeur telle qu'elle apparaît, par exemple "Adénocarcinome lieberkühnien", "Tumeur de la granulosa", "PF1" ou "masse gastrique".
+   - Si aucune valeur n'est spécifiée, laissez la valeur vide.
+
+6. **Qualité du séquençage** :
+   - Extrait la valeur associée à "Qualité du séquençage" dans la section "II. Evaluation de l’échantillon".
+   - Cette valeur est généralement indiquée comme "Optimale" si le coverage moyen est supérieur à 1000x, ou une autre description si fournie.
+   - Si aucune valeur explicite n'est mentionnée, laissez la valeur vide.
+
+7. **% de cellules** :
+   - Extrait la valeur associée à "% de cellules tumorales" ou "% de cellules à analyser" dans la section "II. Evaluation de l’échantillon".
+   - Conservez la valeur numérique telle qu'elle apparaît (par exemple, 50, 30, 10, 70).
+   - Si aucune valeur n'est spécifiée, laissez la valeur vide.
+
+### Instructions pour la génération du JSON :
+- Créez un objet JSON avec les clés suivantes, dans l'ordre : `"Examen"`, `"N° du prélèvement"`, `"Panel"`, `"Origine du prélèvement"`, `"Type de prélèvement"`, `"Qualité du séquençage"`, `"% de cellules"`.
+- Assurez-vous que les valeurs sont extraites verbatim (sans modification sauf indication contraire) et correspondent exactement au texte du rapport.
+- Si une information n'est pas disponible dans le rapport, ne fournissez pas de valeur par défaut ou inventée ; laissez la clé avec une valeur vide ou omettez-la si elle n'est pas pertinente.
+- Le JSON doit être formaté avec une indentation de 2 espaces pour la lisibilité, et entouré de triples backticks avec l'identifiant `json` (```json ... ```).
+
+### Exemple de structure JSON attendue :
+```json
+{
+  "Examen": "valeur_extraite",
+  "N° du prélèvement": "valeur_extraite",
+  "Panel": "code_panel",
+  "Origine du prélèvement": "valeur_extraite",
+  "Type de prélèvement": "valeur_extraite",
+  "Qualité du séquençage": "valeur_extraite",
+  "% de cellules": valeur_numerique
+}
+```
+
+### Contraintes supplémentaires :
+- Ne modifiez pas les valeurs extraites sauf si explicitement requis par les règles (par exemple, pour le code du panel).
+- Ne faites pas d'hypothèses sur les données manquantes.
+- Assurez-vous que le JSON est syntaxiquement correct et conforme aux exemples fournis.
+- Ignorez toutes les informations non pertinentes pour les clés demandées (par exemple, les résultats des mutations, les commentaires, les gènes testés, etc.).
+- Si plusieurs panels sont mentionnés, utilisez le code correspondant à la description la plus spécifique ou la plus large (par exemple, "CANCER PANEL" prend le code "CHP").
+
+### Validation :
+- Vérifiez que les valeurs extraites correspondent exactement aux exemples fournis dans la démonstration.
+- Assurez-vous que le code du panel est cohérent avec les descriptions des panels dans les exemples (CLP, GP, TP, OST, CHP).

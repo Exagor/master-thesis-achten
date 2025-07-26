@@ -324,9 +324,9 @@ if __name__ == "__main__":
     # ["gemma3_4B", "gemma3_1B", "llama32_1B", "llama32_3B", "qwen_3B" ]
     # ["gpt4o", "gpto3", "gemini", "gemma3_4B"]
     model = "qwen_3B"
-    prompt = "gemini"
-    model_excel_path_meta = f'out/metadata_{model}_{prompt}.xlsx'
-    model_excel_path_mut = f'out/mutation_{model}_{prompt}.xlsx'
+    prompt = "gpto3"
+    model_excel_path_meta = f'prompt_engineering/experiments/metadata_{model}_{prompt}.xlsx'
+    model_excel_path_mut = f'prompt_engineering/experiments/mutation_{model}_{prompt}.xlsx'
     print("---- Evaluating gemma 3 4B results ----")
     evaluate_model_metadata(model_excel_path_meta, true_csv_path_meta)
     scores_leven_meta = evaluate_metadata_levenshtein(model_excel_path_meta, true_csv_path_meta, print_results=print_res)
