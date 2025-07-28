@@ -11,6 +11,7 @@ import pandas as pd
 import pdfplumber
 import re
 from pdf2image import convert_from_path
+import json
 
 # Create a logger
 logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO)
@@ -32,6 +33,47 @@ def extract_with_pymupdf(pdf_path:str) -> str:
     text = "\n".join(text)
     logging.info("Text extracted from the PDF file")
     return text
+
+def extract_dict_from_string(s):
+    start = s.find('{')
+    if start == -1:
+        return None  # No dictionary found
+
+    brace_count = 0
+    for i in range(start, len(s)):
+        if s[i] == '{':
+            brace_count += 1
+        elif s[i] == '}':
+            brace_count -= 1
+            if brace_count == 0:
+                dict_str = s[start:i+1]
+                try:
+                    # Try parsing as JSON
+                    return json.loads(dict_str)
+                except json.JSONDecodeError:
+                    logging.debug(f"Metadata output: {s}")
+    return None  # No matching closing brace found
+
+def extract_list_of_dicts_from_string(s):
+    start = s.find('[')
+    if start == -1:
+        return None  # No list found
+
+    bracket_count = 0
+    for i in range(start, len(s)):
+        if s[i] == '[':
+            bracket_count += 1
+        elif s[i] == ']':
+            bracket_count -= 1
+            if bracket_count == 0:
+                list_str = s[start:i+1]
+                try:
+                    # Try to parse as JSON
+                    return json.loads(list_str)
+                except json.JSONDecodeError:
+                    print(f"Failed JSON decode : {s}")
+
+    return None  # No matching closing bracket
 
 def format_metadata(text:str) -> dict:
     examen_info = re.findall(r'EXAMEN\s*:\s*(\S+)', text)

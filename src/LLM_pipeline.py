@@ -102,22 +102,18 @@ for pdf_number,text_pdf in tqdm(pdf_texts.items()):
 
     # Process the output
     answer_meta = output_meta[0]["generated_text"][-1]["content"]
-    cleaned_meta = answer_meta.replace("```json", "").replace("```", "").strip() #clean the answer
-    try: #to handle when the answer is not a valid json
-        data_meta = json.loads(cleaned_meta)
-        metadata_data.append(data_meta)
-        logger.debug(f"Metadata output: {data_meta}")
-    except json.JSONDecodeError as e:
-        logger.error(f"Failed to decode JSON for {pdf_number}: {e} \nContent: {cleaned_meta}")
+    cleaned_meta = extract_dict_from_string(answer_meta)
+    if cleaned_meta is not None:
+        metadata_data.append(cleaned_meta)
+    else:
+        logger.error(f"Failed to extract metadata from output for {pdf_number}, content: {answer_meta}")
 
     answer_mut = output_mut[0]["generated_text"][-1]["content"]
-    cleaned_mut = answer_mut.replace("```json", "").replace("```", "").strip() #clean the answer
-    try:
-        data_mut = json.loads(cleaned_mut)
-        mutation_data.append(data_mut)
-        logger.debug(f"Mutation output: {data_mut}")
-    except json.JSONDecodeError as e:
-        logger.error(f"Failed to decode JSON for {pdf_number}: {e} \nContent: {cleaned_mut}")
+    cleaned_mut = extract_list_of_dicts_from_string(answer_mut)
+    if cleaned_mut is not None:
+        metadata_data.append(cleaned_mut)
+    else:
+        logger.error(f"Failed to extract mutation data from output for {pdf_number}, content: {answer_mut}")
 
 #transform into DataFrame and save to excel
 try:
