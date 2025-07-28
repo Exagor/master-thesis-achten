@@ -238,7 +238,7 @@ def evaluate_mutations_levenshtein(model_path, true_path, print_results=True):
     exam_col = true_df.columns[0]
     model_grouped = model_df.groupby(exam_col)
     true_grouped = true_df.groupby(exam_col)
-
+  
     all_exam_numbers = set(model_grouped.groups.keys()) & set(true_grouped.groups.keys())
     if not all_exam_numbers:
         print("No matching exam numbers found for Levenshtein evaluation.")
@@ -322,9 +322,9 @@ if __name__ == "__main__":
     # evaluate_metadata_levenshtein(model_excel_path_meta, true_csv_path_meta)
     
     # ["gemma3_4B", "gemma3_1B", "llama32_1B", "llama32_3B", "qwen_3B" ]
-    # ["gpt4o", "gpto3", "gemini", "gemma3_4B"]
-    model = "qwen_3B"
-    prompt = "gpto3"
+    # ["gpt4o", "gpto3", "gemini", "gemma3_4B", "grok"]
+    model = "qwen_3B"  # Change this to the model you want to evaluate
+    prompt = "grok"
     model_excel_path_meta = f'prompt_engineering/experiments/metadata_{model}_{prompt}.xlsx'
     model_excel_path_mut = f'prompt_engineering/experiments/mutation_{model}_{prompt}.xlsx'
     print("---- Evaluating gemma 3 4B results ----")
