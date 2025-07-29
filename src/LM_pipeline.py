@@ -1,4 +1,4 @@
-from pdf_parser import *
+from utils import *
 import os
 from transformers import AutoTokenizer, AutoModelForQuestionAnswering, pipeline
 import json

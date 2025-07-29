@@ -1,6 +1,6 @@
 import torch
 from huggingface_hub import login
-from pdf_parser import *
+from utils import *
 from transformers import pipeline
 
 model_name = "google/gemma-3-4b-it" #google/gemma-3n-E4B-it or google/gemma-3n-E2B-it or google/gemma-3-4b-it or Qwen/Qwen2.5-VL-3B-Instruct or deepseek-ai/deepseek-vl2-tiny

@@ -5,7 +5,7 @@ import pandas as pd
 import torch
 import time
 from huggingface_hub import login
-from pdf_parser import *
+from utils import *
 from transformers import pipeline
 from tqdm import tqdm
 

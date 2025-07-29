@@ -5,77 +5,21 @@ Simple implementation using pdf parser and a rule based approach to extract keys
 import camelot
 import fitz
 import logging
-import numpy as np
 import os
 import pandas as pd
-import pdfplumber
 import re
-from pdf2image import convert_from_path
-import json
 
-# Create a logger
-logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO)
+from utils import *
 
-def extract_with_pdfplumber(pdf_path:str) -> str:
-    text = []
-    with pdfplumber.open(pdf_path) as pdf:
-        for page in pdf.pages:
-            text.append(page.extract_text())
-    text = "\n".join(text)
-    logging.info("Text extracted from the PDF file")
-    return text
-
-def extract_with_pymupdf(pdf_path:str) -> str:
-    text = []
-    with fitz.open(pdf_path) as pdf:
-        for page in pdf:
-            text.append(page.get_text())
-    text = "\n".join(text)
-    logging.info("Text extracted from the PDF file")
-    return text
-
-def extract_dict_from_string(s):
-    start = s.find('{')
-    if start == -1:
-        return None  # No dictionary found
-
-    brace_count = 0
-    for i in range(start, len(s)):
-        if s[i] == '{':
-            brace_count += 1
-        elif s[i] == '}':
-            brace_count -= 1
-            if brace_count == 0:
-                dict_str = s[start:i+1]
-                try:
-                    # Try parsing as JSON
-                    return json.loads(dict_str)
-                except json.JSONDecodeError:
-                    logging.debug(f"Metadata output: {s}")
-    return None  # No matching closing brace found
-
-def extract_list_of_dicts_from_string(s):
-    start = s.find('[')
-    if start == -1:
-        return None  # No list found
-
-    bracket_count = 0
-    for i in range(start, len(s)):
-        if s[i] == '[':
-            bracket_count += 1
-        elif s[i] == ']':
-            bracket_count -= 1
-            if bracket_count == 0:
-                list_str = s[start:i+1]
-                try:
-                    # Try to parse as JSON
-                    return json.loads(list_str)
-                except json.JSONDecodeError:
-                    print(f"Failed JSON decode : {s}")
-
-    return None  # No matching closing bracket
 
 def format_metadata(text:str) -> dict:
+    """
+    Extracts metadata fields from a given text using regular expressions.
+    Args:
+        text (str): The input text from which to extract metadata.
+    Returns:
+        dict: A dictionary containing extracted metadata fields.
+    """
     examen_info = re.findall(r'EXAMEN\s*:\s*(\S+)', text)
     # prelev_info = re.findall(r'N° du prélèvement\s*:\s*(\S+)', text)
     prelev_info = re.findall(r'N° du prélèvement\s*:\s*([^\n\r]+)', text)
@@ -119,25 +63,18 @@ def format_metadata(text:str) -> dict:
 
     return data
 
-def extract_tables_camelot(pdf_path:str):
-    tables = camelot.read_pdf(pdf_path, flavor='lattice', pages='all')
-    logging.info(f"Tables extracted")
-    return tables
-
-def extract_pdf2image(pdf_path, save=False, save_folder_path=None):
-    """
-    Return a list of images of each PDF page extracted.
-    """
-    images = convert_from_path(pdf_path)
-    if save:
-        for i in range(len(images)):
-            page_image = images[i]
-            # Remove .pdf extension from pdf_file
-            image_filename = os.path.splitext(pdf_path)[0]
-            page_image.save(os.path.join(save_folder_path, f"{image_filename}_page_{i}.png"), "PNG")
-    return images
-
 def post_process_data(metadata:dict, tables):
+    """
+    Post-processes extracted metadata and tables.
+    - Merges relevant columns in metadata.
+    - Cleans and formats extracted tables.
+    - Handles clinical impact annotations.
+    Args:
+        metadata (dict): List of metadata dictionaries.
+        tables (list): List of tables extracted from PDFs.
+    Returns:
+        tuple: (DataFrame of metadata, DataFrame of tables)
+    """
     # Process the metadata
     df_doc = pd.DataFrame(metadata)
     # Merge the two columns named "% de cellules tumorales" and "% de cellules à analyser"
@@ -198,8 +135,11 @@ def post_process_data(metadata:dict, tables):
 
 def extract_all(pdf_path: str) -> str:
     """
-    Extract all text from the PDF and insert tables (found with camelot) in the text at the place where they should be, in markdown format.
-    Returns a single string with text and tables in order.
+    Extracts all text from a PDF and inserts tables (found with camelot) in the text at the place where they should be, in markdown format.
+    Args:
+        pdf_path (str): Path to the PDF file.
+    Returns:
+        str: A single string with text and tables in order.
     """
 
     doc = fitz.open(pdf_path)
@@ -245,6 +185,13 @@ def extract_all(pdf_path: str) -> str:
     return '\n\n'.join(output)
 
 def clean_text_pdf(text:str) -> str:
+    """
+    Cleans the extracted text from a PDF by removing footers, merging hyphenated words, and normalizing whitespace.
+    Args:
+        text (str): The input text to clean.
+    Returns:
+        str: The cleaned text.
+    """
     texte_nettoye = []
     pieds_de_page_possibles = set()
     
