@@ -12,8 +12,8 @@ from tqdm import tqdm
 import torch
 import pandas as pd
 
-model_name = "Qwen/Qwen2.5-VL-3B-Instruct" # google/gemma-3-4b-it or Qwen/Qwen2.5-VL-3B-Instruct or google/gemma-3-1b-it or meta-llama/Llama-3.2-3B-Instruct or meta-llama/Llama-3.2-1B-Instruct
-model_name_shrt = "qwen_3B" 
+model_name = "google/gemma-3-4b-it" # google/gemma-3-4b-it or Qwen/Qwen2.5-VL-3B-Instruct or google/gemma-3-1b-it or meta-llama/Llama-3.2-3B-Instruct or meta-llama/Llama-3.2-1B-Instruct
+model_name_shrt = "gemma3_4B"
 prompt_names = ["final3"] # "gpt4o", "gpto3", "gemini", "gemma3_4B", "grok"
 
 # Get example input (text+image)
