@@ -111,7 +111,7 @@ for pdf_number,text_pdf in tqdm(pdf_texts.items()):
     answer_mut = output_mut[0]["generated_text"][-1]["content"]
     cleaned_mut = extract_list_of_dicts_from_string(answer_mut)
     if cleaned_mut is not None:
-        metadata_data.append(cleaned_mut)
+        mutation_data.append(cleaned_mut)
     else:
         logger.error(f"Failed to extract mutation data from output for {pdf_number}, content: {answer_mut}")
 
