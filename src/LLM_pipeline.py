@@ -88,12 +88,14 @@ for pdf_number,text_pdf in tqdm(pdf_texts.items()):
             )
         }
     ]
+
     # Run the inference
     start_time = time.time()
     output_meta = pipe(messages_meta, max_new_tokens=250)
     elapsed_time = time.time() - start_time
     time_meta_data.append(elapsed_time)
     logger.info(f"Pipeline inference time for metadata: {elapsed_time:.2f} seconds")
+
     start_time = time.time()
     output_mut = pipe(messages_mut, max_new_tokens=650)
     elapsed_time = time.time() - start_time
@@ -123,7 +125,10 @@ try:
         df_meta['% de cellules'] = df_meta['% de cellules'].astype(str).str.replace('%', '', regex=False)
     df_meta.to_excel(f"out/metadata_{model_name_shrt}.xlsx", index=False)
     logger.info(f"Saved metadata to out/metadata_{model_name_shrt}.xlsx")
+except Exception as e:
+    logger.error(f"Failed to save output file: {e}")
 
+try:
     # Flatten the mutation data
     flat_mutation_data = [item for sublist in mutation_data for item in sublist]
     df_mut = pd.DataFrame(flat_mutation_data)
@@ -131,7 +136,10 @@ try:
     df_mut = df_mut.dropna()
     df_mut.to_excel(f"out/mutation_{model_name_shrt}.xlsx", index=False)
     logger.info(f"Saved mutation data to out/mutation_{model_name_shrt}.xlsx")
-    
+except Exception as e:
+    logger.error(f"Failed to save output file: {e}")
+
+try:
     # Save processing times
     df_times = pd.DataFrame({
         'PDF': pdf_files_path,
@@ -141,4 +149,4 @@ try:
     df_times.to_excel(f"out/times_{model_name_shrt}.xlsx", index=False)
     logger.info(f"Saved processing times to out/times_{model_name_shrt}.xlsx")
 except Exception as e:
-    logger.error(f"Failed to save output files: {e}")
+    logger.error(f"Failed to save output file: {e}")

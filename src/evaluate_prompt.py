@@ -12,9 +12,9 @@ from tqdm import tqdm
 import torch
 import pandas as pd
 
-model_name = "meta-llama/Llama-3.2-3B-Instruct" # google/gemma-3-4b-it or Qwen/Qwen2.5-VL-3B-Instruct or google/gemma-3-1b-it or meta-llama/Llama-3.2-3B-Instruct or meta-llama/Llama-3.2-1B-Instruct
-model_name_shrt = "llama32_3B"
-prompt_names = ["gpt4o", "gpto3", "gemini", "gemma3_4B", "grok"] # "gpt4o", "gpto3", "gemini", "gemma3_4B", "grok"
+model_name = "google/gemma-3-4b-it" # google/gemma-3-4b-it or Qwen/Qwen2.5-VL-3B-Instruct or google/gemma-3-1b-it or meta-llama/Llama-3.2-3B-Instruct or meta-llama/Llama-3.2-1B-Instruct
+model_name_shrt = "gemma3_4B"
+prompt_names = ["final"] # "gpt4o", "gpto3", "gemini", "gemma3_4B", "grok"
 
 # Get example input (text+image)
 pdf_folder_path = "data/PDF"
@@ -48,9 +48,11 @@ pipe = pipeline(
 
 for prompt_name in prompt_names:
     #get the prompt
-    with open(f"prompt/generated_prompt_metadata_{prompt_name}_merged.txt", "r") as f: #to test gpt4o, gpto3 and gemini
+    # with open(f"prompt/generated_prompt_metadata_{prompt_name}_merged.txt", "r") as f: #to test gpt4o, gpto3 and gemini
+    with open(f"prompt/final_prompt_metadata.md", "r") as f:  # final prompt for metadata extraction
         system_prompt_meta = f.read()
-    with open(f"prompt/generated_prompt_mutation_{prompt_name}_merged.txt", "r") as f:
+    # with open(f"prompt/generated_prompt_mutation_{prompt_name}_merged.txt", "r") as f:
+    with open(f"prompt/final_prompt_mutation.md", "r") as f:  # final prompt for mutation extraction
         system_prompt_mut = f.read()
 
     metadata_data = []

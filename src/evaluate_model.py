@@ -225,10 +225,11 @@ def evaluate_metadata_levenshtein(model_excel_path, true_csv_path, print_results
 def evaluate_mutations_levenshtein(model_path, true_path, print_results=True):
     """
     Compare model mutation results with true results using Levenshtein distance (column-wise).
-    Prints average Levenshtein distance per column.
+    Prints ANLS distance per column.
     """
     model_df = pd.read_excel(model_path)
     true_df = pd.read_csv(true_path)
+    model_df.dropna(inplace=True)  # Drop rows with any NaN values
 
     # Ensure columns are in the same order and names
     model_df = model_df[true_df.columns.intersection(model_df.columns)]
@@ -276,11 +277,26 @@ def evaluate_mutations_levenshtein(model_path, true_path, print_results=True):
         t_vals = matched_true_df[col]
 
         similarities = [normalized_levenshtein_similarity(normalize_string(m), normalize_string(t)) for m, t in zip(m_vals, t_vals)]
-        avg_col_sim = sum(similarities) / len(similarities) if similarities else None
+        avg_col_sim = (sum(similarities) / len(similarities))*(1 - (abs(len(model_df)-len(true_df))/max(len(model_df),len(true_df)))) if similarities else None
         if print_results:
             print(f"  {col}: {avg_col_sim:.3f}")
-        col_similarities[col] = avg_col_sim
+        col_similarities[col] = avg_col_sim #here should multiply by (1- abs(num_mutations - 24)/max(24, num_mutations)) if num_mutations != 0 else 0
     return col_similarities
+
+def evaluate_mutations_levenshtein2(model_path, true_path, print_results=True):
+    # load the dfs
+    model_df = pd.read_excel(model_path)
+    true_df = pd.read_csv(true_path)
+    model_df.dropna(inplace=True)  # Drop rows with any NaN values
+    true_df.dropna(inplace=True)  # Drop rows with any NaN values
+
+    key_cols = list(true_df.columns)
+
+    true_set = {tuple(row) for row in true_df[key_cols].drop_duplicates().to_numpy()}
+    model_set = {tuple(row) for row in model_df[key_cols].drop_duplicates().to_numpy()}
+
+    correct_row = true_set & model_set
+
 
 def calculate_time_stats(time_data_path):
     """
@@ -323,20 +339,20 @@ if __name__ == "__main__":
     
     # ["gemma3_4B", "gemma3_1B", "llama32_1B", "llama32_3B", "qwen_3B" ]
     # ["gpt4o", "gpto3", "gemini", "gemma3_4B", "grok"]
-    model = "qwen_3B"  # Change this to the model you want to evaluate
+    model = "llama32_3B"  # Change this to the model you want to evaluate
     prompt = "grok"
     model_excel_path_meta = f'prompt_engineering/experiments/metadata_{model}_{prompt}.xlsx'
     model_excel_path_mut = f'prompt_engineering/experiments/mutation_{model}_{prompt}.xlsx'
+    
     print("---- Evaluating gemma 3 4B results ----")
+
     evaluate_model_metadata(model_excel_path_meta, true_csv_path_meta)
     scores_leven_meta = evaluate_metadata_levenshtein(model_excel_path_meta, true_csv_path_meta, print_results=print_res)
     print(f"Average levenshtein similarity for metadata: {sum(scores_leven_meta.values()) / len(scores_leven_meta)}")
+
     evaluate_model_mutations(model_excel_path_mut, true_csv_path_mut)
     scores_leven_mut = evaluate_mutations_levenshtein(model_excel_path_mut, true_csv_path_mut, print_results=print_res)
-
-    df = pd.read_excel(model_excel_path_mut)
-    num_mutations = df.shape[0]
-    print(f"Average levenshtein similarity for mutations: {(sum(scores_leven_mut.values()) / len(scores_leven_mut))*num_mutations/24}")
+    print(f"Average levenshtein similarity for mutations: {(sum(scores_leven_mut.values())/len(scores_leven_mut))}")
 
     # Calculate time statistics
     # time_data_path = 'out/times_gemma3_4B.xlsx'
