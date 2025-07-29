@@ -12,9 +12,9 @@ from tqdm import tqdm
 import torch
 import pandas as pd
 
-model_name = "meta-llama/Llama-3.2-3B-Instruct" # google/gemma-3-4b-it or Qwen/Qwen2.5-VL-3B-Instruct or google/gemma-3-1b-it or meta-llama/Llama-3.2-3B-Instruct or meta-llama/Llama-3.2-1B-Instruct
-model_name_shrt = "llama32_3B"
-prompt_names = ["final"] # "gpt4o", "gpto3", "gemini", "gemma3_4B", "grok"
+model_name = "google/gemma-3-4b-it" # google/gemma-3-4b-it or Qwen/Qwen2.5-VL-3B-Instruct or google/gemma-3-1b-it or meta-llama/Llama-3.2-3B-Instruct or meta-llama/Llama-3.2-1B-Instruct
+model_name_shrt = "gemma3_4B" 
+prompt_names = ["final2"] # "gpt4o", "gpto3", "gemini", "gemma3_4B", "grok"
 
 # Get example input (text+image)
 pdf_folder_path = "data/PDF"

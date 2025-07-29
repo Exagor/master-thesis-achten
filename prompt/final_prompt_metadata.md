@@ -13,8 +13,8 @@ Vous recevrez un rapport médical textuel contenant des sections telles que "Ren
    contient **"colorectal" et/ou "pulmonaire"** → `"CLP"`
    contient **"ovaire", "endomètre" ou "sein"** → `"GP"`
    contient **"thyroïdien"** → `"TP"`
-   contient **"GIST", "mélanome", "Colon and Lung", "Solid Tumor-plus"** → `"OST"`
-   contient **"50 gènes"**, **"CANCER PANEL"**, ou **"panel général"** → `"CHP"`
+   contient **"GIST", "mélanome", "Oncomine", "Solid Tumor-plus"** → `"OST"`
+   contient **"CANCER PANEL"**, ou **"panel général"** → `"CHP"`
 
 - "Origine du prélèvement" : La valeur du champ "Origine du prélèvement" (ex. : "Centre Hospitalier de Mouscron", "HUB", "CMP Pathology") telle qu'indiquée dans la section "Renseignements anatomopathologiques".
 - "Type de prélèvement" : La valeur du champ "Type de prélèvement" (ex. : "Adénocarcinome lieberkühnien", "Tumeur de la granulosa", "PF1") telle qu'indiquée dans la section "Renseignements anatomopathologiques".

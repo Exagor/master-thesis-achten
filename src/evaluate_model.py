@@ -157,11 +157,19 @@ def levenshtein_distance(s1, s2):
 
 def normalized_levenshtein_similarity(s1, s2, t=0.5):
     # handle the Nan case
-    if pd.isna(s1) or pd.isna(s2):
+    if pd.isna(s1) and pd.isna(s2):
+        return 1
+    elif pd.isna(s1) or pd.isna(s2):
         return 0
     # If both are floats or ints, compare as integers (removing .0)
     if isinstance(s1, (float, int)) and isinstance(s2, (float, int)):
         s1_str = str(int(s1))
+        s2_str = str(int(s2))
+    elif isinstance(s1, float):
+        s1_str = str(int(s1))
+        s2_str = str(s2)
+    elif isinstance(s2, float):
+        s1_str = str(s1)
         s2_str = str(int(s2))
     else:
         s1_str = str(s1)
@@ -229,7 +237,7 @@ def evaluate_mutations_levenshtein(model_path, true_path, print_results=True):
     """
     model_df = pd.read_excel(model_path)
     true_df = pd.read_csv(true_path)
-    model_df.dropna(inplace=True)  # Drop rows with any NaN values
+    # model_df.dropna(inplace=True)  # Drop rows with any NaN values
 
     # Ensure columns are in the same order and names
     model_df = model_df[true_df.columns.intersection(model_df.columns)]
@@ -239,7 +247,8 @@ def evaluate_mutations_levenshtein(model_path, true_path, print_results=True):
     exam_col = true_df.columns[0]
     model_grouped = model_df.groupby(exam_col)
     true_grouped = true_df.groupby(exam_col)
-  
+    
+    # Find all exam numbers that are present in both model and true data
     all_exam_numbers = set(model_grouped.groups.keys()) & set(true_grouped.groups.keys())
     if not all_exam_numbers:
         print("No matching exam numbers found for Levenshtein evaluation.")
@@ -248,9 +257,11 @@ def evaluate_mutations_levenshtein(model_path, true_path, print_results=True):
     # Collect all rows for matched exam numbers
     matched_model_rows = []
     matched_true_rows = []
+    counter_hallucinations = 0
     for exam in sorted(all_exam_numbers):
         model_rows = model_grouped.get_group(exam)
         true_rows = true_grouped.get_group(exam)
+        counter_hallucinations += abs(len(model_rows) - len(true_rows))
         # If there are multiple rows per exam, align by index
         min_len = min(len(model_rows), len(true_rows))
         for i in range(min_len):
@@ -277,25 +288,12 @@ def evaluate_mutations_levenshtein(model_path, true_path, print_results=True):
         t_vals = matched_true_df[col]
 
         similarities = [normalized_levenshtein_similarity(normalize_string(m), normalize_string(t)) for m, t in zip(m_vals, t_vals)]
-        avg_col_sim = (sum(similarities) / len(similarities))*(1 - (abs(len(model_df)-len(true_df))/max(len(model_df),len(true_df)))) if similarities else None
+        avg_col_sim = (sum(similarities) / len(similarities)) * (1 - counter_hallucinations/max(len(model_df),len(true_df))) if similarities else None
+        # avg_col_sim = (sum(similarities) / len(similarities))*(1 - (abs(len(model_df)-len(true_df))/max(len(model_df),len(true_df)))) if similarities else None
         if print_results:
             print(f"  {col}: {avg_col_sim:.3f}")
         col_similarities[col] = avg_col_sim #here should multiply by (1- abs(num_mutations - 24)/max(24, num_mutations)) if num_mutations != 0 else 0
     return col_similarities
-
-def evaluate_mutations_levenshtein2(model_path, true_path, print_results=True):
-    # load the dfs
-    model_df = pd.read_excel(model_path)
-    true_df = pd.read_csv(true_path)
-    model_df.dropna(inplace=True)  # Drop rows with any NaN values
-    true_df.dropna(inplace=True)  # Drop rows with any NaN values
-
-    key_cols = list(true_df.columns)
-
-    true_set = {tuple(row) for row in true_df[key_cols].drop_duplicates().to_numpy()}
-    model_set = {tuple(row) for row in model_df[key_cols].drop_duplicates().to_numpy()}
-
-    correct_row = true_set & model_set
 
 
 def calculate_time_stats(time_data_path):
@@ -338,11 +336,11 @@ if __name__ == "__main__":
     # evaluate_metadata_levenshtein(model_excel_path_meta, true_csv_path_meta)
     
     # ["gemma3_4B", "gemma3_1B", "llama32_1B", "llama32_3B", "qwen_3B" ]
-    # ["gpt4o", "gpto3", "gemini", "gemma3_4B", "grok"]
-    model = "llama32_3B"  # Change this to the model you want to evaluate
-    prompt = "grok"
-    model_excel_path_meta = f'prompt_engineering/experiments/metadata_{model}_{prompt}.xlsx'
-    model_excel_path_mut = f'prompt_engineering/experiments/mutation_{model}_{prompt}.xlsx'
+    # ["gpt4o", "gpto3", "gemini", "gemma3_4B", "grok"] final
+    model = "qwen_3B"  # Change this to the model you want to evaluate
+    prompt = "final"
+    model_excel_path_meta = f'prompt_engineering/final_prompt_results/metadata_{model}_{prompt}.xlsx'
+    model_excel_path_mut = f'prompt_engineering/final_prompt_results/mutation_{model}_{prompt}.xlsx'
     
     print("---- Evaluating gemma 3 4B results ----")
 

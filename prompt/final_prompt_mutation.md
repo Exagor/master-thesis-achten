@@ -20,7 +20,7 @@ Ordre, casse et orthographe des clés **impérativement respectés** :
 | `Mutation`        | string ou `"None"`    | Notation HGVS protéique ou nucléotidique exacte. |
 | `Coverage`        | integer ou `"None"`   | Profondeur de lecture (colonne *Coverage*).      |
 | `% d'ADN muté`    | integer ou `"None"`   | Valeur entière sans `%`.                         |
-| `Impact clinique` |  `"Avéré"` ou `"Potentiel"` ou `"Indéterminé"` ou `"None"` | Déduire de l’intitulé du tableau. Si aucune mutation → `None`. |
+| `Impact clinique` |  `"Avéré"` ou `"Potentiel"` ou `"Indéterminé"` ou `"None"` | Déduire de la ligne juste au dessus de la mutation dans le tableau. Si aucune mutation → `None`. |
 
 ### 4. Règles d’extraction
 
