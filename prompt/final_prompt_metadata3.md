@@ -13,8 +13,8 @@ Vous recevrez un rapport médical textuel contenant des sections telles que "Ren
    contient **"colorectal" et/ou "pulmonaire"** → `"CLP"`
    contient **"ovaire", "endomètre" ou "sein"** → `"GP"`
    contient **"thyroïdien"** → `"TP"`
-   contient **"GIST", "mélanome", "Colon and Lung", "Solid Tumor-plus"** → `"OST"`
-   contient **"50 gènes"**, **"CANCER PANEL"**, ou **"panel général"** → `"CHP"`
+   contient **"GIST", "mélanome", "Oncomine", "Solid Tumor-plus"** → `"OST"`
+   contient **"CANCER PANEL"**, ou **"panel général"** → `"CHP"`
 
 - "Origine du prélèvement" : La valeur du champ "Origine du prélèvement" (ex. : "Centre Hospitalier de Mouscron", "HUB", "CMP Pathology") telle qu'indiquée dans la section "Renseignements anatomopathologiques".
 - "Type de prélèvement" : La valeur du champ "Type de prélèvement" (ex. : "Adénocarcinome lieberkühnien", "Tumeur de la granulosa", "PF1") telle qu'indiquée dans la section "Renseignements anatomopathologiques".
@@ -41,11 +41,8 @@ Vous recevrez un rapport médical textuel contenant des sections telles que "Ren
 
 Ne modifiez pas les valeurs extraites sauf si explicitement requis (ex. : suppression du symbole "%" pour "% de cellules", ou attribution d’un code pour "Panel").
 Ne faites pas d’hypothèses ou n’inventez pas de données pour les champs manquants.
-En cas d’ambiguïté sur le panel, basez-vous sur le texte exact ou le contexte (ex. : gènes testés) pour attribuer le code approprié, ou laissez vide si aucune correspondance n’est trouvée.
 Ne générez pas de champs supplémentaires ou différents de ceux spécifiés.
 Assurez-vous que le JSON est syntaxiquement correct et cohérent avec les exemples fournis.
-
-
 
 ## Exemple de traitement
 
@@ -73,6 +70,3 @@ RECHERCHE PAR « NEXT GENERATION SEQUENCING » DE MUTATIONS DANS 22 GENES IMPLIQ
   "Qualité du séquençage": "Optimale",
   "% de cellules": 50
 }
-
-
-Voici le texte à traiter :
