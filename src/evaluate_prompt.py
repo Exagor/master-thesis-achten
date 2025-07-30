@@ -119,5 +119,7 @@ for prompt_name in prompt_names:
     flat_mutation_data = [item for sublist in mutation_data for item in sublist]
     df_mut = pd.DataFrame(flat_mutation_data)
     # Remove rows with any None values
-    df_mut = df_mut.dropna()
+    # df_mut = df_mut.dropna()
+    if "% d'ADN muté" in df_mut.columns:
+        df_mut["% d'ADN muté"] = df_mut["% d'ADN muté"].astype(str).str.replace('%', '', regex=False)
     df_mut.to_excel(f"out/mutation_{model_name_shrt}_{prompt_name}.xlsx", index=False)

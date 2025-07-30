@@ -134,6 +134,8 @@ try:
     df_mut = pd.DataFrame(flat_mutation_data)
     # Remove rows with any None values
     df_mut = df_mut.dropna()
+    if "% d'ADN muté" in df_mut.columns:
+        df_mut["% d'ADN muté"] = df_mut["% d'ADN muté"].astype(str).str.replace('%', '', regex=False)
     df_mut.to_excel(f"out/mutation_{model_name_shrt}.xlsx", index=False)
     logger.info(f"Saved mutation data to out/mutation_{model_name_shrt}.xlsx")
 except Exception as e:
