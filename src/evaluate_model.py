@@ -337,11 +337,13 @@ if __name__ == "__main__":
     
     # ["gemma3_4B", "gemma3_1B", "llama32_1B", "llama32_3B", "qwen_3B" ]
     # ["gpt4o", "gpto3", "gemini", "gemma3_4B", "grok"] final
-    model = "gemma3_4B"  # Change this to the model you want to evaluate
-    prompt = "final4"
-    model_excel_path_meta = f'prompt_engineering/final_prompt_results/metadata_{model}_{prompt}.xlsx'
-    model_excel_path_mut = f'prompt_engineering/final_prompt_results/mutation_{model}_{prompt}.xlsx'
-    
+    # model = "gemma3_4B"  # Change this to the model you want to evaluate
+    # prompt = "final4"
+    # model_excel_path_meta = f'prompt_engineering/final_prompt_results/metadata_{model}_{prompt}.xlsx'
+    # model_excel_path_mut = f'prompt_engineering/final_prompt_results/mutation_{model}_{prompt}.xlsx'
+    model_excel_path_meta = 'out/metadata_gemma3_4B.xlsx'
+    model_excel_path_mut = 'out/mutation_gemma3_4B.xlsx'
+
     print("---- Evaluating gemma 3 4B results ----")
 
     evaluate_model_metadata(model_excel_path_meta, true_csv_path_meta)
@@ -353,6 +355,6 @@ if __name__ == "__main__":
     print(f"Average levenshtein similarity for mutations: {(sum(scores_leven_mut.values())/len(scores_leven_mut))}")
 
     # Calculate time statistics
-    # time_data_path = 'out/times_gemma3_4B.xlsx'
-    # print('\nTime statistics for gemma3_4B model:')
-    # calculate_time_stats(time_data_path)
+    time_data_path = 'out/times_gemma3_4B.xlsx'
+    print('\nTime statistics for gemma3_4B model:')
+    calculate_time_stats(time_data_path)
