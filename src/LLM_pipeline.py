@@ -25,9 +25,9 @@ for pdf_file in pdf_files_path:
     pdf_texts[os.path.splitext(pdf_file)[0]] = extract_with_pdfplumber(os.path.join(pdf_folder_path,pdf_file))
 
 # Load system prompts
-with open("prompt/system_prompt_metadata.md", "r") as f:
+with open("prompt/final_prompt_metadata_final.md", "r") as f:
     system_prompt_meta = f.read()
-with open("prompt/system_prompt_mutation.md", "r") as f:
+with open("prompt/final_prompt_mutation_final.md", "r") as f:
     system_prompt_mut = f.read()
 
 # Login to Hugging Face to enable the use of gemma 3

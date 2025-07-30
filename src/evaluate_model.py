@@ -337,8 +337,8 @@ if __name__ == "__main__":
     
     # ["gemma3_4B", "gemma3_1B", "llama32_1B", "llama32_3B", "qwen_3B" ]
     # ["gpt4o", "gpto3", "gemini", "gemma3_4B", "grok"] final
-    model = "qwen_3B"  # Change this to the model you want to evaluate
-    prompt = "final3"
+    model = "gemma3_4B"  # Change this to the model you want to evaluate
+    prompt = "final4"
     model_excel_path_meta = f'prompt_engineering/final_prompt_results/metadata_{model}_{prompt}.xlsx'
     model_excel_path_mut = f'prompt_engineering/final_prompt_results/mutation_{model}_{prompt}.xlsx'
     
