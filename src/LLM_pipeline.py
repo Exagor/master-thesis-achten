@@ -124,7 +124,7 @@ try:
     if '% de cellules' in df_meta.columns:
         df_meta['% de cellules'] = df_meta['% de cellules'].astype(str).str.replace('%', '', regex=False)
     df_meta.to_excel(f"{out_folder}metadata_{model_name_shrt}.xlsx", index=False)
-    logger.info(f"Saved metadata to out/metadata_{model_name_shrt}.xlsx")
+    logger.info(f"Saved metadata to {out_folder}metadata_{model_name_shrt}.xlsx")
 except Exception as e:
     logger.error(f"Failed to save output file: {e}")
 
@@ -137,7 +137,7 @@ try:
     if "% d'ADN muté" in df_mut.columns:
         df_mut["% d'ADN muté"] = df_mut["% d'ADN muté"].astype(str).str.replace('%', '', regex=False)
     df_mut.to_excel(f"{out_folder}mutation_{model_name_shrt}.xlsx", index=False)
-    logger.info(f"Saved mutation data to out/mutation_{model_name_shrt}.xlsx")
+    logger.info(f"Saved mutation data to {out_folder}mutation_{model_name_shrt}.xlsx")
 except Exception as e:
     logger.error(f"Failed to save output file: {e}")
 
@@ -148,17 +148,19 @@ try:
         'Time_Metadata': time_meta_data,
         'Time_Mutation': time_mutation_data
     })
-    df_times.to_excel(f"out/times_{model_name_shrt}.xlsx", index=False)
-    logger.info(f"Saved processing times to out/times_{model_name_shrt}.xlsx")
+    df_times.to_excel(f"{out_folder}times_{model_name_shrt}.xlsx", index=False)
+    logger.info(f"Saved processing times to {out_folder}times_{model_name_shrt}.xlsx")
 except Exception as e:
     logger.error(f"Failed to save output file: {e}")
 
 #check for hallucination
 try:
+    logger.info("Checking for hallucination(s)")
     hallucination_report = check_hallucination(pdf_folder_path,
                                                f"{out_folder}metadata_{model_name_shrt}.xlsx",
                                                f"{out_folder}mutation_{model_name_shrt}.xlsx",
                                                f"{out_folder}hallucination_report.xlsx")
+    logger.info("Hallucination report :")
     print(hallucination_report)
 except Exception as e:
-    logger.error(f"Failed to check hallucination: {e}")
+    logger.error(f"Failed to check hallucination(s): {e}")

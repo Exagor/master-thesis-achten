@@ -15,8 +15,9 @@ def check_hallucination(pdf_folder, excel_path_meta, excel_path_mut, save_path):
     If they are not presents, write a report indicating which report must be verified.
     Args:
         pdf_folder (str): Path to the folder containing the PDFs.
-        excel_path (str): Path to the Excel file containing mutation data.
-        save_path (str): Path to save the report.
+        excel_path_meta (str): Path to the Excel file containing metadata data.
+        excel_path_mut (str): Path to the Excel file containing mutation data.
+        save_path (str): Path to save the report, must specify the name of the file.
     returns:
         report (pd.DataFrame): DataFrame containing the report of mutations not found in PDFs.
     """
