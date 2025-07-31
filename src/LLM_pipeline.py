@@ -1,4 +1,3 @@
-import json
 import logging
 import os
 import pandas as pd
@@ -8,20 +7,21 @@ from huggingface_hub import login
 from utils import *
 from transformers import pipeline
 from tqdm import tqdm
+from hallucination_checker import *
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-#get pdfs
+# get pdfs
 pdf_folder_path = "data/PDF"
 pdf_files_path = [f for f in os.listdir(pdf_folder_path) if f.endswith('.pdf')]
+out_folder = "out/"
 # pdf_files = ["24EM03456.pdf"] #used for debug
 
 #extract pdf text
 pdf_texts = {}
 for pdf_file in pdf_files_path:
-    #could use langchain here to extract text from pdf and use Document object
     pdf_texts[os.path.splitext(pdf_file)[0]] = extract_with_pdfplumber(os.path.join(pdf_folder_path,pdf_file))
 
 # Load system prompts
@@ -123,7 +123,7 @@ try:
     # Remove % from the '% cellules' column if it exists
     if '% de cellules' in df_meta.columns:
         df_meta['% de cellules'] = df_meta['% de cellules'].astype(str).str.replace('%', '', regex=False)
-    df_meta.to_excel(f"out/metadata_{model_name_shrt}.xlsx", index=False)
+    df_meta.to_excel(f"{out_folder}metadata_{model_name_shrt}.xlsx", index=False)
     logger.info(f"Saved metadata to out/metadata_{model_name_shrt}.xlsx")
 except Exception as e:
     logger.error(f"Failed to save output file: {e}")
@@ -136,7 +136,7 @@ try:
     df_mut = df_mut.dropna()
     if "% d'ADN muté" in df_mut.columns:
         df_mut["% d'ADN muté"] = df_mut["% d'ADN muté"].astype(str).str.replace('%', '', regex=False)
-    df_mut.to_excel(f"out/mutation_{model_name_shrt}.xlsx", index=False)
+    df_mut.to_excel(f"{out_folder}mutation_{model_name_shrt}.xlsx", index=False)
     logger.info(f"Saved mutation data to out/mutation_{model_name_shrt}.xlsx")
 except Exception as e:
     logger.error(f"Failed to save output file: {e}")
@@ -152,3 +152,13 @@ try:
     logger.info(f"Saved processing times to out/times_{model_name_shrt}.xlsx")
 except Exception as e:
     logger.error(f"Failed to save output file: {e}")
+
+#check for hallucination
+try:
+    hallucination_report = check_hallucination(pdf_folder_path,
+                                               f"{out_folder}metadata_{model_name_shrt}.xlsx",
+                                               f"{out_folder}mutation_{model_name_shrt}.xlsx",
+                                               f"{out_folder}hallucination_report.xlsx")
+    print(hallucination_report)
+except Exception as e:
+    logger.error(f"Failed to check hallucination: {e}")

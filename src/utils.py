@@ -24,7 +24,7 @@ def extract_with_pdfplumber(pdf_path:str) -> str:
         for page in pdf.pages:
             text.append(page.extract_text())
     text = "\n".join(text)
-    logging.info("Text extracted from the PDF file")
+    logging.debug("Text extracted from the PDF file")
     return text
 
 def extract_with_pymupdf(pdf_path:str) -> str:
