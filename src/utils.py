@@ -1,4 +1,6 @@
-
+"""
+Utils for helpingthe work
+"""
 import camelot
 import fitz  # PyMuPDF
 import json
@@ -43,7 +45,7 @@ def extract_with_pymupdf(pdf_path:str) -> str:
     logging.info("Text extracted from the PDF file")
     return text
 
-def extract_dict_from_string(s) -> dict:
+def extract_dict_from_string(s:str) -> dict:
     """
     Extracts the first dictionary found in a string and parses it as JSON.
     Args:
@@ -70,7 +72,7 @@ def extract_dict_from_string(s) -> dict:
                     logging.debug(f"Metadata output: {s}")
     return None  # No matching closing brace found
 
-def extract_list_of_dicts_from_string(s) -> list:
+def extract_list_of_dicts_from_string(s:str) -> list:
     """
     Extracts the first list of dictionaries found in a string and parses it as JSON.
     Args:
@@ -111,7 +113,7 @@ def extract_tables_camelot(pdf_path:str):
     logging.info(f"Tables extracted")
     return tables
 
-def extract_pdf2image(pdf_path, save=False, save_folder_path=None):
+def extract_pdf2image(pdf_path:str, save:bool=False, save_folder_path:bool=None) -> list:
     """
     Converts each page of a PDF file to an image.
     Args:

@@ -1,12 +1,8 @@
-#remove jupyter notebooks
-*.ipynb
-
-#remove python cache
-__pycache__
-
-README.md
-.gitignore
 .git
+.gitignore
+__pycache__
+*.ipynb
+README.md
 guacamole.txt
 prompt_engineering/*
 figs/*

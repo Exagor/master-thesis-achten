@@ -1,5 +1,5 @@
 """
-Script to hellp detect hallucinations from the model output.
+Script to help detect hallucinations from the model output.
 """
 
 import pandas as pd
@@ -9,7 +9,7 @@ from tqdm import tqdm
 import re
 
 
-def check_hallucination(pdf_folder, excel_path_meta, excel_path_mut, save_path):
+def check_hallucination(pdf_folder, excel_path_meta=None, excel_path_mut=None, save_path="./") -> pd.DataFrame:
     """
     Check the mutations in the excel and verify they are present in the pdfs. 
     If they are not presents, write a report indicating which report must be verified.
@@ -22,59 +22,62 @@ def check_hallucination(pdf_folder, excel_path_meta, excel_path_mut, save_path):
         report (pd.DataFrame): DataFrame containing the report of mutations not found in PDFs.
     """
 
-    # Load the mutation data from the Excel file
-    df_mut = pd.read_excel(excel_path_mut)
-    df_mut.dropna(subset=['Examen', 'Mutation'], inplace=True)
-    df_meta = pd.read_excel(excel_path_meta)
     # Initialize a list to store the report
     report = []
 
-    # Iterate through each row in the DataFrame
-    for index, row in tqdm(df_mut.iterrows()):
-        pdf_name = row['Examen']
-        mutation = row['Mutation']
+    if excel_path_mut is not None :
+        # Load the mutation data from the Excel file
+        df_mut = pd.read_excel(excel_path_mut)
+        df_mut.dropna(subset=['Examen', 'Mutation'], inplace=True)
 
-        # Check if the PDF exists in the specified folder
-        pdf_path = f"{pdf_folder}/{pdf_name}.pdf"
-        if not os.path.exists(pdf_path):
-            report.append({
-                'pdf_name': pdf_name,
-                'mutations': mutation,
-                'status': 'PDF not found'
-            })
-            continue
+        # Iterate through each row in the DataFrame
+        for index, row in tqdm(df_mut.iterrows()):
+            pdf_name = row['Examen']
+            mutation = row['Mutation']
 
-        # Extract text from the PDF and search the mutation in it
-        try: 
-            pdf_text = extract_with_pdfplumber(pdf_path)
-        except Exception as e:
-            report.append({
-                'pdf_name': pdf_name,
-                'mutations': mutation,
-                'status': f'Error extracting PDF: {e}'
-            })
-            continue
-        
-        # Use regex for exact match (whole word, accept end of line and spaces around)
-        pattern = r'{}\s|{}$'.format(re.escape(str(mutation)), re.escape(str(mutation)))
-        if not re.search(pattern, pdf_text):
-            report.append({
-                'pdf_name': pdf_name,
-                'mutations': mutation,
-                'status': 'Mutation not found in PDF or ambiguity'
-            })
+            # Check if the PDF exists in the specified folder
+            pdf_path = f"{pdf_folder}/{pdf_name}.pdf"
+            if not os.path.exists(pdf_path):
+                report.append({
+                    'pdf_name': pdf_name,
+                    'mutations': mutation,
+                    'status': 'PDF not found'
+                })
+                continue
 
-    for index, row in tqdm(df_meta.iterrows()):
-        pdf_name = row['Examen']
+            # Extract text from the PDF and search the mutation in it
+            try: 
+                pdf_text = extract_with_pdfplumber(pdf_path)
+            except Exception as e:
+                report.append({
+                    'pdf_name': pdf_name,
+                    'mutations': mutation,
+                    'status': f'Error extracting PDF: {e}'
+                })
+                continue
+            
+            # Use regex for exact match (whole word, accept end of line and spaces around)
+            pattern = r'{}\s|{}$'.format(re.escape(str(mutation)), re.escape(str(mutation)))
+            if not re.search(pattern, pdf_text):
+                report.append({
+                    'pdf_name': pdf_name,
+                    'mutations': mutation,
+                    'status': 'Mutation not found in PDF or ambiguity'
+                })
 
-        # Check if the PDF exists in the specified folder
-        pdf_path = f"{pdf_folder}/{pdf_name}.pdf"
-        if not os.path.exists(pdf_path):
-            report.append({
-                'pdf_name': pdf_name,
-                'status': 'PDF not found or exam number incorrect'
-            })
-            continue
+    if excel_path_meta is not None :
+        df_meta = pd.read_excel(excel_path_meta)
+        for index, row in tqdm(df_meta.iterrows()):
+            pdf_name = row['Examen']
+
+            # Check if the PDF exists in the specified folder
+            pdf_path = f"{pdf_folder}/{pdf_name}.pdf"
+            if not os.path.exists(pdf_path):
+                report.append({
+                    'pdf_name': pdf_name,
+                    'status': 'PDF not found or exam number incorrect'
+                })
+                continue
 
 
     # Convert the report to a DataFrame and save it
