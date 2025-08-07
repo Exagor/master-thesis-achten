@@ -17,7 +17,7 @@ class InfoInputApp:
 
         ttk.Label(control_frame, text="Nombre de champs :").pack(side=tk.LEFT, padx=5)
         self.num_fields_var = tk.IntVar(value=4)
-        self.spinbox = ttk.Spinbox(control_frame, from_=1, to=20, width=5, textvariable=self.num_fields_var)
+        self.spinbox = ttk.Spinbox(control_frame, from_=1, to=10, width=5, textvariable=self.num_fields_var)
         self.spinbox.pack(side=tk.LEFT, padx=5)
 
         ttk.Button(control_frame, text="Générer les champs", command=self.generate_fields).pack(side=tk.LEFT, padx=10)
