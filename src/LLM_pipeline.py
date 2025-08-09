@@ -53,6 +53,7 @@ try:
         model=model_name,
         torch_dtype=torch.bfloat16,
         device=device,
+        model_kwargs={"attn_implementation": "eager"},
         #device_map="auto", #use "auto" to automatically use all available GPUs (but slows the code ??!!)
     )
     logger.info("pipeline initialized")
