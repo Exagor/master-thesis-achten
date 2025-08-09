@@ -36,14 +36,15 @@ with open("prompt/final_prompt_mutation_final.md", "r") as f:
 # Login to Hugging Face to enable the use of gemma 3
 with open("login_huggingface.txt", "r") as f:
     token = f.read()
+    token = token.strip()
 try:
     login(token) #token from huggingface.co necessary to use gemma3
     logger.info("login to hugging face done")
 except Exception as e:
     logger.error(f"Failed to login to hugging face: {e}")
 
-model_name = "google/gemma-3-4b-it"
-model_name_shrt = "gemma3_4BV" #used for output files
+model_name = "google/gemma-3-12b-it"
+model_name_shrt = "gemma3_12BV" #used for output files
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 logger.info(f"Using device: {device}")
@@ -165,7 +166,7 @@ try:
     hallucination_report = check_hallucination(pdf_folder_path,
                                                f"{out_folder}metadata_{model_name_shrt}.xlsx",
                                                f"{out_folder}mutation_{model_name_shrt}.xlsx",
-                                               f"{out_folder}hallucination_report.xlsx")
+                                               f"{out_folder}hallucination_report_{model_name_shrt}.xlsx")
     logger.info("Hallucination report :")
     print(hallucination_report)
 except Exception as e:

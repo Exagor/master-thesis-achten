@@ -51,15 +51,18 @@ docker build -t llm-pipeline .
 
 ### Commands to run the Docker containers
 
-The first command runs the container without GPU support, while the second command runs it with GPU support if available. Both commands mount the current directory's `out` folder to the container's `/app/out` directory, where the output files will be saved.
+The first command runs the container without GPU support, while the second command runs it with GPU support if available. Both commands mount the current directory's `out` folder to the container's `/app/out` directory, where the output files will be saved. Add the `-d` flag to run the container in detached mode if you want it to run in the background.
 
 ```bash
 docker run --rm -v $(pwd)/out:/app/out llm-pipeline
 ```
+
 or
+
 ```bash
 docker run --gpus all -v $(pwd)/out:/app/out llm-pipeline
 ```
+
 ## HuggingFace
 
 Don't forget to use a login token from the HuggingFace website to access the models. The token is set in the ``login_huggingface.txt`` file.
