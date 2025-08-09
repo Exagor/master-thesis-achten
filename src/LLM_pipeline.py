@@ -43,8 +43,8 @@ try:
 except Exception as e:
     logger.error(f"Failed to login to hugging face: {e}")
 
-model_name = "google/gemma-3-12b-it"
-model_name_shrt = "gemma3_12B" #used for output files
+model_name = "google/gemma-3-27b-it"
+model_name_shrt = "gemma3_27B" #used for output files
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 logger.info(f"Using device: {device}")
