@@ -36,7 +36,7 @@ with open("prompt/final_prompt_mutation_final.md", "r") as f:
 # Login to Hugging Face to enable the use of gemma 3
 with open("login_huggingface.txt", "r") as f:
     token = f.read()
-    token = token.strip()
+    token = token.strip() #to remove any leading/trailing whitespace
 try:
     login(token) #token from huggingface.co necessary to use gemma3
     logger.info("login to hugging face done")
@@ -44,13 +44,13 @@ except Exception as e:
     logger.error(f"Failed to login to hugging face: {e}")
 
 model_name = "google/gemma-3-12b-it"
-model_name_shrt = "gemma3_12BV" #used for output files
+model_name_shrt = "gemma3_12B" #used for output files
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 logger.info(f"Using device: {device}")
 try:
     pipe = pipeline(
-        "image-text-to-text", #or "image-text-to-text"
+        "text-generation", #"text-generation" or "image-text-to-text"
         model=model_name,
         torch_dtype=torch.bfloat16,
         device=device,
@@ -77,7 +77,7 @@ for pdf_number,text_pdf in tqdm(pdf_texts.items()):
             "role": "user",
             "content": (
                 [{"type": "text", "text": text_pdf}]
-                + [{"type": "image", "image": img} for img in pdf_image[pdf_number]]
+                #+ [{"type": "image", "image": img} for img in pdf_image[pdf_number]]
             )
         }
     ]
@@ -91,20 +91,20 @@ for pdf_number,text_pdf in tqdm(pdf_texts.items()):
             "role": "user",
             "content": (
                 [{"type": "text", "text": text_pdf}]
-                + [{"type": "image", "image": img} for img in pdf_image[pdf_number]]
+                #+ [{"type": "image", "image": img} for img in pdf_image[pdf_number]]
             )
         }
     ]
 
     # Run the inference
     start_time = time.time()
-    output_meta = pipe(text=messages_meta, max_new_tokens=250) # if in image-text-to-text mode, must precise text= parameter
+    output_meta = pipe(messages_meta, max_new_tokens=250) # if in image-text-to-text mode, must precise text= parameter
     elapsed_time = time.time() - start_time
     time_meta_data.append(elapsed_time)
     logger.info(f"Pipeline inference time for metadata: {elapsed_time:.2f} seconds")
 
     start_time = time.time()
-    output_mut = pipe(text=messages_mut, max_new_tokens=650)
+    output_mut = pipe(messages_mut, max_new_tokens=650)
     elapsed_time = time.time() - start_time
     time_mutation_data.append(elapsed_time)
     logger.info(f"Pipeline inference time for mutations: {elapsed_time:.2f} seconds")
