@@ -53,9 +53,9 @@ try:
         "text-generation", #"text-generation" or "image-text-to-text"
         model=model_name,
         torch_dtype=torch.bfloat16,
-        device=device,
+        #device=device,
         model_kwargs={"attn_implementation": "eager"},
-        #device_map="auto", #use "auto" to automatically use all available GPUs (but slows the code ??!!)
+        device_map="auto", #use "auto" to automatically use all available GPUs (but slows the code ??!!)
     )
     logger.info("pipeline initialized")
 except Exception as e:
