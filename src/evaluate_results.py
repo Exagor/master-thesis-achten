@@ -341,8 +341,8 @@ if __name__ == "__main__":
     # prompt = "final4"
     # model_excel_path_meta = f'prompt_engineering/final_prompt_results/metadata_{model}_{prompt}.xlsx'
     # model_excel_path_mut = f'prompt_engineering/final_prompt_results/mutation_{model}_{prompt}.xlsx'
-    model_excel_path_meta = 'out/metadata_gemma3_4B.xlsx'
-    model_excel_path_mut = 'out/mutation_gemma3_4B.xlsx'
+    model_excel_path_meta = 'out/metadata_gemma3_27BV.xlsx'
+    model_excel_path_mut = 'out/mutation_gemma3_27BV.xlsx'
 
     print("---- Evaluating gemma 3 4B results ----")
 
