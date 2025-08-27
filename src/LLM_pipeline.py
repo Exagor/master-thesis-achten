@@ -15,7 +15,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 # get pdfs
-pdf_folder_path = "data/PDF"
+pdf_folder_path = "data/pdf_clp_ost/"
 pdf_files_path = [f for f in os.listdir(pdf_folder_path) if f.endswith('.pdf')]
 out_folder = "out/"
 # pdf_files = ["24EM03456.pdf"] #used for debug
@@ -44,7 +44,7 @@ except Exception as e:
     logger.error(f"Failed to login to hugging face: {e}")
 
 model_name = "google/gemma-3-4b-it"
-model_name_shrt = "gemma3_4B" #used for output files
+model_name_shrt = "gemma3_4B_clp_ost_ex" #used for output files
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 logger.info(f"Using device: {device}")
