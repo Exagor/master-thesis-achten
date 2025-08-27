@@ -43,8 +43,8 @@ try:
 except Exception as e:
     logger.error(f"Failed to login to hugging face: {e}")
 
-model_name = "google/gemma-3-4b-it"
-model_name_shrt = "gemma3_4B_clp_ost_ex" #used for output files
+model_name = "google/gemma-3-27b-it"
+model_name_shrt = "gemma3_27B_clp_ost_ex" #used for output files
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 logger.info(f"Using device: {device}")
@@ -53,9 +53,9 @@ try:
         "text-generation", #"text-generation" or "image-text-to-text"
         model=model_name,
         torch_dtype=torch.bfloat16,
-        device=device,
-        #model_kwargs={"attn_implementation": "eager"}, # to comment if you want to use the default implementation
-        #device_map="auto", #use "auto" to automatically use all available GPUs (but slows the code sometimes)
+        # device=device,
+        model_kwargs={"attn_implementation": "eager"}, # to comment if you want to use the default implementation and use with gemma-3-27b-it
+        device_map="auto", #use "auto" to automatically use all available GPUs (but slows the code sometimes)
     )
     logger.info("pipeline initialized")
 except Exception as e:
@@ -98,13 +98,13 @@ for pdf_number,text_pdf in tqdm(pdf_texts.items()):
 
     # Run the inference
     start_time = time.time()
-    output_meta = pipe(messages_meta, max_new_tokens=250) # if in image-text-to-text mode, must precise text= parameter
+    output_meta = pipe(messages_meta, max_new_tokens=400) # if in image-text-to-text mode, must precise text= parameter
     elapsed_time = time.time() - start_time
     time_meta_data.append(elapsed_time)
     logger.info(f"Pipeline inference time for metadata: {elapsed_time:.2f} seconds")
 
     start_time = time.time()
-    output_mut = pipe(messages_mut, max_new_tokens=650)
+    output_mut = pipe(messages_mut, max_new_tokens=1500)
     elapsed_time = time.time() - start_time
     time_mutation_data.append(elapsed_time)
     logger.info(f"Pipeline inference time for mutations: {elapsed_time:.2f} seconds")
