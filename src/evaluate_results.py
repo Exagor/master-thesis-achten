@@ -237,7 +237,8 @@ def evaluate_mutations_levenshtein(model_path, true_path, print_results=True):
     """
     model_df = pd.read_excel(model_path)
     true_df = pd.read_csv(true_path)
-    # model_df.dropna(inplace=True)  # Drop rows with any NaN values
+    model_df.dropna(subset=["Mutation"],inplace=True)  # Drop rows with any NaN values
+    true_df.dropna(subset=["Mutation"],inplace=True)  # Drop rows with any NaN values
 
     # Ensure columns are in the same order and names
     model_df = model_df[true_df.columns.intersection(model_df.columns)]
@@ -295,6 +296,44 @@ def evaluate_mutations_levenshtein(model_path, true_path, print_results=True):
         col_similarities[col] = avg_col_sim #here should multiply by (1- abs(num_mutations - 24)/max(24, num_mutations)) if num_mutations != 0 else 0
     return col_similarities
 
+def evaluate_one_file(exam_number, model_meta_path, model_mut_path, true_meta_path, true_mut_path):
+    """
+    Evaluate both metadata and mutation extraction for a single file.
+    """
+    #search for the exam number in the true data
+    true_meta_df = pd.read_csv(true_meta_path)
+    true_mut_df = pd.read_csv(true_mut_path)
+
+    if exam_number not in true_meta_df[true_meta_df.columns[0]].values:
+        print(f"Exam number {exam_number} not found in true metadata.")
+        return
+    if exam_number not in true_mut_df[true_mut_df.columns[0]].values:
+        print(f"Exam number {exam_number} not found in true mutations.")
+        return
+    #extract the rows for the exam number
+    true_meta_row = true_meta_df[true_meta_df[true_meta_df.columns[0]] == exam_number]
+    true_mut_rows = true_mut_df[true_mut_df[true_mut_df.columns[0]] == exam_number]
+    #search for the exam number in the model data
+    model_meta_df = pd.read_excel(model_meta_path)
+    model_mut_df = pd.read_excel(model_mut_path)
+
+    if exam_number not in model_meta_df[model_meta_df.columns[0]].values:
+        print(f"Exam number {exam_number} not found in model metadata.")
+        return
+    if exam_number not in model_mut_df[model_mut_df.columns[0]].values:
+        print(f"Exam number {exam_number} not found in model mutations.")
+        return
+    #extract the rows for the exam number
+    model_meta_row = model_meta_df[model_meta_df[model_meta_df.columns[0]] == exam_number]
+    model_mut_rows = model_mut_df[model_mut_df[model_mut_df.columns[0]] == exam_number]
+ 
+    # Evaluate metadata
+    print(f"\nMetadata for exam {exam_number}:")
+    print(f"    Model:\n{model_meta_row}\n   True:\n{true_meta_row}")
+    # Evaluate mutations
+    print(f"\nMutations for exam {exam_number}:")
+    print(f"    Model:\n{model_mut_rows}\n   True:\n{true_mut_rows}")
+    
 
 def calculate_time_stats(time_data_path):
     """
@@ -318,8 +357,10 @@ def calculate_time_stats(time_data_path):
 if __name__ == "__main__":
 
     # model_excel_path = 'data/verified_metadata.xlsx'
-    true_csv_path_meta = 'data/verified_metadata.csv'
-    true_csv_path_mut = 'data/verified_mutations_without_none.csv'
+    # true_csv_path_meta = 'data/verified_data/verified_metadata.csv'
+    # true_csv_path_mut = 'data/verified_data/verified_mutations_without_none.csv'
+    true_csv_path_meta = 'data/verified_data/verified_metadata_clp_ost_ex.csv'
+    true_csv_path_mut = 'data/verified_data/verified_mutations_clp_ost_ex.csv'
     print_res = True
 
     # model_excel_path_meta = 'out/hand_pdf_parser_metadata.xlsx'
@@ -341,8 +382,8 @@ if __name__ == "__main__":
     # prompt = "final4"
     # model_excel_path_meta = f'prompt_engineering/final_prompt_results/metadata_{model}_{prompt}.xlsx'
     # model_excel_path_mut = f'prompt_engineering/final_prompt_results/mutation_{model}_{prompt}.xlsx'
-    model_excel_path_meta = 'out/metadata_gemma3_27BV.xlsx'
-    model_excel_path_mut = 'out/mutation_gemma3_27BV.xlsx'
+    model_excel_path_meta = 'out/metadata_gemma3_27B_clp_ost_ex.xlsx'
+    model_excel_path_mut = 'out/mutation_gemma3_27B_clp_ost_ex.xlsx'
 
     print("---- Evaluating gemma 3 4B results ----")
 
@@ -354,7 +395,10 @@ if __name__ == "__main__":
     scores_leven_mut = evaluate_mutations_levenshtein(model_excel_path_mut, true_csv_path_mut, print_results=print_res)
     print(f"Average levenshtein similarity for mutations: {(sum(scores_leven_mut.values())/len(scores_leven_mut))}")
 
+    #evaluate a specific exam number
+    # evaluate_one_file('25EM00024', model_excel_path_meta, model_excel_path_mut, true_csv_path_meta, true_csv_path_mut)
+
     # Calculate time statistics
-    time_data_path = 'out/times_gemma3_4B.xlsx'
-    print('\nTime statistics for gemma3_4B model:')
-    calculate_time_stats(time_data_path)
+    # time_data_path = 'out/times_gemma3_4B.xlsx'
+    # print('\nTime statistics for gemma3_4B model:')
+    # calculate_time_stats(time_data_path)
