@@ -1,0 +1,20 @@
+Examen,N° du prélèvement,Panel,Origine du prélèvement,Type de prélèvement,Qualité du séquençage,% de cellules
+25EM00002,24EH17025 2.01. + 2.02.,CHP,Erasme,Tumeur de la fosse postérieure,Optimale,80
+25EM00088,22B11265-A13,CHP,Bordet,carcinome urothélial,Optimale,50
+25EM00103,24CU087869 2 urg,CHP,CurePath,Adénocarcinome de l'ampoule,/,10
+25EM00231,25MH00160,CHP,Mouscron,Cholangiocarcinome intrahépatique,Optimale,50
+25EM00370,24222151-1.1,CHP,CMP Pathology,carcinome urothélial,Optimale,50
+25EM00536,25BB01212,CHP,Bordet,tumeur rénale oncocytaire,Optimale,70
+25EM01867,25BQ00153,CHP,Epicura,Carcinome épithélial - myoépithélial d'origine salivaire,Optimale,10
+25EM01947,25300783 1.1.,CHP,CMP,Adénocarcinome du pancréas,Optimale,10
+25EM02040,25BB07153-1.1,CHP,Bordet,métastase hépatique d'un adénocarcinome peu différencié,Optimale,50
+25EM02220,25212777-1.1,CHP,CMP Pathology,métastase hépatique d'un carcinome compatible avec une origine urothéliale,Optimale,10
+25EM02236,25CU028963 fpa bio,CHP,CurePath,Carcinome adénosquameux du pancréas,Optimale,10
+25EM02286,23H06169-6.01,CHP,Erasme,carcinome urothélial métastatique,Optimale,30
+25EM02357,25BB08466-1,CHP,Bordet,métastase péritonéale par un adénocarcinome compatible avec un cholangiocarcinome,Optimale,30
+25EM02362,25CU001976-2,CHP,CurePath,métastase ovarienne d'un carcinome peu différencié en faveur d'une origine digestive haute,Optimale,80
+25EM02428,25EH08335 11,CHP,Erasme,Métastase ganglionnaire d'un cholangiocarcinome,Optimale,10
+25EM02516,25214938 1.2. Foie,CHP,CMP,Cholangiocarcinome,Optimale,20
+25EM02668,25CU032292-1.01,CHP,CurePath,Métastase d'un adénocarcinome d'origine indéterminée,Optimale,50
+25EM02751,25BF00784-A02,CHP,Bordet,métastase ganglionnaire d'un carcinome peu différencié,Optimale,10
+25EM02848,25216483-1.1,CHP,CMP Pathology,adénocarcinome métastatique dont le profil immunohistochimique suggère une origine digestive haute ou pancréaticobilaire,Optimale,20
