@@ -2,6 +2,11 @@
 import logging
 from huggingface_hub import login
 from transformers import AutoModelForCausalLM
+import os
+
+# Optionally set a custom cache directory for transformers
+os.makedirs("./models", exist_ok=True)
+os.environ["HF_HUB_CACHE"] = "./models"
 
 # Configure logger
 logger = logging.getLogger(__name__)
@@ -19,7 +24,7 @@ except Exception as e:
     raise
 
 # Pre-download the model
-model_name = "google/gemma-3-4b-it" # Qwen/Qwen2.5-VL-3B-Instruct or google/gemma-3-4b-it or google/gemma-3-12b-it
+model_name = "google/gemma-3-27b-it" # Qwen/Qwen2.5-VL-3B-Instruct or google/gemma-3-4b-it or google/gemma-3-12b-it
 try:
     AutoModelForCausalLM.from_pretrained(model_name)
     logger.info(f"Pre-downloaded model: {model_name}")

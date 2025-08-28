@@ -62,3 +62,13 @@ docker run --gpus all -v $(pwd)/out:/app/out llm-pipeline
 ## HuggingFace
 
 Don't forget to use a login token from the HuggingFace website to access the models. The token is set in the ``login_huggingface.txt`` file.
+
+## Acceleration (future works)
+
+- To accelerate the model download, the `pre_download.py` script can be run before the `LLM_pipeline.py` script. This will download the model weights and cache them locally. By specifying the cache path, it is possible to avoid downloading the model weights multiple times (still to implement).
+
+- It is possible to use multiple GPUs to run the model. This can be done by setting the `device_map` parameter to `auto` in the `LLM_pipeline.py` file (already implemented but commented). However, this can slow down the code sometimes.
+
+- The `attn_implementation` parameter can be set to `eager` to use a more efficient attention implementation. This is already implemented but commented in the `LLM_pipeline.py` file. This is only available for the `gemma-3-27b-it` model.
+
+- The files are processed sequentially, but for batch processing, the code can be modified to implement `datasets` like defined in the HuggingFace library.

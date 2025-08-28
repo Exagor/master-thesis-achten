@@ -14,6 +14,10 @@ from utils import *
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
+# Set custom cache directory for the models storage
+os.makedirs("./models", exist_ok=True)
+os.environ["HF_HUB_CACHE"] = "./models"
+
 # get pdfs
 pdf_folder_path = "data/pdf_clp_ost_chp_extended/"
 pdf_files_path = [f for f in os.listdir(pdf_folder_path) if f.endswith('.pdf')]
@@ -43,8 +47,8 @@ try:
 except Exception as e:
     logger.error(f"Failed to login to hugging face: {e}")
 
-model_name = "google/gemma-3-4b-it"
-model_name_shrt = "gemma3_4B_clp_ost_chp_ex" #used for output files
+model_name = "google/gemma-3-27b-it"
+model_name_shrt = "gemma3_27B_clp_ost_chp_ex" #used for output files
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 logger.info(f"Using device: {device}")
@@ -53,9 +57,9 @@ try:
         "text-generation", #"text-generation" or "image-text-to-text"
         model=model_name,
         torch_dtype=torch.bfloat16,
-        device=device,
-        # model_kwargs={"attn_implementation": "eager"}, # to comment if you want to use the default implementation and use with gemma-3-27b-it
-        # device_map="auto", #use "auto" to automatically use all available GPUs (but slows the code sometimes)
+        #device=device,
+        model_kwargs={"attn_implementation": "eager"}, # to comment if you want to use the default implementation and use with gemma-3-27b-it
+        device_map="auto", #use "auto" to automatically use all available GPUs (but slows the code sometimes)
     )
     logger.info("pipeline initialized")
 except Exception as e:
