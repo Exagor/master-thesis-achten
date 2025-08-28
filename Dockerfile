@@ -2,9 +2,6 @@ ARG CUDA="12.6"
 ARG CUDNN="9"
 ARG PYTORCH="2.7.1"
 
-# Use a minimal base Python image
-# FROM python:3.10-slim
-
 # use PyTorch base image with specified versions
 FROM pytorch/pytorch:${PYTORCH}-cuda${CUDA}-cudnn${CUDNN}-devel
 
