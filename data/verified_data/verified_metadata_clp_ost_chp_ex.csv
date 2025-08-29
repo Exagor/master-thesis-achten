@@ -1,19 +1,25 @@
 Examen,N° du prélèvement,Panel,Origine du prélèvement,Type de prélèvement,Qualité du séquençage,% de cellules
+25EM00002,24EH17025 2.01. + 2.02.,CHP,Erasme,Tumeur de la fosse postérieure,Optimale,80
 25EM00024,24CU087248 1.06.,CLP,CurePath,Adénocarcinome du côlon,Optimale,30
 25EM00025,24MH16475-1,OST,Mouscron,Adénocarcinome pulmonaire,Optimale,50
+25EM00088,22B11265-A13,CHP,Bordet,carcinome urothélial,Optimale,50
 25EM00089,25BB00061 2.10.,CLP,HUB,Métastase hépatique d'un adénocarcinome du côlon,Optimale,50
+25EM00103,24CU087869 2 urg,CHP,CurePath,Adénocarcinome de l'ampoule,/,10
 25EM00110,25200050-1.1,OST,CMP,Carcinome épidermoïde,Optimale,50
 25EM00143,25EC00117 4L,OST,Erasme,Adénocarcinome pulmonaire,Optimale,30
 25EM00145,25EH00329-1.01,OST,Erasme,Adénocarcinome pulmonaire,Optimale,30
 25EM00155,24CU084088-1.02,OST,CurePath,Mélanome,Optimale,40
 25EM00180,25CU001423-pneu1,OST,CurePath,Adénocarcinome pulmonaire,Optimale,10
 25EM00216,2432238,OST,CMP,Métastase d'un adénocarcinome épidermoïde,Optimale,10
+25EM00231,25MH00160,CHP,Mouscron,Cholangiocarcinome intrahépatique,Optimale,50
 25EM00267,25200865,CLP,CMP,Adénocarcinome du rectum,Suboptimale,30
+25EM00370,24222151-1.1,CHP,CMP Pathology,carcinome urothélial,Optimale,50
 25EM00413,25BB01341 2.05,CLP,H.U.B.,Métastase ovarienne par un adénocarcinome NOS de bas grade dont l'aspect morphologique est compatible avec une origine colique,Optimale,30
 25EM00449,19H08477 A03f,CLP,C.H.U. Brugmann,adénocarcinome colique moyennement différencié,Optimale,30
 25EM00452,25CU004646 pneu 1.01.,OST,CurePath,Adénocarcinome pulmonaire,Optimale,20
 25EM00466,25BB01775 1,OST,HUB,Mélanome,Optimale,30
 25EM00530,25BF00221,OST,Bordet,aspect cytologique d'adénocarcinome (liquide péricardique),Optimale,10
+25EM00536,25BB01212,CHP,Bordet,tumeur rénale oncocytaire,Optimale,70
 25EM00558,24CU057959-1.06,CLP,Curepath,adénocarcinome du colon,Optimale,50
 25EM00603,25BB02215-1,OST,Institut Bordet,Adénocarcinome pulmonaire,Optimale,80
 25EM00652,25EC00745 frottis 1,OST,Hôpital Erasme,métastase d'un adénocarcinome pulmonaire,Optimale,70
@@ -24,18 +30,31 @@ Examen,N° du prélèvement,Panel,Origine du prélèvement,Type de prélèvement
 25EM01050,25206692-1.2,OST,CMP,Carcinome non à petites cellules,Optimale,10
 25EM01638,25201151,OST,CMP,Adénocarcinome mucosécrétant,Optimale,10
 25EM01816,25CU020935 1.02.,OST,CurePath,Métastase d'un mélanome,Optimale,10
+25EM01867,25BQ00153,CHP,Epicura,Carcinome épithélial - myoépithélial d'origine salivaire,Optimale,10
+25EM01947,25300783 1.1.,CHP,CMP,Adénocarcinome du pancréas,Optimale,10
+25EM02040,25BB07153-1.1,CHP,Bordet,métastase hépatique d'un adénocarcinome peu différencié,Optimale,50
 25EM02139,25H04680-03a,CLP,Brugmann,Adénocarcinome colique (métastase hépatique),Optimale,40
+25EM02220,25212777-1.1,CHP,CMP Pathology,métastase hépatique d'un carcinome compatible avec une origine urothéliale,Optimale,10
+25EM02236,25CU028963 fpa bio,CHP,CurePath,Carcinome adénosquameux du pancréas,Optimale,10
 25EM02282,25EC02797,OST,Erasme,NSCLC,Optimale,20
+25EM02286,23H06169-6.01,CHP,Erasme,carcinome urothélial métastatique,Optimale,30
 25EM02305,21B22221,CLP,Bordet,Adénocarcinome colique,Optimale,30
+25EM02357,25BB08466-1,CHP,Bordet,métastase péritonéale par un adénocarcinome compatible avec un cholangiocarcinome,Optimale,30
+25EM02362,25CU001976-2,CHP,CurePath,métastase ovarienne d'un carcinome peu différencié en faveur d'une origine digestive haute,Optimale,80
 25EM02388,25EH08325-1.02,OST,Erasme,métastase hépatique d'un carcinome pulmonaire,Optimale,40
+25EM02428,25EH08335 11,CHP,Erasme,Métastase ganglionnaire d'un cholangiocarcinome,Optimale,10
 25EM02462,24CU079505,CLP,CurePath,Adénocarcinome du rectum,Optimale,30
+25EM02516,25214938 1.2. Foie,CHP,CMP,Cholangiocarcinome,Optimale,20
 25EM02540,25MH7974,CLP,Centre Hospitalier de Mouscron,adénocarcinome lieberkühnien infiltrant,Optiamle,30
 25EM02541,25EH08651 1,CLP,Erasme,Adénocarcinome du côlon,Optimale,10
 25EM02661,25209842 1.1.,CLP,CMP,Adénocarcinome du rectum,Optimale,30
+25EM02668,25CU032292-1.01,CHP,CurePath,Métastase d'un adénocarcinome d'origine indéterminée,Optimale,50
 25EM02678,25BB08011 5,CLP,HUB,Adénocarcinome colique métastatique,Optimale,30
 25EM02700,25H05986 A03c,OST,Brugmann,Adénocarcinome colique métastatique,Optimale,50
+25EM02751,25BF00784-A02,CHP,Bordet,métastase ganglionnaire d'un carcinome peu différencié,Optimale,10
 25EM02772,25BB09069-1.03,CLP,Bordet,métastase hépatique d'un adénocarcinome colique,Optimale,30
 25EM02797,25EC03922,CLP,Erasme,métastase  ganglionnaire  (A02)  et  pancréatique  (B02)  d'un adénocarcinome compatible avec une origine colique,Optimale,50
 25EM02815,23B07871-A02,CLP,Bordet,métastase hépatique d'un adénocarcinome colique,Optimale,50
 25EM02816,25CU033529-1.08,CLP,CurePath,adénocarcinome colique,Optimale,30
 25EM02823,25301280-2.1,OST,CMP Pathology,adénocarcinome pulmonaire,Optimale,10
+25EM02848,25216483-1.1,CHP,CMP Pathology,adénocarcinome métastatique dont le profil immunohistochimique suggère une origine digestive haute ou pancréaticobilaire,Optimale,20

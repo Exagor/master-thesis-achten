@@ -214,7 +214,7 @@ def evaluate_metadata_levenshtein(model_excel_path, true_csv_path, print_results
     # Column-wise Levenshtein (average per column)
     col_similarities = {}
     if print_results :
-        print("\nAverage Normalized Levenshtein similarity per column:")
+        print("\nAverage ANLS per column (metadata):")
     for col in matched_true_df.columns:
         if col not in matched_model_df.columns:
             print(f"  {col}: column missing in model results")
@@ -237,8 +237,8 @@ def evaluate_mutations_levenshtein(model_path, true_path, print_results=True):
     """
     model_df = pd.read_excel(model_path)
     true_df = pd.read_csv(true_path)
-    model_df.dropna(subset=["Mutation"],inplace=True)  # Drop rows with any NaN values
-    true_df.dropna(subset=["Mutation"],inplace=True)  # Drop rows with any NaN values
+    model_df.dropna(subset=["Mutation"],inplace=True)  # Drop rows where "Mutation" is NaN
+    true_df.dropna(subset=["Mutation"],inplace=True)  
 
     # Ensure columns are in the same order and names
     model_df = model_df[true_df.columns.intersection(model_df.columns)]
@@ -359,8 +359,8 @@ if __name__ == "__main__":
     # model_excel_path = 'data/verified_metadata.xlsx'
     # true_csv_path_meta = 'data/verified_data/verified_metadata.csv'
     # true_csv_path_mut = 'data/verified_data/verified_mutations_without_none.csv'
-    true_csv_path_meta = 'data/verified_data/verified_metadata_clp_ost_ex.csv'
-    true_csv_path_mut = 'data/verified_data/verified_mutations_clp_ost_ex.csv'
+    true_csv_path_meta = 'data/verified_data/verified_metadata_clp_ost_chp_ex.csv'
+    true_csv_path_mut = 'data/verified_data/verified_mutations_clp_ost_chp_ex.csv'
     print_res = True
 
     # model_excel_path_meta = 'out/hand_pdf_parser_metadata.xlsx'
@@ -382,11 +382,12 @@ if __name__ == "__main__":
     # prompt = "final4"
     # model_excel_path_meta = f'prompt_engineering/final_prompt_results/metadata_{model}_{prompt}.xlsx'
     # model_excel_path_mut = f'prompt_engineering/final_prompt_results/mutation_{model}_{prompt}.xlsx'
-    model_excel_path_meta = 'out/metadata_gemma3_27B_clp_ost_ex.xlsx'
-    model_excel_path_mut = 'out/mutation_gemma3_27B_clp_ost_ex.xlsx'
+
+    short_model_name = "gemma3_4B_clp_ost_chp_ex"
+    model_excel_path_meta = f'out/metadata_{short_model_name}.xlsx'
+    model_excel_path_mut = f'out/mutation_{short_model_name}.xlsx'
 
     print("---- Evaluating gemma 3 4B results ----")
-
     evaluate_model_metadata(model_excel_path_meta, true_csv_path_meta)
     scores_leven_meta = evaluate_metadata_levenshtein(model_excel_path_meta, true_csv_path_meta, print_results=print_res)
     print(f"Average levenshtein similarity for metadata: {sum(scores_leven_meta.values()) / len(scores_leven_meta)}")
@@ -399,6 +400,6 @@ if __name__ == "__main__":
     # evaluate_one_file('25EM00024', model_excel_path_meta, model_excel_path_mut, true_csv_path_meta, true_csv_path_mut)
 
     # Calculate time statistics
-    # time_data_path = 'out/times_gemma3_4B.xlsx'
-    # print('\nTime statistics for gemma3_4B model:')
-    # calculate_time_stats(time_data_path)
+    time_data_path = f'out/times_{short_model_name}.xlsx'
+    print(f'\nTime statistics for {short_model_name} model:')
+    calculate_time_stats(time_data_path)
