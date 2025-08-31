@@ -156,6 +156,7 @@ def levenshtein_distance(s1, s2):
     return Levenshtein.distance(str(s1), str(s2))
 
 def normalized_levenshtein_similarity(s1, s2, t=0.5):
+    print("Model : ",s1,"\nTrue : ",s2)
     # handle the Nan case
     if pd.isna(s1) and pd.isna(s2):
         return 1
@@ -383,7 +384,7 @@ if __name__ == "__main__":
     # model_excel_path_meta = f'prompt_engineering/final_prompt_results/metadata_{model}_{prompt}.xlsx'
     # model_excel_path_mut = f'prompt_engineering/final_prompt_results/mutation_{model}_{prompt}.xlsx'
 
-    short_model_name = "gemma3_4B_clp_ost_chp_ex"
+    short_model_name = "gemma3_27B_clp_ost_chp_ex"
     model_excel_path_meta = f'out/metadata_{short_model_name}.xlsx'
     model_excel_path_mut = f'out/mutation_{short_model_name}.xlsx'
 
